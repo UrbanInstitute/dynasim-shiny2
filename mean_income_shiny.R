@@ -5,6 +5,8 @@ library(extrafont)
 library(grid)
 library(RColorBrewer)
 
+options(scipen = 999)
+
 #Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
 
 # Source file for Windows

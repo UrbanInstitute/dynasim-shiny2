@@ -37,40 +37,42 @@ ui <- fluidPage(
   
   titlePanel("Urban Analysis of BPC Social Security Reforms"),
   
-  verticalLayout(
+  fluidRow(
     
-    plotOutput("chart"),
+    column(6,
+           plotOutput("chart"))),
     
-    selectInput(inputId = "comparison",
-      label = "Comparison",
-      choices = c("Level" = "mean.income",
-                  "Percent Change" = "percent.change",
-                  "Dollar Change" = "dollar.change")),
+  fluidRow(
+    column(4,
+      selectInput(inputId = "comparison",
+        label = "Comparison",
+        choices = c("Level" = "mean.income",
+                    "Percent Change" = "percent.change",
+                    "Dollar Change" = "dollar.change")),
     
-    selectInput(inputId = "measure",
-      label = "Measure",
-      choices = c("Per Capita Annuity Income" = "per capita annuity",
-                  "Per Capita Cash Income" = "per capita cash",
-                  "Net Per Capita Annuity Income" = "net per capita annuity",
-                  "Net Per Capita Cash Income" = "net per capita cash")),
+     selectInput(inputId = "measure",
+       label = "Measure",
+       choices = c("Per Capita Annuity Income" = "per capita annuity",
+                    "Per Capita Cash Income" = "per capita cash",
+                   "Net Per Capita Annuity Income" = "net per capita annuity",
+                    "Net Per Capita Cash Income" = "net per capita cash")),
     
-    selectInput(inputId = "demographic",
-      label = "Demographic",
-      choices = c("All" = "All",
-                  "Sex" = "Sex",
-                  "Education" = "Education",
-                  "Race Ethnicity" = "Race Ethnicity",
-                  "Marital Status" = "Marital Status",
-                  "Shared Work Years" = "Shared Work Years",
-                  "Own Work Years" = "Own Work Years",
-                  "Shared Income Quintile" = "Shared Income Quintile",
-                  "Shared Lifetime Earnings" = "Shared Lifetime Earnings",
-                  "Homeownership" = "Homeownership",
-                  "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
-                  "Per Capita Financial Assets" = "Per Capita Financial Assets ($2015)",
-                  "Per Capita Financial + Retirement Account Assets" = "Per Capita Financial + Retirement Account Assets ($2015)"))
+     selectInput(inputId = "demographic",
+       label = "Demographic",
+       choices = c("All" = "All",
+                    "Sex" = "Sex",
+                    "Education" = "Education",
+                    "Race Ethnicity" = "Race Ethnicity",
+                    "Marital Status" = "Marital Status",
+                    "Shared Work Years" = "Shared Work Years",
+                    "Own Work Years" = "Own Work Years",
+                    "Shared Income Quintile" = "Shared Income Quintile",
+                    "Shared Lifetime Earnings" = "Shared Lifetime Earnings",
+                    "Homeownership" = "Homeownership",
+                    "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
+                    "Per Capita Financial Assets" = "Per Capita Financial Assets ($2015)",
+                    "Per Capita Financial + Retirement Account Assets" = "Per Capita Financial + Retirement Account Assets ($2015)"))))
 
-  )
 )
 
 server <- function(input, output){

@@ -1,6 +1,16 @@
+# Aaron Williams, Urban Institute Program on Retirement Policy
+
+# This script reads five decades of four measures of mean income for older 
+# Americans across from 
+# "X:\programs\run912\Run5SaveOpt4\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx".
+# The script also cleans the data and turns them into a long data frame 
+# formatted for ggplot2 
+
+# Library and Source Statements
 library(tidyverse)
 library(readxl)
 
+# Read unformatted data from Microsoft Excel
 mean.income <- read_excel("X:\\programs\\Run912\\run5SaveOpt4\\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx", sheet = "mean income", skip = 2, col_names = TRUE)
 
 # Per capita annuity
@@ -22,7 +32,6 @@ per.capita.annuity <- per.capita.annuity %>%
   mutate(category = ifelse(is.na(category), lag(category), category)) %>%
   filter(!is.na(year2015)) %>%
   mutate(measure = "per capita annuity")
-
 
 # Per capita cash
 per.capita.cash <- mean.income[, 10:18]
@@ -84,12 +93,15 @@ net.per.capita.cash <- net.per.capita.cash %>%
   filter(!is.na(year2015)) %>%
   mutate(measure = "net per capita cash")
 
+mean.income <- bind_rows(per.capita.annuity, per.capita.cash, net.per.capita.annuity, net.per.capita.cash)
 
+mean.income <- gather(mean.income, key = year , value,-category, -group, -category, -measure) %>%
+               mutate(year = as.numeric(gsub("year", "", year)))
 
+# If data directory does not exist, create data directory
+if (!file.exists("data")) {
+  dir.create("data")
+}
 
-
-
-
-
-
-
+# Write .csv
+write.csv(mean.income, "data//mean.income.csv", row.names = FALSE)

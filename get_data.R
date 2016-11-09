@@ -15,6 +15,11 @@ mean.income <- read_excel("X:\\programs\\Run912\\run5SaveOpt4\\BPCtableShellsRun
 dollar.change <- read_excel("X:\\programs\\Run912\\run5SaveOpt4\\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx", sheet = "$mean income compare", skip = 2, col_names = TRUE)
 percent.change <- read_excel("X:\\programs\\Run912\\run5SaveOpt4\\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx", sheet = "%mean income compare", skip = 2, col_names = TRUE)
 
+# Fix imperfections from read_excel
+
+dollar.change <- dollar.change[, c(1:27, 29:37)]
+percent.change <- percent.change[, c(1:27, 29:37)]
+
 ##
 ## MEAN INCOME
 ##
@@ -107,7 +112,7 @@ mean.income <- gather(mean.income, key = year , value,-category, -group, -catego
                mutate(year = as.numeric(gsub("year", "", year)))
 
 ##
-## DOLLAR CHANGE#
+## DOLLAR CHANGE
 ##
 
 # Per capita annuity

@@ -191,6 +191,70 @@
 "Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita annuity",2015,-0.00194388021240518
 "Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita annuity",2015,-0.00179567395568825
 "Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita annuity",2015,-0.000924046559104872
+"All","All","net per capita cash",2015,-0.00176216516157431
+"Age","62-69","net per capita cash",2015,-0.00152070114977593
+"Age","70-74","net per capita cash",2015,-0.00224662264059755
+"Age","75-79","net per capita cash",2015,-0.0023879918781359
+"Age","80-84","net per capita cash",2015,-0.00191039694932958
+"Age","85+","net per capita cash",2015,-0.000616655272171786
+"Sex","Female","net per capita cash",2015,-0.00173751131106048
+"Sex","Male","net per capita cash",2015,-0.00178882680269084
+"Education","1.High School Dropout","net per capita cash",2015,-0.0023381236188096
+"Education","2.High School Graduate","net per capita cash",2015,-0.00227349028830216
+"Education","3.Some College","net per capita cash",2015,-0.00161869978256897
+"Education","4.College Graduate","net per capita cash",2015,-0.00133944254495935
+"Race Ethnicity","1.White","net per capita cash",2015,-0.00178272631151937
+"Race Ethnicity","2.Black","net per capita cash",2015,-0.00182199956765067
+"Race Ethnicity","3.Hispanic","net per capita cash",2015,-0.00193071313556222
+"Race Ethnicity","4.Other","net per capita cash",2015,-0.000972220573585814
+"Marital Status","Married","net per capita cash",2015,-0.00187988338351585
+"Marital Status","Widowed","net per capita cash",2015,-0.00173916552988359
+"Marital Status","Divorced","net per capita cash",2015,-0.00110705374660107
+"Marital Status","Single","net per capita cash",2015,-0.00213216199668208
+"Shared Work Years","0-9","net per capita cash",2015,-0.0000831499300468306
+"Shared Work Years","10-14","net per capita cash",2015,-0.000304546189018135
+"Shared Work Years","15-19","net per capita cash",2015,-0.00112442259799897
+"Shared Work Years","20-24","net per capita cash",2015,-0.00150040282292289
+"Shared Work Years","25-29","net per capita cash",2015,-0.00169814775916262
+"Shared Work Years","30-34","net per capita cash",2015,-0.00119577057585363
+"Shared Work Years","35-39","net per capita cash",2015,-0.00162964849054628
+"Shared Work Years","40+","net per capita cash",2015,-0.00201124411115701
+"Own Work Years","0-9","net per capita cash",2015,-0.000841972429741177
+"Own Work Years","10-14","net per capita cash",2015,-0.00156354225001632
+"Own Work Years","15-19","net per capita cash",2015,-0.00169092917095472
+"Own Work Years","20-24","net per capita cash",2015,-0.00132928978238223
+"Own Work Years","25-29","net per capita cash",2015,-0.00102189645800302
+"Own Work Years","30-34","net per capita cash",2015,-0.00247228782273942
+"Own Work Years","35-39","net per capita cash",2015,-0.00146120328999758
+"Own Work Years","40+","net per capita cash",2015,-0.00186895379226965
+"Shared Income Quintile","bottom quintile","net per capita cash",2015,-0.000887197465118849
+"Shared Income Quintile","2nd quintile","net per capita cash",2015,-0.00303676045865245
+"Shared Income Quintile","3rd quintile","net per capita cash",2015,-0.00180308569992965
+"Shared Income Quintile","4th quintile","net per capita cash",2015,-0.0022593026241019
+"Shared Income Quintile","top quintile","net per capita cash",2015,-0.00115906999246491
+"Shared Lifetime Earnings Quintile","bottom quintile","net per capita cash",2015,-0.000979591257476202
+"Shared Lifetime Earnings Quintile","2nd quintile","net per capita cash",2015,-0.00199846409110127
+"Shared Lifetime Earnings Quintile","3rd quintile","net per capita cash",2015,-0.00220113043026908
+"Shared Lifetime Earnings Quintile","4th quintile","net per capita cash",2015,-0.00182760429813451
+"Shared Lifetime Earnings Quintile","top quintile","net per capita cash",2015,-0.00157446439234658
+"Homeownership","Home Owner","net per capita cash",2015,-0.00180940383075939
+"Homeownership","Renter","net per capita cash",2015,-0.00139862208355234
+"Family Income Relative to Official Poverty","1.Less 100% of Poverty","net per capita cash",2015,0.000561865922948308
+"Family Income Relative to Official Poverty","2.100-199% of Poverty","net per capita cash",2015,-0.000430175140260697
+"Family Income Relative to Official Poverty","3.200-399% of Poverty","net per capita cash",2015,-0.000448660928091747
+"Family Income Relative to Official Poverty","4.400%+ of Poverty","net per capita cash",2015,-0.000722007214355547
+"Per Capita Retirement Account Assets ($2015)","<0k","net per capita cash",2015,-0.00215322348815835
+"Per Capita Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2015,-0.00257366960455689
+"Per Capita Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2015,-0.00203511775378636
+"Per Capita Retirement Account Assets ($2015)","25k +","net per capita cash",2015,-0.00155606486014135
+"Per Capita Financial Assets ($2015)","<0k","net per capita cash",2015,-0.00170785672678237
+"Per Capita Financial Assets ($2015)","0k -  5k","net per capita cash",2015,-0.0018720370169144
+"Per Capita Financial Assets ($2015)","5k - 25k","net per capita cash",2015,-0.00156160631535095
+"Per Capita Financial Assets ($2015)","25k +","net per capita cash",2015,-0.00180468252905787
+"Per Capita Financial + Retirement Account Assets ($2015)","<0k","net per capita cash",2015,-0.00183851402212528
+"Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2015,-0.00220432985373126
+"Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2015,-0.00199265953981519
+"Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita cash",2015,-0.00171580580140271
 "All","All","per capita annuity",2025,-0.00495094716322969
 "Age","62-69","per capita annuity",2025,-0.00546327471857667
 "Age","70-74","per capita annuity",2025,-0.00476075915056411
@@ -383,6 +447,70 @@
 "Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita annuity",2025,-0.0303308691622017
 "Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita annuity",2025,-0.00730655112288164
 "Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita annuity",2025,-0.00756000361776743
+"All","All","net per capita cash",2025,-0.00958159240965477
+"Age","62-69","net per capita cash",2025,-0.0113456670928685
+"Age","70-74","net per capita cash",2025,-0.00766069399354387
+"Age","75-79","net per capita cash",2025,-0.00911051451643852
+"Age","80-84","net per capita cash",2025,-0.00914652485684708
+"Age","85+","net per capita cash",2025,-0.00696505635609247
+"Sex","Female","net per capita cash",2025,-0.00856750270986914
+"Sex","Male","net per capita cash",2025,-0.0107397583133063
+"Education","1.High School Dropout","net per capita cash",2025,0.00546958706135414
+"Education","2.High School Graduate","net per capita cash",2025,-0.00876956226344174
+"Education","3.Some College","net per capita cash",2025,-0.011943366265993
+"Education","4.College Graduate","net per capita cash",2025,-0.0108848453285496
+"Race Ethnicity","1.White","net per capita cash",2025,-0.0111705088442583
+"Race Ethnicity","2.Black","net per capita cash",2025,-0.0050968877351772
+"Race Ethnicity","3.Hispanic","net per capita cash",2025,-0.000259253007662632
+"Race Ethnicity","4.Other","net per capita cash",2025,-0.0040571961378207
+"Marital Status","Married","net per capita cash",2025,-0.0129262614078187
+"Marital Status","Widowed","net per capita cash",2025,-0.00847251385318185
+"Marital Status","Divorced","net per capita cash",2025,-0.00241568206813522
+"Marital Status","Single","net per capita cash",2025,-0.000499871153124076
+"Shared Work Years","0-9","net per capita cash",2025,0.0116687657181207
+"Shared Work Years","10-14","net per capita cash",2025,0.0407727969959106
+"Shared Work Years","15-19","net per capita cash",2025,0.0146370869052093
+"Shared Work Years","20-24","net per capita cash",2025,-0.000294734624484511
+"Shared Work Years","25-29","net per capita cash",2025,-0.00475336439372366
+"Shared Work Years","30-34","net per capita cash",2025,-0.00913752924133684
+"Shared Work Years","35-39","net per capita cash",2025,-0.0117789930820687
+"Shared Work Years","40+","net per capita cash",2025,-0.0115993796633381
+"Own Work Years","0-9","net per capita cash",2025,-0.00282617892671621
+"Own Work Years","10-14","net per capita cash",2025,0.00938224949159804
+"Own Work Years","15-19","net per capita cash",2025,0.0115947999416614
+"Own Work Years","20-24","net per capita cash",2025,-0.00113036395158896
+"Own Work Years","25-29","net per capita cash",2025,-0.00332408151666185
+"Own Work Years","30-34","net per capita cash",2025,-0.00910846023222326
+"Own Work Years","35-39","net per capita cash",2025,-0.011154435575637
+"Own Work Years","40+","net per capita cash",2025,-0.0116429172277599
+"Shared Income Quintile","bottom quintile","net per capita cash",2025,0.0481345454090347
+"Shared Income Quintile","2nd quintile","net per capita cash",2025,-0.0184841164806732
+"Shared Income Quintile","3rd quintile","net per capita cash",2025,-0.0131314795243366
+"Shared Income Quintile","4th quintile","net per capita cash",2025,-0.0126940004599349
+"Shared Income Quintile","top quintile","net per capita cash",2025,-0.0100388457170455
+"Shared Lifetime Earnings Quintile","bottom quintile","net per capita cash",2025,0.0285879160537262
+"Shared Lifetime Earnings Quintile","2nd quintile","net per capita cash",2025,-0.0124753888418483
+"Shared Lifetime Earnings Quintile","3rd quintile","net per capita cash",2025,-0.0133586666040627
+"Shared Lifetime Earnings Quintile","4th quintile","net per capita cash",2025,-0.0117335442899015
+"Shared Lifetime Earnings Quintile","top quintile","net per capita cash",2025,-0.0121354023404333
+"Homeownership","Home Owner","net per capita cash",2025,-0.011568011789297
+"Homeownership","Renter","net per capita cash",2025,0.00573315734828331
+"Family Income Relative to Official Poverty","1.Less 100% of Poverty","net per capita cash",2025,0.0190465670269972
+"Family Income Relative to Official Poverty","2.100-199% of Poverty","net per capita cash",2025,-0.0114518366426812
+"Family Income Relative to Official Poverty","3.200-399% of Poverty","net per capita cash",2025,-0.00538432330147879
+"Family Income Relative to Official Poverty","4.400%+ of Poverty","net per capita cash",2025,-0.00494639778259063
+"Per Capita Retirement Account Assets ($2015)","<0k","net per capita cash",2025,-0.0511304362340492
+"Per Capita Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2025,-0.0664583441330859
+"Per Capita Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2025,-0.00131662444708087
+"Per Capita Retirement Account Assets ($2015)","25k +","net per capita cash",2025,-0.012811958357501
+"Per Capita Financial Assets ($2015)","<0k","net per capita cash",2025,-0.020846445715063
+"Per Capita Financial Assets ($2015)","0k -  5k","net per capita cash",2025,-0.0079150097121404
+"Per Capita Financial Assets ($2015)","5k - 25k","net per capita cash",2025,-0.0079922335657353
+"Per Capita Financial Assets ($2015)","25k +","net per capita cash",2025,-0.0106581491254374
+"Per Capita Financial + Retirement Account Assets ($2015)","<0k","net per capita cash",2025,-0.045371932072337
+"Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2025,-0.0283228175816663
+"Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2025,-0.00702652843119205
+"Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita cash",2025,-0.0118176539061924
 "All","All","per capita annuity",2035,-0.0135921673879299
 "Age","62-69","per capita annuity",2035,-0.0147197359663099
 "Age","70-74","per capita annuity",2035,-0.0202502142835063
@@ -575,6 +703,70 @@
 "Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita annuity",2035,-0.0727618841894085
 "Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita annuity",2035,-0.0819061607240028
 "Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita annuity",2035,-0.0270654290395553
+"All","All","net per capita cash",2035,-0.0278531582891844
+"Age","62-69","net per capita cash",2035,-0.0354833162229631
+"Age","70-74","net per capita cash",2035,-0.0317179396880193
+"Age","75-79","net per capita cash",2035,-0.0190375951042323
+"Age","80-84","net per capita cash",2035,-0.018195050365432
+"Age","85+","net per capita cash",2035,-0.0199337571156343
+"Sex","Female","net per capita cash",2035,-0.0255962665072136
+"Sex","Male","net per capita cash",2035,-0.0303597166757675
+"Education","1.High School Dropout","net per capita cash",2035,-0.00869206702556615
+"Education","2.High School Graduate","net per capita cash",2035,-0.0265645023396463
+"Education","3.Some College","net per capita cash",2035,-0.0281381597310924
+"Education","4.College Graduate","net per capita cash",2035,-0.0308829979863115
+"Race Ethnicity","1.White","net per capita cash",2035,-0.0301718236828955
+"Race Ethnicity","2.Black","net per capita cash",2035,-0.0204014976616587
+"Race Ethnicity","3.Hispanic","net per capita cash",2035,-0.0181269934741301
+"Race Ethnicity","4.Other","net per capita cash",2035,-0.0245165956157139
+"Marital Status","Married","net per capita cash",2035,-0.0440144407749182
+"Marital Status","Widowed","net per capita cash",2035,-0.0101011967724332
+"Marital Status","Divorced","net per capita cash",2035,-0.0107555573126527
+"Marital Status","Single","net per capita cash",2035,-0.00194949739444496
+"Shared Work Years","0-9","net per capita cash",2035,0.00420232628776648
+"Shared Work Years","10-14","net per capita cash",2035,0.03793704759611
+"Shared Work Years","15-19","net per capita cash",2035,-0.00126098034607001
+"Shared Work Years","20-24","net per capita cash",2035,-0.021842749130635
+"Shared Work Years","25-29","net per capita cash",2035,-0.0330752699236594
+"Shared Work Years","30-34","net per capita cash",2035,-0.0361809118978633
+"Shared Work Years","35-39","net per capita cash",2035,-0.032397076203676
+"Shared Work Years","40+","net per capita cash",2035,-0.0277000241602287
+"Own Work Years","0-9","net per capita cash",2035,-0.0281307867521771
+"Own Work Years","10-14","net per capita cash",2035,-0.0141818732811931
+"Own Work Years","15-19","net per capita cash",2035,-0.0178762035181267
+"Own Work Years","20-24","net per capita cash",2035,-0.0239633130656192
+"Own Work Years","25-29","net per capita cash",2035,-0.0248081599477678
+"Own Work Years","30-34","net per capita cash",2035,-0.026434032527781
+"Own Work Years","35-39","net per capita cash",2035,-0.0292546872349478
+"Own Work Years","40+","net per capita cash",2035,-0.0286939051847348
+"Shared Income Quintile","bottom quintile","net per capita cash",2035,0.0645953208301566
+"Shared Income Quintile","2nd quintile","net per capita cash",2035,-0.0430860664971354
+"Shared Income Quintile","3rd quintile","net per capita cash",2035,-0.041006571992776
+"Shared Income Quintile","4th quintile","net per capita cash",2035,-0.0327034534135296
+"Shared Income Quintile","top quintile","net per capita cash",2035,-0.0250707115834181
+"Shared Lifetime Earnings Quintile","bottom quintile","net per capita cash",2035,0.037410444717301
+"Shared Lifetime Earnings Quintile","2nd quintile","net per capita cash",2035,-0.0297896608936101
+"Shared Lifetime Earnings Quintile","3rd quintile","net per capita cash",2035,-0.0337155363831723
+"Shared Lifetime Earnings Quintile","4th quintile","net per capita cash",2035,-0.0348700387114381
+"Shared Lifetime Earnings Quintile","top quintile","net per capita cash",2035,-0.0306430868827077
+"Homeownership","Home Owner","net per capita cash",2035,-0.0317799767195156
+"Homeownership","Renter","net per capita cash",2035,0.000563669903312799
+"Family Income Relative to Official Poverty","1.Less 100% of Poverty","net per capita cash",2035,-0.219961460903329
+"Family Income Relative to Official Poverty","2.100-199% of Poverty","net per capita cash",2035,-0.0141019951097229
+"Family Income Relative to Official Poverty","3.200-399% of Poverty","net per capita cash",2035,-0.0221734700855681
+"Family Income Relative to Official Poverty","4.400%+ of Poverty","net per capita cash",2035,-0.00989142436766944
+"Per Capita Retirement Account Assets ($2015)","<0k","net per capita cash",2035,-0.143817788237059
+"Per Capita Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2035,-0.181737576098879
+"Per Capita Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2035,-0.0954412202118381
+"Per Capita Retirement Account Assets ($2015)","25k +","net per capita cash",2035,-0.0464162324917189
+"Per Capita Financial Assets ($2015)","<0k","net per capita cash",2035,-0.0691997438560238
+"Per Capita Financial Assets ($2015)","0k -  5k","net per capita cash",2035,-0.0195139123271166
+"Per Capita Financial Assets ($2015)","5k - 25k","net per capita cash",2035,-0.0222151109291371
+"Per Capita Financial Assets ($2015)","25k +","net per capita cash",2035,-0.0302678242522374
+"Per Capita Financial + Retirement Account Assets ($2015)","<0k","net per capita cash",2035,-0.149444896655624
+"Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2035,-0.0717364131276923
+"Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2035,-0.0896769973859089
+"Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita cash",2035,-0.0369838068838556
 "All","All","per capita annuity",2045,-0.0141986254732382
 "Age","62-69","per capita annuity",2045,-0.0106306397622566
 "Age","70-74","per capita annuity",2045,-0.0170659844132304
@@ -767,6 +959,70 @@
 "Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita annuity",2045,-0.133716215953913
 "Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita annuity",2045,-0.119327373941822
 "Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita annuity",2045,-0.0424207501747595
+"All","All","net per capita cash",2045,-0.0331725775575763
+"Age","62-69","net per capita cash",2045,-0.0380518517574816
+"Age","70-74","net per capita cash",2045,-0.0312230593564716
+"Age","75-79","net per capita cash",2045,-0.0338132841621603
+"Age","80-84","net per capita cash",2045,-0.0318386734779882
+"Age","85+","net per capita cash",2045,-0.0242905934537395
+"Sex","Female","net per capita cash",2045,-0.0298317375264431
+"Sex","Male","net per capita cash",2045,-0.0367728186951955
+"Education","1.High School Dropout","net per capita cash",2045,-0.00979539241398676
+"Education","2.High School Graduate","net per capita cash",2045,-0.0288127079769448
+"Education","3.Some College","net per capita cash",2045,-0.0309077869945737
+"Education","4.College Graduate","net per capita cash",2045,-0.0390771396923085
+"Race Ethnicity","1.White","net per capita cash",2045,-0.03655834636599
+"Race Ethnicity","2.Black","net per capita cash",2045,-0.0183998692526904
+"Race Ethnicity","3.Hispanic","net per capita cash",2045,-0.0251967719496694
+"Race Ethnicity","4.Other","net per capita cash",2045,-0.0326419993264234
+"Marital Status","Married","net per capita cash",2045,-0.0608118376566666
+"Marital Status","Widowed","net per capita cash",2045,0.0062883753604491
+"Marital Status","Divorced","net per capita cash",2045,-0.0148294084429811
+"Marital Status","Single","net per capita cash",2045,-0.00198757001032913
+"Shared Work Years","0-9","net per capita cash",2045,0.0134675365460223
+"Shared Work Years","10-14","net per capita cash",2045,0.0462128459420697
+"Shared Work Years","15-19","net per capita cash",2045,-0.0131451205197262
+"Shared Work Years","20-24","net per capita cash",2045,-0.0419414725096971
+"Shared Work Years","25-29","net per capita cash",2045,-0.0447533744967746
+"Shared Work Years","30-34","net per capita cash",2045,-0.0459590475494519
+"Shared Work Years","35-39","net per capita cash",2045,-0.0426435272221125
+"Shared Work Years","40+","net per capita cash",2045,-0.0308556115642704
+"Own Work Years","0-9","net per capita cash",2045,-0.0498193650328862
+"Own Work Years","10-14","net per capita cash",2045,-0.0241982686844468
+"Own Work Years","15-19","net per capita cash",2045,-0.0286215027438056
+"Own Work Years","20-24","net per capita cash",2045,-0.0373182280726773
+"Own Work Years","25-29","net per capita cash",2045,-0.0381368583125011
+"Own Work Years","30-34","net per capita cash",2045,-0.038766959356231
+"Own Work Years","35-39","net per capita cash",2045,-0.0357997258805077
+"Own Work Years","40+","net per capita cash",2045,-0.0320094773913534
+"Shared Income Quintile","bottom quintile","net per capita cash",2045,0.101224135172468
+"Shared Income Quintile","2nd quintile","net per capita cash",2045,-0.0479013698903694
+"Shared Income Quintile","3rd quintile","net per capita cash",2045,-0.0467252983708995
+"Shared Income Quintile","4th quintile","net per capita cash",2045,-0.0384057692383949
+"Shared Income Quintile","top quintile","net per capita cash",2045,-0.0325216184161766
+"Shared Lifetime Earnings Quintile","bottom quintile","net per capita cash",2045,0.0514756113434391
+"Shared Lifetime Earnings Quintile","2nd quintile","net per capita cash",2045,-0.0245764660684644
+"Shared Lifetime Earnings Quintile","3rd quintile","net per capita cash",2045,-0.0345063792628974
+"Shared Lifetime Earnings Quintile","4th quintile","net per capita cash",2045,-0.0419266242506705
+"Shared Lifetime Earnings Quintile","top quintile","net per capita cash",2045,-0.0423841948559467
+"Homeownership","Home Owner","net per capita cash",2045,-0.0388469234180579
+"Homeownership","Renter","net per capita cash",2045,0.00304279023179791
+"Family Income Relative to Official Poverty","1.Less 100% of Poverty","net per capita cash",2045,-0.666195190352602
+"Family Income Relative to Official Poverty","2.100-199% of Poverty","net per capita cash",2045,-0.0163668508788398
+"Family Income Relative to Official Poverty","3.200-399% of Poverty","net per capita cash",2045,-0.0152593451935425
+"Family Income Relative to Official Poverty","4.400%+ of Poverty","net per capita cash",2045,-0.0119031805014735
+"Per Capita Retirement Account Assets ($2015)","<0k","net per capita cash",2045,-0.179044147819187
+"Per Capita Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2045,-0.238129061364626
+"Per Capita Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2045,-0.179063197150764
+"Per Capita Retirement Account Assets ($2015)","25k +","net per capita cash",2045,-0.0855104164082802
+"Per Capita Financial Assets ($2015)","<0k","net per capita cash",2045,-0.0523896883937599
+"Per Capita Financial Assets ($2015)","0k -  5k","net per capita cash",2045,-0.0388198374409177
+"Per Capita Financial Assets ($2015)","5k - 25k","net per capita cash",2045,-0.0143001882725695
+"Per Capita Financial Assets ($2015)","25k +","net per capita cash",2045,-0.0369878939788943
+"Per Capita Financial + Retirement Account Assets ($2015)","<0k","net per capita cash",2045,-0.145187640504496
+"Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2045,-0.123415566263027
+"Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2045,-0.123581574969457
+"Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita cash",2045,-0.0552327109241732
 "All","All","per capita annuity",2055,-0.00794462718598812
 "Age","62-69","per capita annuity",2055,-0.00678212022597075
 "Age","70-74","per capita annuity",2055,-0.00988708846599232
@@ -959,6 +1215,70 @@
 "Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita annuity",2055,-0.190474561419648
 "Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita annuity",2055,-0.14064941819265
 "Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita annuity",2055,-0.0463891291096011
+"All","All","net per capita cash",2055,-0.0251668255962571
+"Age","62-69","net per capita cash",2055,-0.0397020754256572
+"Age","70-74","net per capita cash",2055,-0.0170169873897302
+"Age","75-79","net per capita cash",2055,-0.0152391069715681
+"Age","80-84","net per capita cash",2055,-0.0193657095502558
+"Age","85+","net per capita cash",2055,-0.0117841108536855
+"Sex","Female","net per capita cash",2055,-0.0197396540262984
+"Sex","Male","net per capita cash",2055,-0.0308501944979878
+"Education","1.High School Dropout","net per capita cash",2055,-0.000686031800272191
+"Education","2.High School Graduate","net per capita cash",2055,-0.0177560794723384
+"Education","3.Some College","net per capita cash",2055,-0.0222065260071189
+"Education","4.College Graduate","net per capita cash",2055,-0.0325486055174496
+"Race Ethnicity","1.White","net per capita cash",2055,-0.0303149707040532
+"Race Ethnicity","2.Black","net per capita cash",2055,-0.00838293648722935
+"Race Ethnicity","3.Hispanic","net per capita cash",2055,-0.0132942725033634
+"Race Ethnicity","4.Other","net per capita cash",2055,-0.0247803489487527
+"Marital Status","Married","net per capita cash",2055,-0.0603928137447816
+"Marital Status","Widowed","net per capita cash",2055,0.0422886422396287
+"Marital Status","Divorced","net per capita cash",2055,-0.00961994001763217
+"Marital Status","Single","net per capita cash",2055,0.00634808916736403
+"Shared Work Years","0-9","net per capita cash",2055,0.01932992813389
+"Shared Work Years","10-14","net per capita cash",2055,0.0527452519754893
+"Shared Work Years","15-19","net per capita cash",2055,-0.0137656331633417
+"Shared Work Years","20-24","net per capita cash",2055,-0.0412951117148457
+"Shared Work Years","25-29","net per capita cash",2055,-0.0457415883829997
+"Shared Work Years","30-34","net per capita cash",2055,-0.0441109150434103
+"Shared Work Years","35-39","net per capita cash",2055,-0.0350481450033412
+"Shared Work Years","40+","net per capita cash",2055,-0.0208811764167869
+"Own Work Years","0-9","net per capita cash",2055,-0.0618665010099161
+"Own Work Years","10-14","net per capita cash",2055,-0.0270536194940858
+"Own Work Years","15-19","net per capita cash",2055,-0.0293933844575771
+"Own Work Years","20-24","net per capita cash",2055,-0.037334020305201
+"Own Work Years","25-29","net per capita cash",2055,-0.0330485039591343
+"Own Work Years","30-34","net per capita cash",2055,-0.039705055202718
+"Own Work Years","35-39","net per capita cash",2055,-0.0277838305144662
+"Own Work Years","40+","net per capita cash",2055,-0.0219052751062656
+"Shared Income Quintile","bottom quintile","net per capita cash",2055,0.138743776436341
+"Shared Income Quintile","2nd quintile","net per capita cash",2055,-0.0393730306756721
+"Shared Income Quintile","3rd quintile","net per capita cash",2055,-0.0270471348772906
+"Shared Income Quintile","4th quintile","net per capita cash",2055,-0.0317188055375489
+"Shared Income Quintile","top quintile","net per capita cash",2055,-0.0292579727593297
+"Shared Lifetime Earnings Quintile","bottom quintile","net per capita cash",2055,0.0655584745144923
+"Shared Lifetime Earnings Quintile","2nd quintile","net per capita cash",2055,-0.013370030011157
+"Shared Lifetime Earnings Quintile","3rd quintile","net per capita cash",2055,-0.0187376948974091
+"Shared Lifetime Earnings Quintile","4th quintile","net per capita cash",2055,-0.0312152106673033
+"Shared Lifetime Earnings Quintile","top quintile","net per capita cash",2055,-0.0402407549376003
+"Homeownership","Home Owner","net per capita cash",2055,-0.0317191032576361
+"Homeownership","Renter","net per capita cash",2055,0.0140223822986555
+"Family Income Relative to Official Poverty","1.Less 100% of Poverty","net per capita cash",2055,-1.05279583084445
+"Family Income Relative to Official Poverty","2.100-199% of Poverty","net per capita cash",2055,0.0101621453624724
+"Family Income Relative to Official Poverty","3.200-399% of Poverty","net per capita cash",2055,-0.0145947378069547
+"Family Income Relative to Official Poverty","4.400%+ of Poverty","net per capita cash",2055,-0.0108541389104067
+"Per Capita Retirement Account Assets ($2015)","<0k","net per capita cash",2055,-0.193864456242621
+"Per Capita Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2055,-0.259268366327655
+"Per Capita Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2055,-0.216444635360218
+"Per Capita Retirement Account Assets ($2015)","25k +","net per capita cash",2055,-0.107302942724802
+"Per Capita Financial Assets ($2015)","<0k","net per capita cash",2055,-0.0554822288142988
+"Per Capita Financial Assets ($2015)","0k -  5k","net per capita cash",2055,-0.0495482724364826
+"Per Capita Financial Assets ($2015)","5k - 25k","net per capita cash",2055,-0.00280369218864094
+"Per Capita Financial Assets ($2015)","25k +","net per capita cash",2055,-0.0298319982629994
+"Per Capita Financial + Retirement Account Assets ($2015)","<0k","net per capita cash",2055,-0.167679039894627
+"Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2055,-0.183335218101716
+"Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2055,-0.144477971585004
+"Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita cash",2055,-0.0569457482597197
 "All","All","per capita annuity",2065,-0.00505251381178292
 "Age","62-69","per capita annuity",2065,-0.0132755886127957
 "Age","70-74","per capita annuity",2065,-0.00744444856825034
@@ -1151,3 +1471,67 @@
 "Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita annuity",2065,-0.209180368230408
 "Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita annuity",2065,-0.146330634568223
 "Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita annuity",2065,-0.0470966589036225
+"All","All","net per capita cash",2065,-0.0175290364443485
+"Age","62-69","net per capita cash",2065,-0.0488671557663872
+"Age","70-74","net per capita cash",2065,-0.0111239551804721
+"Age","75-79","net per capita cash",2065,-0.00159375941445283
+"Age","80-84","net per capita cash",2065,0.00665752749284514
+"Age","85+","net per capita cash",2065,0.0174634815033364
+"Sex","Female","net per capita cash",2065,-0.0104683420129831
+"Sex","Male","net per capita cash",2065,-0.0252041363627349
+"Education","1.High School Dropout","net per capita cash",2065,-0.000149684283203977
+"Education","2.High School Graduate","net per capita cash",2065,-0.00543290612688479
+"Education","3.Some College","net per capita cash",2065,-0.0146090261468832
+"Education","4.College Graduate","net per capita cash",2065,-0.0259420319432771
+"Race Ethnicity","1.White","net per capita cash",2065,-0.0209738202097899
+"Race Ethnicity","2.Black","net per capita cash",2065,-0.00530459082621726
+"Race Ethnicity","3.Hispanic","net per capita cash",2065,-0.0106344902508883
+"Race Ethnicity","4.Other","net per capita cash",2065,-0.0209336978673331
+"Marital Status","Married","net per capita cash",2065,-0.0582160053297356
+"Marital Status","Widowed","net per capita cash",2065,0.0684781964867149
+"Marital Status","Divorced","net per capita cash",2065,-0.00482568876795646
+"Marital Status","Single","net per capita cash",2065,0.0140381118078838
+"Shared Work Years","0-9","net per capita cash",2065,0.0172968678390305
+"Shared Work Years","10-14","net per capita cash",2065,0.0537658867481062
+"Shared Work Years","15-19","net per capita cash",2065,-0.0185201684504908
+"Shared Work Years","20-24","net per capita cash",2065,-0.044687908024526
+"Shared Work Years","25-29","net per capita cash",2065,-0.0482381809370799
+"Shared Work Years","30-34","net per capita cash",2065,-0.0428047033712921
+"Shared Work Years","35-39","net per capita cash",2065,-0.0322128247583027
+"Shared Work Years","40+","net per capita cash",2065,-0.0099655414224458
+"Own Work Years","0-9","net per capita cash",2065,-0.0709159311624456
+"Own Work Years","10-14","net per capita cash",2065,-0.0298195184368245
+"Own Work Years","15-19","net per capita cash",2065,-0.033284298074785
+"Own Work Years","20-24","net per capita cash",2065,-0.0418013282775904
+"Own Work Years","25-29","net per capita cash",2065,-0.0309649939933642
+"Own Work Years","30-34","net per capita cash",2065,-0.0277036819669555
+"Own Work Years","35-39","net per capita cash",2065,-0.0277280686448721
+"Own Work Years","40+","net per capita cash",2065,-0.0118339613177956
+"Shared Income Quintile","bottom quintile","net per capita cash",2065,0.163476038772052
+"Shared Income Quintile","2nd quintile","net per capita cash",2065,-0.0192830081225454
+"Shared Income Quintile","3rd quintile","net per capita cash",2065,-0.0194148372254996
+"Shared Income Quintile","4th quintile","net per capita cash",2065,-0.0176076811454978
+"Shared Income Quintile","top quintile","net per capita cash",2065,-0.0279109043112281
+"Shared Lifetime Earnings Quintile","bottom quintile","net per capita cash",2065,0.0680206803130152
+"Shared Lifetime Earnings Quintile","2nd quintile","net per capita cash",2065,-0.00400074768865416
+"Shared Lifetime Earnings Quintile","3rd quintile","net per capita cash",2065,-0.00542115297880253
+"Shared Lifetime Earnings Quintile","4th quintile","net per capita cash",2065,-0.0224419147359842
+"Shared Lifetime Earnings Quintile","top quintile","net per capita cash",2065,-0.0355349182753509
+"Homeownership","Home Owner","net per capita cash",2065,-0.0244610217077908
+"Homeownership","Renter","net per capita cash",2065,0.0215261919948181
+"Family Income Relative to Official Poverty","1.Less 100% of Poverty","net per capita cash",2065,1.05014043534337
+"Family Income Relative to Official Poverty","2.100-199% of Poverty","net per capita cash",2065,0.0425457186666002
+"Family Income Relative to Official Poverty","3.200-399% of Poverty","net per capita cash",2065,-0.0135705039502798
+"Family Income Relative to Official Poverty","4.400%+ of Poverty","net per capita cash",2065,-0.0100196854897196
+"Per Capita Retirement Account Assets ($2015)","<0k","net per capita cash",2065,-0.159268949875184
+"Per Capita Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2065,-0.300255087619685
+"Per Capita Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2065,-0.227972556775161
+"Per Capita Retirement Account Assets ($2015)","25k +","net per capita cash",2065,-0.112294779926694
+"Per Capita Financial Assets ($2015)","<0k","net per capita cash",2065,-0.0575562660463383
+"Per Capita Financial Assets ($2015)","0k -  5k","net per capita cash",2065,-0.0621809742228525
+"Per Capita Financial Assets ($2015)","5k - 25k","net per capita cash",2065,0.00565454214496808
+"Per Capita Financial Assets ($2015)","25k +","net per capita cash",2065,-0.0261828974966685
+"Per Capita Financial + Retirement Account Assets ($2015)","<0k","net per capita cash",2065,-0.16434746926221
+"Per Capita Financial + Retirement Account Assets ($2015)","0k -  5k","net per capita cash",2065,-0.189796214472604
+"Per Capita Financial + Retirement Account Assets ($2015)","5k - 25k","net per capita cash",2065,-0.153601832649888
+"Per Capita Financial + Retirement Account Assets ($2015)","25k +","net per capita cash",2065,-0.0522785950139943

@@ -28,28 +28,36 @@ percent.change <- tbl_df(read.csv("data/percent.change.csv", header = TRUE, stri
 # 
 
 mean.income <- mean.income %>%
-  mutate(comparison = "mean.income")
-  
-dollar.change <- dollar.change %>%
-  mutate(comparison = "dollar.change")
-
-percent.change <- percent.change %>%
-  mutate(comparison = "percent.change")
-
-mean.income <- bind_rows(mean.income, dollar.change, percent.change) %>%
+  mutate(comparison = "mean.income") %>%
   mutate(group = gsub("1\\.", "", group)) %>%
   mutate(group = gsub("2\\.", "", group)) %>%
   mutate(group = gsub("3\\.", "", group)) %>%
   mutate(group = gsub("4\\.", "", group)) %>%
   mutate(group = factor(group, levels = group))
   
+dollar.change <- dollar.change %>%
+  mutate(comparison = "dollar.change") %>%
+  mutate(group = gsub("1\\.", "", group)) %>%
+  mutate(group = gsub("2\\.", "", group)) %>%
+  mutate(group = gsub("3\\.", "", group)) %>%
+  mutate(group = gsub("4\\.", "", group)) %>%
+  mutate(group = factor(group, levels = group))
+
+percent.change <- percent.change %>%
+  mutate(comparison = "percent.change") %>%
+  mutate(group = gsub("1\\.", "", group)) %>%
+  mutate(group = gsub("2\\.", "", group)) %>%
+  mutate(group = gsub("3\\.", "", group)) %>%
+  mutate(group = gsub("4\\.", "", group)) %>%
+  mutate(group = factor(group, levels = group))
+
 ##
 ## SHINY
 ##
 
 ui <- fluidPage(
   
-  titlePanel("Urban Analysis of BPC Social Security Reforms"),
+  titlePanel("Urban Institute Analysis of BPC Social Security Reforms"),
   
   fluidRow(
     
@@ -85,7 +93,8 @@ ui <- fluidPage(
                     "Homeownership" = "Homeownership",
                     "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
                     "Per Capita Financial Assets" = "Per Capita Financial Assets ($2015)",
-                    "Per Capita Financial + Retirement Account Assets" = "Per Capita Financial + Retirement Account Assets ($2015)"))))
+                    "Per Capita Financial + Retirement Account Assets" = 
+                     "Per Capita Financial + Retirement Account Assets ($2015)"))))
 
 )
 
@@ -93,27 +102,53 @@ server <- function(input, output){
   
   output$chart <- renderPlot({
 
-    
     title <- if (input$measure == "per capita annuity") {
-                 "Per Capita Annuity"} 
+                 "Per Capita Annuity Income of People Age 62 and Older"} 
              else if (input$measure == "per capita cash") {
-               "Per Capita Cash"}
+               "Per Capita Cash Income of People Age 62 and Older"}
              else if (input$measure == "net per capita annuity") {
-               "Net Per Capita Annuity"
+               "Net Per Capita Annuity Income of People Age 62 and Older"
                }
              else if (input$measure == "net per capita cash") {
-             "Net Per Capita Cash"}
+             "Net Per Capita Cash Income of People Age 62 and Older"}
     
-    mean.income %>%
-      filter(comparison == input$comparison) %>%
-      filter(measure == input$measure) %>%
-      filter(category == input$demographic) %>%
-      ggplot(aes(year, value, color = group)) +
-      geom_line() +
-      ggtitle(title) +
-      xlab("Year") +
-      geom_line(size = 1)
-  
+    if (input$comparison == "mean.income") {
+      mean.income %>%
+        filter(measure == input$measure) %>%
+        filter(category == input$demographic) %>%
+        ggplot(aes(year, value, color = group)) +
+        geom_line() +
+        ggtitle(title) +
+        xlab("Year") +
+        ylab("Mean Annual Income") +
+        geom_line(size = 1) +
+        scale_y_continuous(labels = scales::dollar)
+      } else if (input$comparison == "dollar.change") {
+      dollar.change %>%
+        filter(measure == input$measure) %>%
+        filter(category == input$demographic) %>%
+        ggplot(aes(year, value, color = group)) +
+        geom_line() +
+        ggtitle(title) +
+        xlab("Year") +
+        ylab("Percent Change in Mean Annual Income") +
+        geom_line(size = 1) +
+        scale_y_continuous(labels = scales::dollar) +
+        expand_limits(y = 0)
+    } else if (input$comparison == "percent.change") {
+      percent.change %>%
+        filter(measure == input$measure) %>%
+        filter(category == input$demographic) %>%
+        ggplot(aes(year, value, color = group)) +
+        geom_line() +
+        ggtitle(title) +
+        xlab("Year") +
+        ylab("Change in Mean Annual Income") +
+        geom_line(size = 1) +
+        scale_y_continuous(labels = scales::percent) +
+        expand_limits(y = 0)
+    }
+    
   })
   
   }

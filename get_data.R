@@ -109,8 +109,7 @@ mean.income <- bind_rows(per.capita.annuity, per.capita.cash, net.per.capita.ann
 rm(per.capita.annuity, per.capita.cash, net.per.capita.annuity, net.per.capita.cash)
 
 mean.income <- gather(mean.income, key = year , value,-category, -group, -category, -measure) %>%
-               mutate(year = as.numeric(gsub("year", "", year))) %>%
-               mutate(value = round(value))
+               mutate(year = as.numeric(gsub("year", "", year)))
 
 ##
 ## DOLLAR CHANGE
@@ -201,8 +200,7 @@ dollar.change <- bind_rows(per.capita.annuity, per.capita.cash, net.per.capita.a
 rm(per.capita.annuity, per.capita.cash, net.per.capita.annuity, net.per.capita.cash)
 
 dollar.change <- gather(dollar.change, key = year , value,-category, -group, -category, -measure) %>%
-  mutate(year = as.numeric(gsub("year", "", year))) %>%
-  mutate(value = round(value))
+  mutate(year = as.numeric(gsub("year", "", year)))
 
 ##
 ## PERCENT CHANGE
@@ -293,9 +291,7 @@ percent.change <- bind_rows(per.capita.annuity, per.capita.cash, net.per.capita.
 rm(per.capita.annuity, per.capita.cash, net.per.capita.annuity, net.per.capita.cash)
 
 percent.change <- gather(percent.change, key = year , value,-category, -group, -category, -measure) %>%
-  mutate(year = as.numeric(gsub("year", "", year))) %>%
-  mutate(value = (value * 100)) %>%
-  mutate(value = round(value, 1))
+  mutate(year = as.numeric(gsub("year", "", year)))
 
 # If data directory does not exist, create data directory
 if (!file.exists("data")) {

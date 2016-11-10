@@ -59,8 +59,6 @@ percent.change <- percent.change %>%
 
 ui <- fluidPage(
   
-  titlePanel("Urban Institute Analysis of BPC Social Security Reforms"),
-  
   fluidRow(
     
     column(6,
@@ -118,7 +116,6 @@ ui <- fluidPage(
                    "Per Capita Financial Assets" = "Per Capita Financial Assets ($2015)",
                    "Per Capita Financial + Retirement Account Assets" = 
                    "Per Capita Financial + Retirement Account Assets ($2015)"))))
-
 )
 
 server <- function(input, output){
@@ -126,14 +123,14 @@ server <- function(input, output){
   output$chart <- renderPlot({
 
     title <- if (input$measure == "per capita annuity") {
-                 "Per Capita Annuity Income of People Age 62 and Older"} 
+                 "Gross Per Capita Annuity Income of People Ages 62 and Older"} 
              else if (input$measure == "per capita cash") {
-               "Per Capita Cash Income of People Age 62 and Older"}
+               "Gross Per Capita Cash Income of People Ages 62 and Older"}
              else if (input$measure == "net per capita annuity") {
-               "Net Per Capita Annuity Income of People Age 62 and Older"
+               "Net Per Capita Annuity Income of People Ages 62 and Older"
                }
              else if (input$measure == "net per capita cash") {
-             "Net Per Capita Cash Income of People Age 62 and Older"}
+             "Net Per Capita Cash Income of People Ages 62 and Older"}
     
     if (input$comparison == "mean.income") {
       mean.income %>%
@@ -143,7 +140,7 @@ server <- function(input, output){
         geom_line() +
         ggtitle(title) +
         xlab("Year") +
-        ylab("Mean Annual Income") +
+        ylab("Mean Annual Income (2015 dollars)") +
         geom_line(size = 1) +
         scale_y_continuous(labels = scales::dollar)
       } else if (input$comparison == "dollar.change") {
@@ -154,7 +151,7 @@ server <- function(input, output){
         geom_line() +
         ggtitle(title) +
         xlab("Year") +
-        ylab("Change in Mean Annual Income") +
+        ylab("Change Compared to Scheduled Law (2015 dollars)") +
         geom_line(size = 1) +
         scale_y_continuous(labels = scales::dollar) +
         expand_limits(y = 0)
@@ -166,7 +163,7 @@ server <- function(input, output){
         geom_line() +
         ggtitle(title) +
         xlab("Year") +
-        ylab("Percent Change in Mean Annual Income") +
+        ylab("Percent Change Compared to Scheduled Law") +
         geom_line(size = 1) +
         scale_y_continuous(labels = scales::percent) +
         expand_limits(y = 0)

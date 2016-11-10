@@ -133,7 +133,7 @@ server <- function(input, output){
         geom_line() +
         ggtitle(title) +
         xlab("Year") +
-        ylab("Percent Change in Mean Annual Income") +
+        ylab("Change in Mean Annual Income") +
         geom_line(size = 1) +
         scale_y_continuous(labels = scales::dollar) +
         expand_limits(y = 0)
@@ -145,7 +145,7 @@ server <- function(input, output){
         geom_line() +
         ggtitle(title) +
         xlab("Year") +
-        ylab("Change in Mean Annual Income") +
+        ylab("Percent Change in Mean Annual Income") +
         geom_line(size = 1) +
         scale_y_continuous(labels = scales::percent) +
         expand_limits(y = 0)

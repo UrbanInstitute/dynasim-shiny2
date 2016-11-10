@@ -68,6 +68,27 @@ ui <- fluidPage(
     
   fluidRow(
     column(4,
+           
+      selectInput(inputId = "option",
+        label = "Reform Option",
+        choices = c("BPC Package" = "bpc",
+                    "Mini.PIA" = "mini.pia", 
+                    "Tax SSB" = "tax.ssb",
+                    "Cap Spouse" = "cap.spouse",
+                    "SurvivorJS75" = "survivor.js75",
+                    "90% Tax max" = "taxmax90",
+                    "90% Tax max and 13.4 FICA" = "taxmax90.fica13.4",
+                    "13.4 FICA" = "fica13.4",
+                    "Chained-CPI COLA" = "cola.chaincpi",
+                    "Reduce COLA" = "reduce.cola",
+                    "Increase FRA" = "increase.fra",
+                    "Increase ERA & FRA" = "increase.fra.era",
+                    "Tax Max to $150,000" = "taxmax150000",
+                    "Tax Max to $180,000" = "taxmax180000",
+                    "Eliminate the Tax Max" = "notaxmax",
+                    "14% FICA" = "fica14",
+                    "15% FICA" = "fica15")),
+           
       selectInput(inputId = "comparison",
         label = "Comparison",
         choices = c("Level" = "mean.income",
@@ -76,27 +97,27 @@ ui <- fluidPage(
     
      selectInput(inputId = "measure",
        label = "Measure",
-       choices = c("Per Capita Annuity Income" = "per capita annuity",
-                    "Per Capita Cash Income" = "per capita cash",
+       choices = c("Gross Per Capita Annuity Income" = "per capita annuity",
+                   "Gross Per Capita Cash Income" = "per capita cash",
                    "Net Per Capita Annuity Income" = "net per capita annuity",
-                    "Net Per Capita Cash Income" = "net per capita cash")),
+                   "Net Per Capita Cash Income" = "net per capita cash")),
     
      selectInput(inputId = "demographic",
        label = "Demographic",
        choices = c("All" = "All",
-                    "Sex" = "Sex",
-                    "Education" = "Education",
-                    "Race Ethnicity" = "Race Ethnicity",
-                    "Marital Status" = "Marital Status",
-                    "Shared Work Years" = "Shared Work Years",
-                    "Own Work Years" = "Own Work Years",
-                    "Shared Income Quintile" = "Shared Income Quintile",
-                    "Shared Lifetime Earnings" = "Shared Lifetime Earnings",
-                    "Homeownership" = "Homeownership",
-                    "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
-                    "Per Capita Financial Assets" = "Per Capita Financial Assets ($2015)",
-                    "Per Capita Financial + Retirement Account Assets" = 
-                     "Per Capita Financial + Retirement Account Assets ($2015)"))))
+                   "Sex" = "Sex",
+                   "Education" = "Education",
+                   "Race Ethnicity" = "Race Ethnicity",
+                   "Marital Status" = "Marital Status",
+                   "Shared Work Years" = "Shared Work Years",
+                   "Own Work Years" = "Own Work Years",
+                   "Shared Income Quintile" = "Shared Income Quintile",
+                   "Shared Lifetime Earnings Quintile" = "Shared Lifetime Earnings Quintile",
+                   "Homeownership" = "Homeownership",
+                   "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
+                   "Per Capita Financial Assets" = "Per Capita Financial Assets ($2015)",
+                   "Per Capita Financial + Retirement Account Assets" = 
+                   "Per Capita Financial + Retirement Account Assets ($2015)"))))
 
 )
 

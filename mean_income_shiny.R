@@ -7,28 +7,21 @@ library(RColorBrewer)
 
 options(scipen = 999)
 
-#Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
-
 # Source file for Windows
+#Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/temp-windows/urban_ggplot_theme.R')
-#source('urban_theme_windows.R')
-
+#source('urban_institute_themes/urban_theme_windows.R')
 
 # Source file for Mac
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/master/urban_ggplot_theme.R')
-source('urban_theme_mac.R')
+source('urban_institute_themes/urban_theme_mac.R')
 
-# Load data
-#mean.income <- tbl_df(read.csv("data\\mean.income.csv", header = TRUE, stringsAsFactors = FALSE))
-#dollar.change <- tbl_df(read.csv("data\\dollar.change.csv", header = TRUE, stringsAsFactors = FALSE))
-#percent.change <- tbl_df(read.csv("data\\percent.change.csv", header = TRUE, stringsAsFactors = FALSE))
+# Load Data
+mean.income <- read_csv("data/mean.income.csv")
+dollar.change <- read_csv("data/dollar.change.csv")
+percent.change <- read_csv("data/percent.change.csv")
 
-mean.income <- tbl_df(read.csv("data/mean.income.csv", header = TRUE, stringsAsFactors = FALSE))
-dollar.change <- tbl_df(read.csv("data/dollar.change.csv", header = TRUE, stringsAsFactors = FALSE))
-percent.change <- tbl_df(read.csv("data/percent.change.csv", header = TRUE, stringsAsFactors = FALSE))
-
-# 
-
+# Remove numbers in certain factor levels and order all levels
 mean.income <- mean.income %>%
   mutate(comparison = "mean.income") %>%
   mutate(group = gsub("1\\.", "", group)) %>%
@@ -123,22 +116,50 @@ server <- function(input, output){
   output$chart <- renderPlot({
 
     title <- if (input$measure == "per capita annuity") {
-                 "Gross Per Capita Annuity Income of People Ages 62 and Older"} 
+                 "Gross Per Capita Annuity Income"} 
              else if (input$measure == "per capita cash") {
-               "Gross Per Capita Cash Income of People Ages 62 and Older"}
+               "Gross Per Capita Cash Income"}
              else if (input$measure == "net per capita annuity") {
-               "Net Per Capita Annuity Income of People Ages 62 and Older"
-               }
+               "Net Per Capita Annuity Income"}
              else if (input$measure == "net per capita cash") {
-             "Net Per Capita Cash Income of People Ages 62 and Older"}
+             "Net Per Capita Cash Income"}
     
+    subtitle <- if (input$demographic == "All") {
+                    "Everyone Ages 62 and Older"} 
+                else if (input$demographic == "Sex") {
+                  "Ages 62 and Older by Sex"}
+                else if (input$demographic == "Education") {
+                  "Ages 62 and Older by Education"}
+                else if (input$demographic == "Race Ethnicity") {
+                  "Ages 62 and Older by Race & Ethnicity"}
+                else if (input$demographic == "Marital Status") {
+                  "Ages 62 and Older by Marital Status"}
+                else if (input$demographic == "Shared Work Years") {
+                  "Ages 62 and Older by Shared Work Years"}
+                else if (input$demographic == "Own Work Years") {
+                  "Ages 62 and Older by Own Work Years"}
+                else if (input$demographic == "Shared Income Quintile") {
+                  "Ages 62 and Older by Shared Income Quintile"}
+                else if (input$demographic == "Shared Lifetime Earnings Quintile") {
+                  "Ages 62 and Older by Shared Lifetime Earnings Quintile"}   
+                else if (input$demographic == "Homeownership") {
+                  "Ages 62 and Older by Homeownership"}
+                else if (input$demographic == "Family Income Relative to Official Poverty") {
+                  "Ages 62 and Older by Family Income Relative to Official Poverty"}    
+                else if (input$demographic == "Per Capita Financial Assets ($2015)") {
+                  "Ages 62 and Older by Per Capita Financial Assets ($2015)"}
+                else if (input$demographic == "Per Capita Financial + Retirement Account Assets ($2015)") {
+                  "Ages 62 and Older by Per Capita Financial + Retirement Account Assets  ($2015)"}    
+
     if (input$comparison == "mean.income") {
       mean.income %>%
         filter(measure == input$measure) %>%
         filter(category == input$demographic) %>%
         ggplot(aes(year, value, color = group)) +
         geom_line() +
-        ggtitle(title) +
+        labs(title = title,
+             subtitle = subtitle,
+             caption = "DYNASIM4") +
         xlab("Year") +
         ylab("Mean Annual Income (2015 dollars)") +
         geom_line(size = 1) +
@@ -149,7 +170,9 @@ server <- function(input, output){
         filter(category == input$demographic) %>%
         ggplot(aes(year, value, color = group)) +
         geom_line() +
-        ggtitle(title) +
+        labs(title = title,
+             subtitle = subtitle,
+             caption = "DYNASIM4") +
         xlab("Year") +
         ylab("Change Compared to Scheduled Law (2015 dollars)") +
         geom_line(size = 1) +
@@ -161,17 +184,15 @@ server <- function(input, output){
         filter(category == input$demographic) %>%
         ggplot(aes(year, value, color = group)) +
         geom_line() +
-        ggtitle(title) +
+        labs(title = title,
+             subtitle = subtitle,
+             caption = "DYNASIM4") +
         xlab("Year") +
         ylab("Percent Change Compared to Scheduled Law") +
         geom_line(size = 1) +
         scale_y_continuous(labels = scales::percent) +
         expand_limits(y = 0)
     }
-    
   })
-  
   }
 shinyApp(ui = ui, server = server)
-
-

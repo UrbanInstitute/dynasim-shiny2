@@ -4,6 +4,7 @@ library(tidyverse)
 library(extrafont)
 library(grid)
 library(RColorBrewer)
+library(scales)
 
 options(scipen = 999)
 
@@ -201,7 +202,15 @@ server <- function(input, output){
   # Chart
   output$hover_info <- renderUI({
     hover <- input$plot_hover
-    point <- nearPoints(mean.income, hover, threshold = 5, maxpoints = 1, addDist = TRUE)
+    
+    if (input$comparison == "mean.income") {
+      point <- nearPoints(mean.income, hover, threshold = 5, maxpoints = 1, addDist = TRUE)
+    } else if (input$comparison == "dollar.change") {
+      point <- nearPoints(dollar.change, hover, threshold = 5, maxpoints = 1, addDist = TRUE)
+    } else if (input$comparison == "percent.change") {
+      point <- nearPoints(percent.change, hover, threshold = 5, maxpoints = 1, addDist = TRUE)
+    }
+    
     if (nrow(point) == 0) return(NULL)
     
     # calculate point position inside the image as percent of total dimensions
@@ -223,7 +232,13 @@ server <- function(input, output){
     # actual tooltip created as wellPanel
     wellPanel(
       style = style,
-      p(HTML(paste0("<b> Amount: </b>", paste0("$", round(point$value)), "<br/>")))
+      p(HTML(paste0("<b> Amount: </b>", if (input$comparison == "mean.income") {
+        dollar_format()(point$value)
+      } else if (input$comparison == "dollar.change") {
+        dollar_format()(point$value)
+      } else if (input$comparison == "percent.change") {
+        percent_format()(point$value)
+      }, "<br/>")))
     )
   })  
 }

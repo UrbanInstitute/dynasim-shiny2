@@ -9,13 +9,13 @@ library(scales)
 options(scipen = 999)
 
 # Source file for Windows
-Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
+#Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/temp-windows/urban_ggplot_theme.R')
-source('urban_institute_themes/urban_theme_windows.R')
+#source('urban_institute_themes/urban_theme_windows.R')
 
 # Source file for Mac
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/master/urban_ggplot_theme.R')
-#source('urban_institute_themes/urban_theme_mac.R')
+source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
 mean.income <- read_csv("data/mean.income.csv")
@@ -29,7 +29,7 @@ mean.income <- mean.income %>%
   mutate(group = gsub("2\\.", "", group)) %>%
   mutate(group = gsub("3\\.", "", group)) %>%
   mutate(group = gsub("4\\.", "", group)) %>%
-  mutate(group = factor(group, levels = group))
+  mutate(group = factor(group, levels = unique(group)))
   
 dollar.change <- dollar.change %>%
   mutate(comparison = "dollar.change") %>%
@@ -37,7 +37,7 @@ dollar.change <- dollar.change %>%
   mutate(group = gsub("2\\.", "", group)) %>%
   mutate(group = gsub("3\\.", "", group)) %>%
   mutate(group = gsub("4\\.", "", group)) %>%
-  mutate(group = factor(group, levels = group))
+  mutate(group = factor(group, levels = unique(group)))
 
 percent.change <- percent.change %>%
   mutate(comparison = "percent.change") %>%
@@ -45,13 +45,13 @@ percent.change <- percent.change %>%
   mutate(group = gsub("2\\.", "", group)) %>%
   mutate(group = gsub("3\\.", "", group)) %>%
   mutate(group = gsub("4\\.", "", group)) %>%
-  mutate(group = factor(group, levels = group))
+  mutate(group = factor(group, levels = unique(group)))
 
 ##
 ## SHINY
 ##
 
-ui <- fluidPage(
+ui <- fluidPage(theme = "shiny.css",
   
   fluidRow(
     

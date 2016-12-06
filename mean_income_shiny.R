@@ -82,21 +82,26 @@ ui <- fluidPage(theme = "shiny.css",
                     "Tax Max to $180,000" = "taxmax180000",
                     "Eliminate the Tax Max" = "notaxmax",
                     "14% FICA" = "fica14",
-                    "15% FICA" = "fica15")),
+                    "15% FICA" = "fica15"))),
            
+    column(4,
       selectInput(inputId = "comparison",
         label = "Comparison",
         choices = c("Level" = "mean.income",
                     "Percent Change" = "percent.change",
-                    "Dollar Change" = "dollar.change")),
+                    "Dollar Change" = "dollar.change")))),
     
+      fluidRow(
+        column(4,
+      
      selectInput(inputId = "measure",
        label = "Measure",
        choices = c("Gross Per Capita Annuity Income" = "per capita annuity",
                    "Gross Per Capita Cash Income" = "per capita cash",
                    "Net Per Capita Annuity Income" = "net per capita annuity",
-                   "Net Per Capita Cash Income" = "net per capita cash")),
+                   "Net Per Capita Cash Income" = "net per capita cash"))),
     
+     column(4,
      selectInput(inputId = "demographic",
        label = "Demographic",
        choices = c("All" = "All",
@@ -183,7 +188,8 @@ server <- function(input, output){
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
         scale_y_continuous(labels = scales::dollar) +
-        expand_limits(y = 0)
+        expand_limits(y = 0) +
+        geom_hline(size = 0.5, yintercept = 0)
     } else if (input$comparison == "percent.change") {
       percent.change %>%
         filter(measure == input$measure) %>%
@@ -198,7 +204,8 @@ server <- function(input, output){
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
         scale_y_continuous(labels = scales::percent) +
-        expand_limits(y = 0)
+        expand_limits(y = 0) +
+        geom_hline(size = 0.5, yintercept = 0)
     }
   })
   
@@ -207,11 +214,11 @@ server <- function(input, output){
     hover <- input$plot_hover
     
     if (input$comparison == "mean.income") {
-      point <- nearPoints(mean.income, hover, threshold = 5, maxpoints = 1, addDist = TRUE)
+      point <- nearPoints(mean.income, hover, threshold = 20, maxpoints = 1)
     } else if (input$comparison == "dollar.change") {
-      point <- nearPoints(dollar.change, hover, threshold = 5, maxpoints = 1, addDist = TRUE)
+      point <- nearPoints(dollar.change, hover, threshold = 20, maxpoints = 1)
     } else if (input$comparison == "percent.change") {
-      point <- nearPoints(percent.change, hover, threshold = 5, maxpoints = 1, addDist = TRUE)
+      point <- nearPoints(percent.change, hover, threshold = 20, maxpoints = 1)
     }
     
     if (nrow(point) == 0) return(NULL)
@@ -229,7 +236,8 @@ server <- function(input, output){
     # create style property fot tooltip
     # background color is set so tooltip is a bit transparent
     # z-index is set so we are sure are tooltip will be on top
-    style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
+    style <- paste0("position:absolute; z-index:100; 
+                    background-color: rgba(245, 245, 245, 0.85); ",
                     "left:", left_px + 2, "px; top:", top_px + 2, "px;")
   
     # actual tooltip created as wellPanel
@@ -240,7 +248,6 @@ server <- function(input, output){
         # TODO(awunderground): set tooltip sensitivity to zero
         paste0(
           "<b> Year: </b>", point$year, "<br/>",
-          "<b> Group: </b>", point$group, "<br/>",
           "<b> Amount: </b>", 
         if (input$comparison == "mean.income") {
         dollar_format()(point$value)

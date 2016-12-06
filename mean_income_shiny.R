@@ -237,7 +237,11 @@ server <- function(input, output){
       style = style,
       p(
         HTML(
-        paste0("<b> Amount: </b>", 
+        # TODO(awunderground): set tooltip sensitivity to zero
+        paste0(
+          "<b> Year: </b>", point$year, "<br/>",
+          "<b> Group: </b>", point$group, "<br/>",
+          "<b> Amount: </b>", 
         if (input$comparison == "mean.income") {
         dollar_format()(point$value)
       } else if (input$comparison == "dollar.change") {

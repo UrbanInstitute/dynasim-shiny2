@@ -167,6 +167,7 @@ server <- function(input, output){
         xlab("Year") +
         ylab("Mean Annual Income (2015 dollars)") +
         geom_line(size = 1) +
+        scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
         scale_y_continuous(labels = scales::dollar)
       } else if (input$comparison == "dollar.change") {
       dollar.change %>%
@@ -180,6 +181,7 @@ server <- function(input, output){
         xlab("Year") +
         ylab("Change Compared to Scheduled Law (2015 dollars)") +
         geom_line(size = 1) +
+        scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
         scale_y_continuous(labels = scales::dollar) +
         expand_limits(y = 0)
     } else if (input$comparison == "percent.change") {
@@ -194,6 +196,7 @@ server <- function(input, output){
         xlab("Year") +
         ylab("Percent Change Compared to Scheduled Law") +
         geom_line(size = 1) +
+        scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
         scale_y_continuous(labels = scales::percent) +
         expand_limits(y = 0)
     }
@@ -228,17 +231,22 @@ server <- function(input, output){
     # z-index is set so we are sure are tooltip will be on top
     style <- paste0("position:absolute; z-index:100; background-color: rgba(245, 245, 245, 0.85); ",
                     "left:", left_px + 2, "px; top:", top_px + 2, "px;")
-    
+  
     # actual tooltip created as wellPanel
     wellPanel(
       style = style,
-      p(HTML(paste0("<b> Amount: </b>", if (input$comparison == "mean.income") {
+      p(
+        HTML(
+        paste0("<b> Amount: </b>", 
+        if (input$comparison == "mean.income") {
         dollar_format()(point$value)
       } else if (input$comparison == "dollar.change") {
         dollar_format()(point$value)
       } else if (input$comparison == "percent.change") {
         percent_format()(point$value)
-      }, "<br/>")))
+      }, "<br/>")
+        )
+      )
     )
   })  
 }

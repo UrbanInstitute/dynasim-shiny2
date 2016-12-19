@@ -73,7 +73,6 @@ ui <- fluidPage(theme = "shiny.css",
                     "SurvivorJS75" = "survivor.js75",
                     "90% Tax max" = "taxmax90",
                     "90% Tax max and 13.4 FICA" = "taxmax90.fica13.4",
-                    "13.4 FICA" = "fica13.4",
                     "Chained-CPI COLA" = "cola.chaincpi",
                     "Reduce COLA" = "reduce.cola",
                     "Increase FRA" = "increase.fra",
@@ -81,6 +80,7 @@ ui <- fluidPage(theme = "shiny.css",
                     "Tax Max to $150,000" = "taxmax150000",
                     "Tax Max to $180,000" = "taxmax180000",
                     "Eliminate the Tax Max" = "notaxmax",
+                    "13.4% FICA" = "fica13.4",
                     "14% FICA" = "fica14",
                     "15% FICA" = "fica15"))),
            
@@ -125,40 +125,40 @@ server <- function(input, output){
   output$chart <- renderPlot({
 
     title <- if (input$measure == "per capita annuity") {
-                 "Gross Per Capita Annuity Income"} 
+                 "Mean Gross Per Capita Annuity Income"} 
              else if (input$measure == "per capita cash") {
-               "Gross Per Capita Cash Income"}
+               "Mean Gross Per Capita Cash Income"}
              else if (input$measure == "net per capita annuity") {
-               "Net Per Capita Annuity Income"}
+               "Mean Net Per Capita Annuity Income"}
              else if (input$measure == "net per capita cash") {
-             "Net Per Capita Cash Income"}
+               "Mean Net Per Capita Cash Income"}
     
     subtitle <- if (input$demographic == "All") {
-                    "Everyone Ages 62 and Older"} 
+                    "Everyone ages 62+, 2015 dollars"} 
                 else if (input$demographic == "Sex") {
-                  "Ages 62 and Older by Sex"}
+                  "Ages 62+ by sex, 2015 dollars"}
                 else if (input$demographic == "Education") {
-                  "Ages 62 and Older by Education"}
+                  "Ages 62 and older by education, 2015 dollars"}
                 else if (input$demographic == "Race Ethnicity") {
-                  "Ages 62 and Older by Race & Ethnicity"}
+                  "Ages 62 and older by race & ethnicity, 2015 dollars"}
                 else if (input$demographic == "Marital Status") {
-                  "Ages 62 and Older by Marital Status"}
+                  "Ages 62 and older by marital status, 2015 dollars"}
                 else if (input$demographic == "Shared Work Years") {
-                  "Ages 62 and Older by Shared Work Years"}
+                  "Ages 62 and older by shared work years, 2015 dollars"}
                 else if (input$demographic == "Own Work Years") {
-                  "Ages 62 and Older by Own Work Years"}
+                  "Ages 62 and older by own work years, 2015 dollars"}
                 else if (input$demographic == "Shared Income Quintile") {
-                  "Ages 62 and Older by Shared Income Quintile"}
+                  "Ages 62 and older by shared income quintile, 2015 dollars"}
                 else if (input$demographic == "Shared Lifetime Earnings Quintile") {
-                  "Ages 62 and Older by Shared Lifetime Earnings Quintile"}   
+                  "Ages 62 and older by shared lifetime earnings quintile, 2015 dollars"}   
                 else if (input$demographic == "Homeownership") {
-                  "Ages 62 and Older by Homeownership"}
+                  "Ages 62 and older by homeownership"}
                 else if (input$demographic == "Family Income Relative to Official Poverty") {
-                  "Ages 62 and Older by Family Income Relative to Official Poverty"}    
+                  "Ages 62 and older by family income relative to official poverty, 2015 dollars"}    
                 else if (input$demographic == "Per Capita Financial Assets ($2015)") {
-                  "Ages 62 and Older by Per Capita Financial Assets ($2015)"}
+                  "Ages 62 and older by per capita financial assets, 2015 dollars"}
                 else if (input$demographic == "Per Capita Financial + Retirement Account Assets ($2015)") {
-                  "Ages 62 and Older by Per Capita Financial + Retirement Account Assets  ($2015)"}    
+                  "Ages 62 and older by per capita financial + retirement account assets, 2015 dollars"}    
 
     if (input$comparison == "mean.income") {
       mean.income %>%
@@ -170,19 +170,24 @@ server <- function(input, output){
              subtitle = subtitle,
              caption = "DYNASIM4") +
         xlab("Year") +
-        ylab("Mean Annual Income (2015 dollars)") +
+        ylab(NULL) +
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-        scale_y_continuous(labels = scales::dollar) +
+        scale_y_continuous(expand = c(0.3, 0), labels = scales::dollar) +
         theme(axis.ticks.length = unit(0, "points"), 
               axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
+                                                            unit = "pt",
+                                                            valid.unit = 8L,
+                                                            class = c("margin", "unit"))),
+              axis.text.y = element_text(margin = structure(c(0, 2, 0, 0),
                                                             unit = "pt",
                                                             valid.unit = 8L,
                                                             class = c("margin", "unit"))),
               plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
                                                               unit = "pt",
                                                               valid.unit = 8L,
-                                                              class = c("margin", "unit"))))
+                                                              class = c("margin", "unit"))),
+              legend.box.margin = margin(6, 0, 0, 0, "points"))
       
       } else if (input$comparison == "dollar.change") {
       dollar.change %>%
@@ -194,10 +199,10 @@ server <- function(input, output){
              subtitle = subtitle,
              caption = "DYNASIM4") +
         xlab("Year") +
-        ylab("Change Compared to Scheduled Law (2015 dollars)") +
+        ylab(NULL) +
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-        scale_y_continuous(labels = scales::dollar) +
+        scale_y_continuous(expand = c(0.3, 0), labels = scales::dollar) +
         expand_limits(y = 0) +
         geom_hline(size = 0.5, yintercept = 0) +
         theme(axis.ticks.length = unit(0, "points"), 
@@ -205,10 +210,15 @@ server <- function(input, output){
                                                             unit = "pt",
                                                             valid.unit = 8L,
                                                             class = c("margin", "unit"))),
+              axis.text.y = element_text(margin = structure(c(0, 2, 0, 0),
+                                                            unit = "pt",
+                                                            valid.unit = 8L,
+                                                            class = c("margin", "unit"))),
               plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
                                                               unit = "pt",
                                                               valid.unit = 8L,
-                                                              class = c("margin", "unit"))))
+                                                              class = c("margin", "unit"))),
+              legend.box.margin = margin(6, 0, 0, 0, "points"))
         
     } else if (input$comparison == "percent.change") {
       percent.change %>%
@@ -220,10 +230,10 @@ server <- function(input, output){
              subtitle = subtitle,
              caption = "DYNASIM4") +
         xlab("Year") +
-        ylab("Percent Change Compared to Scheduled Law") +
+        ylab(NULL) +
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-        scale_y_continuous(labels = scales::percent) +
+        scale_y_continuous(expand = c(0.3, 0), labels = scales::percent) +
         expand_limits(y = 0) +
         geom_hline(size = 0.5, yintercept = 0) +
         theme(axis.ticks.length = unit(0, "points"), 
@@ -231,10 +241,15 @@ server <- function(input, output){
                                                             unit = "pt",
                                                             valid.unit = 8L,
                                                             class = c("margin", "unit"))),
+              axis.text.y = element_text(margin = structure(c(0, 2, 0, 0),
+                                                            unit = "pt",
+                                                            valid.unit = 8L,
+                                                            class = c("margin", "unit"))),
               plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
                                                               unit = "pt",
                                                               valid.unit = 8L,
-                                                              class = c("margin", "unit"))))
+                                                              class = c("margin", "unit"))),
+              legend.box.margin = margin(6, 0, 0, 0, "points"))
     }
   })
   

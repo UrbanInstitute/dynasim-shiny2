@@ -173,7 +173,17 @@ server <- function(input, output){
         ylab("Mean Annual Income (2015 dollars)") +
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-        scale_y_continuous(labels = scales::dollar)
+        scale_y_continuous(labels = scales::dollar) +
+        theme(axis.ticks.length = unit(0, "points"), 
+              axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
+                                                            unit = "pt",
+                                                            valid.unit = 8L,
+                                                            class = c("margin", "unit"))),
+              plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
+                                                              unit = "pt",
+                                                              valid.unit = 8L,
+                                                              class = c("margin", "unit"))))
+      
       } else if (input$comparison == "dollar.change") {
       dollar.change %>%
         filter(measure == input$measure) %>%
@@ -189,7 +199,17 @@ server <- function(input, output){
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
         scale_y_continuous(labels = scales::dollar) +
         expand_limits(y = 0) +
-        geom_hline(size = 0.5, yintercept = 0)
+        geom_hline(size = 0.5, yintercept = 0) +
+        theme(axis.ticks.length = unit(0, "points"), 
+              axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
+                                                            unit = "pt",
+                                                            valid.unit = 8L,
+                                                            class = c("margin", "unit"))),
+              plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
+                                                              unit = "pt",
+                                                              valid.unit = 8L,
+                                                              class = c("margin", "unit"))))
+        
     } else if (input$comparison == "percent.change") {
       percent.change %>%
         filter(measure == input$measure) %>%
@@ -205,7 +225,16 @@ server <- function(input, output){
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
         scale_y_continuous(labels = scales::percent) +
         expand_limits(y = 0) +
-        geom_hline(size = 0.5, yintercept = 0)
+        geom_hline(size = 0.5, yintercept = 0) +
+        theme(axis.ticks.length = unit(0, "points"), 
+              axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
+                                                            unit = "pt",
+                                                            valid.unit = 8L,
+                                                            class = c("margin", "unit"))),
+              plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
+                                                              unit = "pt",
+                                                              valid.unit = 8L,
+                                                              class = c("margin", "unit"))))
     }
   })
   

@@ -18,35 +18,17 @@ source('urban_institute_themes/urban_theme_windows.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-mean.income <- read_csv("data/mean.income.csv")
-dollar.change <- read_csv("data/dollar.change.csv")
-percent.change <- read_csv("data/percent.change.csv")
+
+income <- read_csv("data/income.csv")
 
 # Remove numbers in certain factor levels and order all levels
-mean.income <- mean.income %>%
-  mutate(comparison = "mean.income") %>%
+income <- income %>%
   mutate(group = gsub("1\\.", "", group)) %>%
   mutate(group = gsub("2\\.", "", group)) %>%
   mutate(group = gsub("3\\.", "", group)) %>%
   mutate(group = gsub("4\\.", "", group)) %>%
   mutate(group = factor(group, levels = unique(group)))
   
-dollar.change <- dollar.change %>%
-  mutate(comparison = "dollar.change") %>%
-  mutate(group = gsub("1\\.", "", group)) %>%
-  mutate(group = gsub("2\\.", "", group)) %>%
-  mutate(group = gsub("3\\.", "", group)) %>%
-  mutate(group = gsub("4\\.", "", group)) %>%
-  mutate(group = factor(group, levels = unique(group)))
-
-percent.change <- percent.change %>%
-  mutate(comparison = "percent.change") %>%
-  mutate(group = gsub("1\\.", "", group)) %>%
-  mutate(group = gsub("2\\.", "", group)) %>%
-  mutate(group = gsub("3\\.", "", group)) %>%
-  mutate(group = gsub("4\\.", "", group)) %>%
-  mutate(group = factor(group, levels = unique(group)))
-
 ##
 ## SHINY
 ##
@@ -85,31 +67,33 @@ ui <- fluidPage(
     column(4,
            
       selectInput(inputId = "option",
-        label = "Reform Option",
-        choices = c("BPC Package" = "bpc",
-                    "Mini.PIA" = "mini.pia", 
-                    "Tax SSB" = "tax.ssb",
-                    "Cap Spouse" = "cap.spouse",
-                    "SurvivorJS75" = "survivor.js75",
+        label = "Social Security Reform",
+        choices = c("BPC Option" = "bpc.option",
+                    "Annual PIA" = "mini.pia", 
+                    "Increase Benefits Taxation" = "tax.ssb",
+                    "Cap Spouse Benefits" = "cap.spouse",
+                    "75% Survivor Benefit" = "survivor.js75",
                     "90% Tax max" = "taxmax90",
-                    "90% Tax max and 13.4 FICA" = "taxmax90.fica13.4",
-                    "Chained-CPI COLA" = "cola.chaincpi",
-                    "Reduce COLA" = "reduce.cola",
+                    "90% Tax Max and 13.4% Payroll Tax" = "taxmax90.fica13.4",
+                    "Full Chained-CPI COLA" = "cola.chaincpi",
+                    "Partial Chained-CPI COLA" = "reduce.cola",
                     "Increase FRA" = "increase.fra",
-                    "Increase ERA & FRA" = "increase.fra.era",
-                    "Tax Max to $150,000" = "taxmax150000",
-                    "Tax Max to $180,000" = "taxmax180000",
+                    "Increase EEA & FRA" = "increase.fra.era",
+                    "$150,000 Tax Max" = "taxmax150000",
+                    "$180,000 Tax Max" = "taxmax180000",
                     "Eliminate the Tax Max" = "notaxmax",
-                    "13.4% FICA" = "fica13.4",
-                    "14% FICA" = "fica14",
-                    "15% FICA" = "fica15"))),
+                    "13.4% Payroll Tax" = "fica13.4",
+                    "14.4% Payroll Tax" = "fica14",
+                    "15.4% Payroll Tax" = "fica15"))),
            
     column(4,
       selectInput(inputId = "comparison",
         label = "Comparison",
         choices = c("Level" = "mean.income",
-                    "Percent Change" = "percent.change",
-                    "Dollar Change" = "dollar.change")))),
+                    "Percent Change from Payable Law" = "payable.percent.change",
+                    "Percent Change from Scheduled Law" = "scheduled.percent.change",
+                    "Dollar Change from Payable Law" = "payable.dollar.change",
+                    "Dollar Change from Scheduled Law" = "scheduled.dollar.change")))),
     
       fluidRow(
         column(4,
@@ -137,7 +121,18 @@ ui <- fluidPage(
                    "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
                    "Per Capita Financial Assets" = "Per Capita Financial Assets ($2015)",
                    "Per Capita Financial + Retirement Account Assets" = 
-                   "Per Capita Financial + Retirement Account Assets ($2015)"))))
+                   "Per Capita Financial + Retirement Account Assets ($2015)")))),
+  
+  fluidRow(
+    
+    column(8,
+           
+           # Explanation of Social Security Reform
+           
+           htmlOutput("text1"))
+    
+  )
+  
 )
 
 server <- function(input, output){
@@ -180,8 +175,11 @@ server <- function(input, output){
                 else if (input$demographic == "Per Capita Financial + Retirement Account Assets ($2015)") {
                   "Ages 62 and older by per capita financial + retirement account assets, 2015 dollars"}    
 
-    if (input$comparison == "mean.income") {
-      mean.income %>%
+    
+    graphr <- function(scale, origin, line.placement, line.color){
+  
+      income %>%
+        filter(chart == input$comparison) %>%
         filter(measure == input$measure) %>%
         filter(category == input$demographic) %>%
         ggplot(aes(year, value, color = group)) +
@@ -193,69 +191,9 @@ server <- function(input, output){
         ylab(NULL) +
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-        scale_y_continuous(expand = c(0.3, 0), labels = scales::dollar) +
-        theme(axis.ticks.length = unit(0, "points"), 
-              axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
-                                                            unit = "pt",
-                                                            valid.unit = 8L,
-                                                            class = c("margin", "unit"))),
-              axis.text.y = element_text(margin = structure(c(0, 2, 0, 0),
-                                                            unit = "pt",
-                                                            valid.unit = 8L,
-                                                            class = c("margin", "unit"))),
-              plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
-                                                              unit = "pt",
-                                                              valid.unit = 8L,
-                                                              class = c("margin", "unit"))),
-              legend.box.margin = margin(6, 0, 0, 0, "points"))
-      
-      } else if (input$comparison == "dollar.change") {
-      dollar.change %>%
-        filter(measure == input$measure) %>%
-        filter(category == input$demographic) %>%
-        ggplot(aes(year, value, color = group)) +
-        geom_line() +
-        labs(title = title,
-             subtitle = subtitle,
-             caption = "DYNASIM4") +
-        xlab("Year") +
-        ylab(NULL) +
-        geom_line(size = 1) +
-        scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-        scale_y_continuous(expand = c(0.3, 0), labels = scales::dollar) +
-        expand_limits(y = 0) +
-        geom_hline(size = 0.5, yintercept = 0) +
-        theme(axis.ticks.length = unit(0, "points"), 
-              axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
-                                                            unit = "pt",
-                                                            valid.unit = 8L,
-                                                            class = c("margin", "unit"))),
-              axis.text.y = element_text(margin = structure(c(0, 2, 0, 0),
-                                                            unit = "pt",
-                                                            valid.unit = 8L,
-                                                            class = c("margin", "unit"))),
-              plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
-                                                              unit = "pt",
-                                                              valid.unit = 8L,
-                                                              class = c("margin", "unit"))),
-              legend.box.margin = margin(6, 0, 0, 0, "points"))
-        
-    } else if (input$comparison == "percent.change") {
-      percent.change %>%
-        filter(measure == input$measure) %>%
-        filter(category == input$demographic) %>%
-        ggplot(aes(year, value, color = group)) +
-        geom_line() +
-        labs(title = title,
-             subtitle = subtitle,
-             caption = "DYNASIM4") +
-        xlab("Year") +
-        ylab(NULL) +
-        geom_line(size = 1) +
-        scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-        scale_y_continuous(expand = c(0.3, 0), labels = scales::percent) +
-        expand_limits(y = 0) +
-        geom_hline(size = 0.5, yintercept = 0) +
+        scale_y_continuous(expand = c(0.3, 0), labels = scale) +
+        expand_limits(y = origin) +
+        geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
         theme(axis.ticks.length = unit(0, "points"), 
               axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
                                                             unit = "pt",
@@ -271,19 +209,65 @@ server <- function(input, output){
                                                               class = c("margin", "unit"))),
               legend.box.margin = margin(6, 0, 0, 0, "points"))
     }
+    
+    
+    if (input$comparison == "mean.income") {
+       graphr(scale = scales::dollar, origin = NULL, line.placement = 50000, line.color = NA) 
+       } 
+     else if (input$comparison == "scheduled.dollar.change") {
+       graphr(scale = scales::dollar, origin = 0, line.placement = 0, line.color = "black")
+       } 
+     else if (input$comparison == "scheduled.percent.change") {
+       graphr(scale = scales::percent, origin = 0, line.placement = 0, line.color = "black")
+       }
+
   })
   
-  # Chart
+  output$text1 <- renderText({
+    
+    if (input$option == "bpc.option") {"<p><h4>BPC Package</h4></p><p>Annual PIA, limit spousal benefits, replace the WEP and GPO with a proportional reduction in OASI benefits based on covered earnings, enhance survivor benefits, increase the progressivity of the benefit formula, increase Social Security tax max to $195,000, payroll tax to 13.4% and FRA to 69, switch to C-CPI-U for COLAs, end 'claim-and-suspend' games, create a basic minimum benefit for all individuals above the FRA eligible for Social Security, and tax 100 percent of Social Security benefits for beneficiaries with annual incomes above $250,000.</p>"}
+    
+    else if (input$option == "mini.pia") {"<p><h4>Annual PIA</h4></p><p>Eliminates the preferential treatment of workers with short careers by applying Social Security’s progressive benefit formula to the 40 highest years of wage-indexed earnings divided by 37 rather than applying the formula to total wage-indexed earnings received in the top 35 years. It also makes the benefit formula more progressive. This begins with OASI claimants who attain age 62 in 2022.</p>"}
+    
+    else if (input$option == "tax.ssb") {"<p><h4>Increase Benefits Taxation</h4></p><p>Increases the taxation of Social Security benefits.</p>"}
+    
+    else if (input$option == "cap.spouse") {"<p><h4>Cap Spouse Benefits</h4></p><p>Caps the spouse benefit at $1,121.68 in 2016 beginning for claimants who turn 60 in 2020 and beyond. Indexes the cap annually by chained CPI-U.</p>"}
+    
+    else if (input$option == "survivor.js75") {"<p><h4>75% Survivor Benefit</h4></p><p>Increases joint-and-survivors benefits to 75 percent of combined benefits for the couple, from 50 percent of combined benefits, for claimants who turn 62 in 2022 and beyond.</p>"}
+    
+    else if (input$option == "taxmax90") {"<p><h4>90% Tax Max</h4></p><p>Raises the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation to cover 90 percent of payroll. This increase is phased in over 10 years, beginning in 2016.</p>"}
+    
+    else if (input$option == "taxmax90.fica13.4") {"<p><h4>90% Tax Max and 13.4% Payroll Tax</h4></p><p>Raises the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation to cover 90 percent of payroll. This increase is phased in over 10 years, beginning in 2016. Also, increase the payroll tax to 13.4% over t10 years beginning in 2016.</p>"}
+    
+    else if (input$option == "cola.chaincpi") {"<p><h4>Full Chained-CPI COLA</h4></p><p>Ties beneficiaries' annual cost-of-living-adjustment (COLA) to the change in the chained consumer price index (C-CPI-U), which grows more slowly than the standard CPI-U now used to compute COLAs. (Only those NRA or older)</p>"}
+    
+    else if (input$option == "reduce.cola") {"<p><h4>Partial Chained-CPI COLA</h4></p><p>Ties beneficiaries' annual cost-of-living-adjustment (COLA) to the change in the chained consumer price index (C-CPI-U), which grows more slowly than the standard CPI-U now used to compute COLAs. (All beneficiaries including those under the NRA)</p>"}
+    
+    else if (input$option == "increase.fra") {"<p><h4>Increase FRA</h4></p><p>Indefinitely raises Social Security's FRA (now set at 67 beginning in 2022) and the age for receiving delayed retirement credits by one month every two years, beginning in 2024.</p>"}
+    
+    else if (input$option == "increase.fra.era") {"<p><h4>Increase EEA & FRA</h4></p><p>Raises Social Security's early eligibility age (EEA), which is now set at 62, and indefinitely raises Social Security's FRA (now set at 67 beginning in 2022) and the age for receiving delayed retirement credits by one month every two years, beginning in 2024.</p>"}
+    
+    else if (input$option == "taxmax150000") {"<p><h4>$150,000 Tax Max</h4></p><p>Increase the tax cap to $150,000 between 2016 and 2018 and then increase the tax cap by wage growth plus 0.5 percentage points thereafter.</p>"}
+    
+    else if (input$option == "taxmax180000") {"<p><h4>$180,000 Tax Max</h4></p><p>Increase the tax cap to $180,000 between 2016 and 2018 and then increase the tax cap by wage growth plus 0.5 percentage points thereafter.</p>"}
+    
+    else if (input$option == "notaxmax") {"<p><h4>Eliminate the Tax Max</h4></p><p>Eliminates the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation.</p>"}
+    
+    else if (input$option == "fica13.4") {"<p><h4>13.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 13.4% over 10 years beginning in 2016.</p>"}
+    
+    else if (input$option == "fica14") {"<p><h4>14.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 14.4% over 10 years beginning in 2016.</p>"}
+    
+    else if (input$option == "fica15") {"<p><h4>15.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 15.4% over 10 years beginning in 2016.</p>"}
+    
+    else {"<p><h4></h4></p><p><strong>Current Law Scheduled</strong> assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
+    
+  })
+  
+  # Tooltip
   output$hover_info <- renderUI({
     hover <- input$plot_hover
     
-    if (input$comparison == "mean.income") {
-      point <- nearPoints(mean.income, hover, threshold = 20, maxpoints = 1)
-    } else if (input$comparison == "dollar.change") {
-      point <- nearPoints(dollar.change, hover, threshold = 20, maxpoints = 1)
-    } else if (input$comparison == "percent.change") {
-      point <- nearPoints(percent.change, hover, threshold = 20, maxpoints = 1)
-    }
+    point <- nearPoints(income, hover, threshold = 20, maxpoints = 1)
     
     if (nrow(point) == 0) return(NULL)
     

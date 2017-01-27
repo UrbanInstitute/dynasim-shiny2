@@ -9,13 +9,13 @@ library(scales)
 options(scipen = 999)
 
 # Source file for Windows
-#Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
+Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/temp-windows/urban_ggplot_theme.R')
-#source('urban_institute_themes/urban_theme_windows.R')
+source('urban_institute_themes/urban_theme_windows.R')
 
 # Source file for Mac
 #source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/master/urban_ggplot_theme.R')
-source('urban_institute_themes/urban_theme_mac.R')
+#source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
 mean.income <- read_csv("data/mean.income.csv")
@@ -51,7 +51,27 @@ percent.change <- percent.change %>%
 ## SHINY
 ##
 
-ui <- fluidPage(theme = "shiny.css",
+ui <- fluidPage(
+
+  theme = "shiny.css",
+  
+  
+  fluidRow(
+    
+    column(8,
+           
+           titlePanel("Exploring Social Security Reform Options"),
+           
+           p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
+             Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
+           HTML("<p>Explore the trust fund, <b>by income</b>, by demographics, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065'>the data</a>.</p>"),
+           
+           br()
+           
+           
+           )
+    
+  ),
   
   fluidRow(
     

@@ -1,24 +1,25 @@
 # Aaron Williams, Urban Institute Program on Retirement Policy
 
-# This script reads five decades of four measures of mean income for older 
-# Americans across from 
-# "X:\programs\run912\Run5SaveOpt4\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx".
+# This script reads mean income data for 64 groups, across 4 measures, in 6 
+# different decades, for 15 different reform options, in two scales. It then 
+# calculates percent and dollar change against two different baselines. 
 # The script also cleans the data and turns them into a long data frame 
 # formatted for ggplot2 
 
-# Library and Source Statements
+# Library, Source, and Options Statements
 library(tidyverse)
 library(readxl)
 
 options(scipen = 999)
 
+# Create a df with links to the Excel sheets with the mean income data
 files <- read_csv("option, scale, base, link
           bpc, per capita, level, X:\\programs\\Run912\\run5SaveOpt4\\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx
           bpc, equivalent, level, X:\\programs\\Run912\\run5SaveOpt4\\BPCtableShellsEquivalentRun5SaveOpt4.xlsx
-          0, per capita, payable, X:\\programs\\Run912\\opt0\\BPCtableShellsOPT0.xlsx
-          0, equivalent, payable, X:\\programs\\Run912\\opt0\\BPCtableShellsEquivalentOPT0.xlsx
-          0, per capita, scheduled, X:\\programs\\Run912\\payable\\BPCTableShellsPayableV3.xlsx
-          0, equivalent, scheduled, X:\\programs\\Run912\\payable\\BPCTableShellsEquivalentPayableV3.xlsx
+          0, per capita, scheduled, X:\\programs\\Run912\\opt0\\BPCtableShellsOPT0.xlsx
+          0, equivalent, scheduled, X:\\programs\\Run912\\opt0\\BPCtableShellsEquivalentOPT0.xlsx
+          0, per capita, payable, X:\\programs\\Run912\\payable\\BPCTableShellsPayableV3.xlsx
+          0, equivalent, payable, X:\\programs\\Run912\\payable\\BPCTableShellsEquivalentPayableV3.xlsx
           1, per capita, level, X:\\programs\\Run912\\opt1(MiniPIA)\\BPCtableShellsOPT1.xlsx
           1, equivalent, level, X:\\programs\\Run912\\opt1(MiniPIA)\\BPCtableShellsEquivalentOPT1.xlsx
           2, per capita, level, X:\\programs\\Run912\\opt2(increaseTaxSSB)\\BPCtableShellsOPT2.xlsx
@@ -46,9 +47,6 @@ files <- read_csv("option, scale, base, link
           12, per capita, level, X:\\programs\\Run912\\opt12\\BPCtableShellsOPT12.xlsx
           12, equivalent, level, X:\\programs\\Run912\\opt12\\BPCtableShellsEquivalentOPT12.xlsx")
         
-works <- read_excel("X:\\programs\\Run912\\opt1(MiniPIA)\\BPCtableShellsEquivalentOPT1.xlsx", sheet = "mean income", skip = 2, col_names = TRUE)
-broken <- read_excel("X:\\programs\\Run912\\payable\\BPCTableShellsEquivalentPayableV3.xlsx", sheet = "mean income", skip = 2, col_names = TRUE)
-
 ##
 ## MEAN INCOME
 ##
@@ -163,54 +161,48 @@ for (i in 1:nrow(files)) {
   final.income <- bind_rows(final.income, mean.income)
    
 }
+# final.income should be 1,536 * 32 = 49,152 rows
 
-# 1,536 * 32 = 49,152 rows
-#table(final.income$category)
-#table(final.income$measure)
-#table(final.income$year)
-#table(final.income$option)
-#table(final.income$scale)
+# Remove "Per Capita " and "Equivalent " so the left_join works
+final.income <- final.income %>%
+  mutate(category = gsub("Per Capita ", "", category)) %>%
+  mutate(category = gsub("Equivalent ", "", category))
 
-
-
-
-
-
-
-
-
-
-## PER CAPITA
-
-per.capita <- final.income %>%
-  filter(scale == "per capita" & option != "0") %>%
+# Create a df with the baselines
+options <- final.income %>%
+  filter(option != "0") %>%
   select(-base)
+# should contain 43,008 rows
+# 64*4*6*14*2
 
-per.capita.0 <- final.income %>%
-  filter(scale == "per capita" & option == "0") %>%
+# Create a df with the options
+baselines <- final.income %>%
+  filter(option == "0") %>%
   spread(key = option, value = value) %>%
   rename(Option0 = `0`)
+# should contain 6,144 rows
+# 64*4*6*2*2
 
-final.income <- left_join(per.capita, per.capita.0, by = c("category", "group", "measure", "year", "scale"))
+# left_join the options with the baselines
+final.income <- left_join(options, baselines, by = c("category", "group", "measure", "year", "scale"))
+# should be 86,016 observations
 
+# Calculate the dollar and percent changes
 final.income <- final.income %>%
   mutate(dollar.change = value - Option0) %>%
   mutate(percent.change = (value - Option0) / Option0) %>%
   select(-Option0)
 
-per.capita.0 <- per.capita.0 %>%
+# Clean up baselines so it matches final.income
+baselines <- baselines %>%
   rename(value = Option0) %>%
   mutate(option = "0") %>%
   mutate(dollar.change = 0) %>%
   mutate(percent.change = 0)
 
-final.income <- union(final.income, per.capita.0)
-
-
-
-
-
-
+# Combine the baselines (with zeroes for changes) and the options
+final.income <- union(final.income, baselines)
+# Should be 92,160 observations
 
 
 # If data directory does not exist, create data directory
@@ -219,12 +211,4 @@ if (!file.exists("data")) {
 }
 
 # Combine data sets
-
-
-
-#write_csv(income, "data//income.csv")
-
-# Write .csv
-#write_csv(mean.income, "data//mean.income.csv", row.names = FALSE)
-#write_csv(dollar.change, "data//dollar.change.csv", row.names = FALSE)
-#write_csv(percent.change, "data//percent.change.csv", row.names = FALSE)
+write_csv(final.income, "data//new_income.csv")

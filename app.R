@@ -3,6 +3,7 @@ library(shiny)
 library(tidyverse)
 library(extrafont)
 library(grid)
+library(gridExtra)
 library(RColorBrewer)
 library(scales)
 
@@ -207,9 +208,7 @@ server <- function(input, output){
         filter(comparison == input$comparison) %>%
         ggplot(aes(year, value, color = group)) +
         geom_line() +
-        labs(title = title,
-             subtitle = subtitle,
-             caption = "DYNASIM3") +
+        labs(caption = "DYNASIM3") +
         xlab("Year") +
         ylab(NULL) +
         geom_line(size = 1) +
@@ -217,20 +216,42 @@ server <- function(input, output){
         scale_y_continuous(expand = c(0.3, 0), labels = scale) +
         expand_limits(y = origin) +
         geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-        theme(axis.ticks.length = unit(0, "points"),
-              axis.line = element_blank())
+        theme(axis.line = element_blank())
+
     }
     
-    
     if (input$comparison == "level") {
-       graphr(scale = scales::dollar, origin = NULL, line.placement = 50000, line.color = NA) 
+       graph <- graphr(scale = scales::dollar, origin = NULL, line.placement = 50000, line.color = NA) 
        } 
      else if (input$comparison == "dollar.change") {
-       graphr(scale = scales::dollar, origin = 0, line.placement = 0, line.color = "black")
+       graph <- graphr(scale = scales::dollar, origin = 0, line.placement = 0, line.color = "black")
        } 
      else if (input$comparison == "percent.change") {
-       graphr(scale = scales::percent, origin = 0, line.placement = 0, line.color = "black")
+       graph <- graphr(scale = scales::percent, origin = 0, line.placement = 0, line.color = "black")
        }
+    
+    ###
+    title.grob <- textGrob(
+      label = title,
+      x = unit(0.2, "lines"), 
+      y = unit(0, "lines"),
+      hjust = 0, vjust = 0,
+      gp = gpar(fontsize = 18, fontfamily = "Lato"))
+    
+    subtitle.grob <- textGrob(
+      label = subtitle,
+      x = unit(0.33, "lines"), 
+      y = unit(0.2, "lines"),
+      hjust = 0, vjust = 0,
+      gp = gpar(fontsize = 14, fontfamily = "Lato"))
+    
+    margin <- unit(0.5, "line")
+    grid.newpage()
+    grid.arrange(title.grob, subtitle.grob, graph,
+                 heights = unit.c(grobHeight(title.grob) + 1.2 * margin,
+                                  grobHeight(subtitle.grob) + margin,
+                                  unit(2, "null")))
+    ###
 
   })
   
@@ -323,7 +344,6 @@ server <- function(input, output){
       style = style,
       p(
         HTML(
-        # TODO(awunderground): set tooltip sensitivity to zero
         paste0(
           "<b> Year: </b>", point$year, "<br/>",
           "<b> Amount: </b>", 

@@ -10,16 +10,13 @@ options(scipen = 999)
 
 # Source file for Windows
 Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
-#source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/temp-windows/urban_ggplot_theme.R')
 source('urban_institute_themes/urban_theme_windows.R')
 
 # Source file for Mac
-#source('https://raw.githubusercontent.com/UrbanInstitute/urban_R_theme/master/urban_ggplot_theme.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-
-income <- read_csv("data/income.csv")
+income <- read_csv("data/new_income.csv")
 
 # Remove numbers in certain factor levels and order all levels
 income <- income %>%
@@ -56,7 +53,6 @@ ui <- fluidPage(
   ),
   
   fluidRow(
-    
     column(6,
            style = "position:relative",
            plotOutput("chart",
@@ -68,42 +64,42 @@ ui <- fluidPage(
            
       selectInput(inputId = "option",
         label = "Social Security Reform",
-        choices = c("BPC Option" = "bpc.option",
-                    "Annual PIA" = "mini.pia", 
-                    "Increase Benefits Taxation" = "tax.ssb",
-                    "Cap Spouse Benefits" = "cap.spouse",
-                    "75% Survivor Benefit" = "survivor.js75",
-                    "90% Tax max" = "taxmax90",
-                    "90% Tax Max and 13.4% Payroll Tax" = "taxmax90.fica13.4",
-                    "Full Chained-CPI COLA" = "cola.chaincpi",
-                    "Partial Chained-CPI COLA" = "reduce.cola",
-                    "Increase FRA" = "increase.fra",
-                    "Increase EEA & FRA" = "increase.fra.era",
-                    "$150,000 Tax Max" = "taxmax150000",
-                    "$180,000 Tax Max" = "taxmax180000",
-                    "Eliminate the Tax Max" = "notaxmax",
-                    "13.4% Payroll Tax" = "fica13.4",
-                    "14.4% Payroll Tax" = "fica14",
-                    "15.4% Payroll Tax" = "fica15"))),
+        choices = c("Scheduled Law" = "Scheduled Law",
+                    "Payable Law" = "Payable Law",
+                    "BPC Option" = "BPC Package",
+                    "Annual PIA" = "Annual PIA", 
+                    "Increase Benefits Taxation" = "Increase Benefits Taxation",
+                    "Cap Spouse Benefits" = "Cap Spouse Benefits",
+                    "75% Survivor Benefit" = "75% Survivor Benefit",
+                    "90% Tax max" = " 90% Tax Max",
+                    "90% Tax Max and 13.4% Payroll Tax" = "90% Tax Max and 13.4% Payroll Tax",
+                    "Full Chained-CPI COLA" = "Full Chained-CPI COLA",
+                    "Partial Chained-CPI COLA" = "Partial Chained-CPI COLA",
+                    "Increase FRA" = "Increase FRA",
+                    "Increase FRA and EEA" = "Increase FRA and EEA",
+                    "$150,000 Tax Max" = "$150,000 Tax Max",
+                    "$180,000 Tax Max" = "$180,000 Tax Max",
+                    "Eliminate the Tax Max" = "Eliminate the Tax Max",
+                    "13.4% Payroll Tax" = "13.4% Payroll Tax",
+                    "14.4% Payroll Tax" = "14.4% Payroll Tax",
+                    "15.4% Payroll Tax" = "15.5% Payroll Tax"))),
            
     column(4,
       selectInput(inputId = "comparison",
         label = "Comparison",
-        choices = c("Level" = "mean.income",
-                    "Percent Change from Payable Law" = "payable.percent.change",
-                    "Percent Change from Scheduled Law" = "scheduled.percent.change",
-                    "Dollar Change from Payable Law" = "payable.dollar.change",
-                    "Dollar Change from Scheduled Law" = "scheduled.dollar.change")))),
+        choices = c("Level" = "level",
+                    "Percent Change" = "percent.change",
+                    "Dollar Change" = "dollar.change")))),
     
-      fluidRow(
-        column(4,
+  fluidRow(
+    column(4,
       
      selectInput(inputId = "measure",
        label = "Measure",
-       choices = c("Gross Per Capita Annuity Income" = "per capita annuity",
-                   "Gross Per Capita Cash Income" = "per capita cash",
-                   "Net Per Capita Annuity Income" = "net per capita annuity",
-                   "Net Per Capita Cash Income" = "net per capita cash"))),
+       choices = c("Gross Annuity Income" = "Average Annuity Income",
+                   "Gross Cash Income" = "Average Cash Income",
+                   "Net Annuity Income" = "Average Net Annuity Income",
+                   "Net Cash Income" = "Average Net Cash Income"))),
     
      column(4,
      selectInput(inputId = "demographic",
@@ -119,9 +115,23 @@ ui <- fluidPage(
                    "Shared Lifetime Earnings Quintile" = "Shared Lifetime Earnings Quintile",
                    "Homeownership" = "Homeownership",
                    "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
-                   "Per Capita Financial Assets" = "Per Capita Financial Assets ($2015)",
-                   "Per Capita Financial + Retirement Account Assets" = 
-                   "Per Capita Financial + Retirement Account Assets ($2015)")))),
+                   "Financial Assets" = "Financial Assets ($2015)",
+                   "Financial + Retirement Account Assets" = 
+                   "Financial + Retirement Account Assets ($2015)")))),
+  
+  fluidRow(
+    column(4,
+      selectInput(inputId = "baseline",
+        label = "Baseline",
+        choices = c("Current Law Scheduled" = "Scheduled Law",
+                    "Current Law Payable" = "Payable Law"))),
+    
+    column(4,
+      selectInput(inputId = "scale",
+        label = "Scale",
+        choices = c("Per Capita" = "per capita",
+                    "Equivalent" = "equivalent")))
+    ),
   
   fluidRow(
     
@@ -131,6 +141,16 @@ ui <- fluidPage(
            
            htmlOutput("text1"))
     
+  ),
+  
+  fluidRow(
+    
+    column(8,
+           
+           # Explanation of Baselines/Comparisons
+           
+           htmlOutput("text2"))
+    
   )
   
 )
@@ -139,14 +159,14 @@ server <- function(input, output){
   
   output$chart <- renderPlot({
 
-    title <- if (input$measure == "per capita annuity") {
-                 "Mean Gross Per Capita Annuity Income"} 
-             else if (input$measure == "per capita cash") {
-               "Mean Gross Per Capita Cash Income"}
-             else if (input$measure == "net per capita annuity") {
-               "Mean Net Per Capita Annuity Income"}
-             else if (input$measure == "net per capita cash") {
-               "Mean Net Per Capita Cash Income"}
+    title <- if (input$measure == "Average Annuity Income") {
+                 "Mean Gross Annuity Income"} 
+             else if (input$measure == "Average Cash Income") {
+               "Mean Gross Cash Income"}
+             else if (input$measure == "Average Net Annuity Income") {
+               "Mean Net Annuity Income"}
+             else if (input$measure == "Average Net Cash Income") {
+               "Mean Net Cash Income"}
     
     subtitle <- if (input$demographic == "All") {
                     "Everyone ages 62+, 2015 dollars"} 
@@ -170,23 +190,26 @@ server <- function(input, output){
                   "Ages 62 and older by homeownership"}
                 else if (input$demographic == "Family Income Relative to Official Poverty") {
                   "Ages 62 and older by family income relative to official poverty, 2015 dollars"}    
-                else if (input$demographic == "Per Capita Financial Assets ($2015)") {
-                  "Ages 62 and older by per capita financial assets, 2015 dollars"}
-                else if (input$demographic == "Per Capita Financial + Retirement Account Assets ($2015)") {
-                  "Ages 62 and older by per capita financial + retirement account assets, 2015 dollars"}    
+                else if (input$demographic == "Financial Assets ($2015)") {
+                  "Ages 62 and older by financial assets, 2015 dollars"}
+                else if (input$demographic == "Financial + Retirement Account Assets ($2015)") {
+                  "Ages 62 and older by financial + retirement account assets, 2015 dollars"}    
 
     
     graphr <- function(scale, origin, line.placement, line.color){
   
       income %>%
-        filter(chart == input$comparison) %>%
-        filter(measure == input$measure) %>%
         filter(category == input$demographic) %>%
+        filter(measure == input$measure) %>%
+        filter(option == input$option) %>%
+        filter(scale == input$scale) %>%
+        filter(baseline == input$baseline) %>%
+        filter(comparison == input$comparison) %>%
         ggplot(aes(year, value, color = group)) +
         geom_line() +
         labs(title = title,
              subtitle = subtitle,
-             caption = "DYNASIM4") +
+             caption = "DYNASIM3") +
         xlab("Year") +
         ylab(NULL) +
         geom_line(size = 1) +
@@ -194,73 +217,80 @@ server <- function(input, output){
         scale_y_continuous(expand = c(0.3, 0), labels = scale) +
         expand_limits(y = origin) +
         geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-        theme(axis.ticks.length = unit(0, "points"), 
-              axis.text.x = element_text(margin = structure(c(4, 0, 0, 0),
-                                                            unit = "pt",
-                                                            valid.unit = 8L,
-                                                            class = c("margin", "unit"))),
-              axis.text.y = element_text(margin = structure(c(0, 2, 0, 0),
-                                                            unit = "pt",
-                                                            valid.unit = 8L,
-                                                            class = c("margin", "unit"))),
-              plot.subtitle = element_text(margin = structure(c(5, 0, 2, 0),
-                                                              unit = "pt",
-                                                              valid.unit = 8L,
-                                                              class = c("margin", "unit"))),
-              legend.box.margin = margin(6, 0, 0, 0, "points"))
+        theme(axis.ticks.length = unit(0, "points"),
+              axis.line = element_blank())
     }
     
     
-    if (input$comparison == "mean.income") {
+    if (input$comparison == "level") {
        graphr(scale = scales::dollar, origin = NULL, line.placement = 50000, line.color = NA) 
        } 
-     else if (input$comparison == "scheduled.dollar.change") {
+     else if (input$comparison == "dollar.change") {
        graphr(scale = scales::dollar, origin = 0, line.placement = 0, line.color = "black")
        } 
-     else if (input$comparison == "scheduled.percent.change") {
+     else if (input$comparison == "percent.change") {
        graphr(scale = scales::percent, origin = 0, line.placement = 0, line.color = "black")
        }
 
   })
   
+  # Social Security Reform Descriptions
   output$text1 <- renderText({
     
-    if (input$option == "bpc.option") {"<p><h4>BPC Package</h4></p><p>Annual PIA, limit spousal benefits, replace the WEP and GPO with a proportional reduction in OASI benefits based on covered earnings, enhance survivor benefits, increase the progressivity of the benefit formula, increase Social Security tax max to $195,000, payroll tax to 13.4% and FRA to 69, switch to C-CPI-U for COLAs, end 'claim-and-suspend' games, create a basic minimum benefit for all individuals above the FRA eligible for Social Security, and tax 100 percent of Social Security benefits for beneficiaries with annual incomes above $250,000.</p>"}
+    if (input$option == "BPC Package") {"<p><h4>BPC Package</h4></p><p>Annual PIA, limit spousal benefits, replace the WEP and GPO with a proportional reduction in OASI benefits based on covered earnings, enhance survivor benefits, increase the progressivity of the benefit formula, increase Social Security tax max to $195,000, payroll tax to 13.4% and FRA to 69, switch to C-CPI-U for COLAs, end 'claim-and-suspend' games, create a basic minimum benefit for all individuals above the FRA eligible for Social Security, and tax 100 percent of Social Security benefits for beneficiaries with annual incomes above $250,000.</p>"}
     
-    else if (input$option == "mini.pia") {"<p><h4>Annual PIA</h4></p><p>Eliminates the preferential treatment of workers with short careers by applying Social Security’s progressive benefit formula to the 40 highest years of wage-indexed earnings divided by 37 rather than applying the formula to total wage-indexed earnings received in the top 35 years. It also makes the benefit formula more progressive. This begins with OASI claimants who attain age 62 in 2022.</p>"}
+    else if (input$option == "Annual PIA") {"<p><h4>Annual PIA</h4></p><p>Eliminates the preferential treatment of workers with short careers by applying Social Security’s progressive benefit formula to the 40 highest years of wage-indexed earnings divided by 37 rather than applying the formula to total wage-indexed earnings received in the top 35 years. It also makes the benefit formula more progressive. This begins with OASI claimants who attain age 62 in 2022.</p>"}
     
-    else if (input$option == "tax.ssb") {"<p><h4>Increase Benefits Taxation</h4></p><p>Increases the taxation of Social Security benefits.</p>"}
+    else if (input$option == "Increase Benefits Taxation") {"<p><h4>Increase Benefits Taxation</h4></p><p>Increases the taxation of Social Security benefits.</p>"}
     
-    else if (input$option == "cap.spouse") {"<p><h4>Cap Spouse Benefits</h4></p><p>Caps the spouse benefit at $1,121.68 in 2016 beginning for claimants who turn 60 in 2020 and beyond. Indexes the cap annually by chained CPI-U.</p>"}
+    else if (input$option == "Cap Spouse Benefits") {"<p><h4>Cap Spouse Benefits</h4></p><p>Caps the spouse benefit at $1,121.68 in 2016 beginning for claimants who turn 60 in 2020 and beyond. Indexes the cap annually by chained CPI-U.</p>"}
     
-    else if (input$option == "survivor.js75") {"<p><h4>75% Survivor Benefit</h4></p><p>Increases joint-and-survivors benefits to 75 percent of combined benefits for the couple, from 50 percent of combined benefits, for claimants who turn 62 in 2022 and beyond.</p>"}
+    else if (input$option == "75% Survivor Benefit") {"<p><h4>75% Survivor Benefit</h4></p><p>Increases joint-and-survivors benefits to 75 percent of combined benefits for the couple, from 50 percent of combined benefits, for claimants who turn 62 in 2022 and beyond.</p>"}
     
-    else if (input$option == "taxmax90") {"<p><h4>90% Tax Max</h4></p><p>Raises the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation to cover 90 percent of payroll. This increase is phased in over 10 years, beginning in 2016.</p>"}
+    else if (input$option == "90% Tax Max") {"<p><h4>90% Tax Max</h4></p><p>Raises the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation to cover 90 percent of payroll. This increase is phased in over 10 years, beginning in 2016.</p>"}
     
-    else if (input$option == "taxmax90.fica13.4") {"<p><h4>90% Tax Max and 13.4% Payroll Tax</h4></p><p>Raises the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation to cover 90 percent of payroll. This increase is phased in over 10 years, beginning in 2016. Also, increase the payroll tax to 13.4% over t10 years beginning in 2016.</p>"}
+    else if (input$option == "90% Tax Max and 13.4% Payroll Tax") {"<p><h4>90% Tax Max and 13.4% Payroll Tax</h4></p><p>Raises the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation to cover 90 percent of payroll. This increase is phased in over 10 years, beginning in 2016. Also, increase the payroll tax to 13.4% over t10 years beginning in 2016.</p>"}
     
-    else if (input$option == "cola.chaincpi") {"<p><h4>Full Chained-CPI COLA</h4></p><p>Ties beneficiaries' annual cost-of-living-adjustment (COLA) to the change in the chained consumer price index (C-CPI-U), which grows more slowly than the standard CPI-U now used to compute COLAs. (Only those NRA or older)</p>"}
+    else if (input$option == "Full Chained-CPI COLA") {"<p><h4>Full Chained-CPI COLA</h4></p><p>Ties beneficiaries' annual cost-of-living-adjustment (COLA) to the change in the chained consumer price index (C-CPI-U), which grows more slowly than the standard CPI-U now used to compute COLAs. (Only those NRA or older)</p>"}
     
-    else if (input$option == "reduce.cola") {"<p><h4>Partial Chained-CPI COLA</h4></p><p>Ties beneficiaries' annual cost-of-living-adjustment (COLA) to the change in the chained consumer price index (C-CPI-U), which grows more slowly than the standard CPI-U now used to compute COLAs. (All beneficiaries including those under the NRA)</p>"}
+    else if (input$option == "Partial Chained-CPI COLA") {"<p><h4>Partial Chained-CPI COLA</h4></p><p>Ties beneficiaries' annual cost-of-living-adjustment (COLA) to the change in the chained consumer price index (C-CPI-U), which grows more slowly than the standard CPI-U now used to compute COLAs. (All beneficiaries including those under the NRA)</p>"}
     
-    else if (input$option == "increase.fra") {"<p><h4>Increase FRA</h4></p><p>Indefinitely raises Social Security's FRA (now set at 67 beginning in 2022) and the age for receiving delayed retirement credits by one month every two years, beginning in 2024.</p>"}
+    else if (input$option == "Increase FRA") {"<p><h4>Increase FRA</h4></p><p>Indefinitely raises Social Security's FRA (now set at 67 beginning in 2022) and the age for receiving delayed retirement credits by one month every two years, beginning in 2024.</p>"}
     
-    else if (input$option == "increase.fra.era") {"<p><h4>Increase EEA & FRA</h4></p><p>Raises Social Security's early eligibility age (EEA), which is now set at 62, and indefinitely raises Social Security's FRA (now set at 67 beginning in 2022) and the age for receiving delayed retirement credits by one month every two years, beginning in 2024.</p>"}
+    else if (input$option == "Increase FRA and EEA") {"<p><h4>Increase EEA & FRA</h4></p><p>Raises Social Security's early eligibility age (EEA), which is now set at 62, and indefinitely raises Social Security's FRA (now set at 67 beginning in 2022) and the age for receiving delayed retirement credits by one month every two years, beginning in 2024.</p>"}
     
-    else if (input$option == "taxmax150000") {"<p><h4>$150,000 Tax Max</h4></p><p>Increase the tax cap to $150,000 between 2016 and 2018 and then increase the tax cap by wage growth plus 0.5 percentage points thereafter.</p>"}
+    else if (input$option == "$150,000 Tax Max") {"<p><h4>$150,000 Tax Max</h4></p><p>Increase the tax cap to $150,000 between 2016 and 2018 and then increase the tax cap by wage growth plus 0.5 percentage points thereafter.</p>"}
     
-    else if (input$option == "taxmax180000") {"<p><h4>$180,000 Tax Max</h4></p><p>Increase the tax cap to $180,000 between 2016 and 2018 and then increase the tax cap by wage growth plus 0.5 percentage points thereafter.</p>"}
+    else if (input$option == "$180,000 Tax Max") {"<p><h4>$180,000 Tax Max</h4></p><p>Increase the tax cap to $180,000 between 2016 and 2018 and then increase the tax cap by wage growth plus 0.5 percentage points thereafter.</p>"}
     
-    else if (input$option == "notaxmax") {"<p><h4>Eliminate the Tax Max</h4></p><p>Eliminates the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation.</p>"}
+    else if (input$option == "Eliminate the Tax Max") {"<p><h4>Eliminate the Tax Max</h4></p><p>Eliminates the cap on annual earnings subject to the Social Security payroll tax and that enter the benefits calculation.</p>"}
     
-    else if (input$option == "fica13.4") {"<p><h4>13.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 13.4% over 10 years beginning in 2016.</p>"}
+    else if (input$option == "13.4%  Payroll Tax") {"<p><h4>13.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 13.4% over 10 years beginning in 2016.</p>"}
     
-    else if (input$option == "fica14") {"<p><h4>14.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 14.4% over 10 years beginning in 2016.</p>"}
+    else if (input$option == "14.4%  Payroll Tax") {"<p><h4>14.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 14.4% over 10 years beginning in 2016.</p>"}
     
-    else if (input$option == "fica15") {"<p><h4>15.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 15.4% over 10 years beginning in 2016.</p>"}
+    else if (input$option == "15.4%  Payroll Tax") {"<p><h4>15.4% Payroll Tax</h4></p><p>Increase the payroll tax rate to 15.4% over 10 years beginning in 2016.</p>"}
     
-    else {"<p><h4></h4></p><p><strong>Current Law Scheduled</strong> assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
+    else if (input$option == "Scheduled Law") {"<p><h4>Current Law Scheduled</h4></p><p><strong>Current Law Scheduled</strong> assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
     
+    else if (input$option == "Payable Law") {""}
+    
+  })
+  
+  
+  # Comparison description
+  output$text2 <- renderText({
+    
+    if (input$comparison == "level") {"<p><h4>Mean Income</h4></p><p>Projected annual income under the specified social security reform option.</p>"}
+    
+    else if (input$comparison == "percent.change") {"<p><h4>Percent Change from Current Law Payable</h4></p><p>The percentage difference in any year between a scenario where the reform is implemented and current law payable payable, which assumes that current public policies, business practices, and individual behaviors continue, but reduces Social Security benefits by a uniform amount after the trust fund runs out so that all benefits in each year can be paid out of revenues from that year.</p>"}
+    
+    else if (input$comparison == "scheduled.percent.change") {"<p><h4>Percent Change from Current Law Scheduled</h4></p><p> The percentage difference in any year between a scenario where the reform is implemented and current law scheduled, which assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
+    
+    else if (input$comparison == "dollar.change") {"<p><h4>Dollar Change from Current Law Payable</h4></p><p> The annual dollar difference in any year between a scenario where the reform is implemented and current law payable payable, which assumes that current public policies, business practices, and individual behaviors continue, but reduces Social Security benefits by a uniform amount after the trust fund runs out so that all benefits in each year can be paid out of revenues from that year.</p>"}
+    
+    else if (input$comparison == "scheduled.dollar.change") {"<p><h4>Dollar Change from Current Law Scheduled</h4></p><p> The annual dollar difference in any year between a scenario where the reform is implemented and current law scheduled, which assumes that current public policies, business practices, and individual behaviors continue, and that Social Security benefits are paid as promised, even after the trust fund runs out.</p>"}
+  
   })
   
   # Tooltip
@@ -297,7 +327,7 @@ server <- function(input, output){
         paste0(
           "<b> Year: </b>", point$year, "<br/>",
           "<b> Amount: </b>", 
-        if (input$comparison == "mean.income") {
+        if (input$comparison == "level") {
         dollar_format()(point$value)
       } else if (input$comparison == "dollar.change") {
         dollar_format()(point$value)

@@ -24,12 +24,12 @@ meanIncomeScrapeR <- function(link) {
 
   mean.income <- read_excel(link, sheet = "mean income", skip = 2, col_names = TRUE)
   
-  # Per capita annuity
-  per.capita.annuity <- mean.income[, 1:9]
+  # Average Annuity Income
+  annuity <- mean.income[, 1:9]
   
-  names(per.capita.annuity) <- c("category", "trash", "group", "year2015", "year2025", "year2035", "year2045", "year2055", "year2065")
+  names(annuity) <- c("category", "trash", "group", "year2015", "year2025", "year2035", "year2045", "year2055", "year2065")
   
-  per.capita.annuity <- per.capita.annuity %>%
+  annuity <- annuity %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
@@ -42,14 +42,14 @@ meanIncomeScrapeR <- function(link) {
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
-    mutate(measure = "per capita annuity")
+    mutate(measure = "Average Annuity Income")
   
-  # Per capita cash
-  per.capita.cash <- mean.income[, 10:18]
+  # Average Cash Income
+  cash <- mean.income[, 10:18]
   
-  names(per.capita.cash) <- c("category", "trash", "group", "year2015", "year2025", "year2035", "year2045", "year2055", "year2065")
+  names(cash) <- c("category", "trash", "group", "year2015", "year2025", "year2035", "year2045", "year2055", "year2065")
   
-  per.capita.cash <- per.capita.cash %>%
+  cash <- cash %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
@@ -62,14 +62,14 @@ meanIncomeScrapeR <- function(link) {
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
-    mutate(measure = "per capita cash")
+    mutate(measure = "Average Cash Income")
   
-  # Net per capita annuity
-  net.per.capita.annuity <- mean.income[, 19:27]
+  # Average Net Annuity Income
+  net.annuity <- mean.income[, 19:27]
   
-  names(net.per.capita.annuity) <- c("category", "trash", "group", "year2015", "year2025", "year2035", "year2045", "year2055", "year2065")
+  names(net.annuity) <- c("category", "trash", "group", "year2015", "year2025", "year2035", "year2045", "year2055", "year2065")
   
-  net.per.capita.annuity <- net.per.capita.annuity %>%
+  net.annuity <- net.annuity %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
@@ -82,14 +82,14 @@ meanIncomeScrapeR <- function(link) {
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
-    mutate(measure = "net per capita annuity")
+    mutate(measure = "Average Net Annuity Income")
   
-  # Net per capita cash
-  net.per.capita.cash <- mean.income[, 28:36]
+  # Average Net Cash Income
+  net.cash <- mean.income[, 28:36]
   
-  names(net.per.capita.cash) <- c("category", "trash", "group", "year2015", "year2025", "year2035", "year2045", "year2055", "year2065")
+  names(net.cash) <- c("category", "trash", "group", "year2015", "year2025", "year2035", "year2045", "year2055", "year2065")
   
-  net.per.capita.cash <- net.per.capita.cash %>%
+  net.cash <- net.cash %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
@@ -102,11 +102,11 @@ meanIncomeScrapeR <- function(link) {
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
     mutate(category = ifelse(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
-    mutate(measure = "net per capita cash")
+    mutate(measure = "Average Net Cash Income")
   
-  mean.income <- bind_rows(per.capita.annuity, per.capita.cash, net.per.capita.annuity, net.per.capita.cash)
+  mean.income <- bind_rows(annuity, cash, net.annuity, net.cash)
   
-  rm(per.capita.annuity, per.capita.cash, net.per.capita.annuity, net.per.capita.cash)
+  rm(annuity, cash, net.annuity, net.cash)
   
   mean.income <- gather(mean.income, key = year , value,-category, -group, -category, -measure) %>%
                  mutate(year = as.numeric(gsub("year", "", year)))
@@ -169,10 +169,11 @@ baselines <- baselines %>%
 
 # Combine the baselines (with zeroes for changes) and the options
 final.income <- union(final.income, baselines) %>%
-  rename(baseline = baseline.type)
-rm(files, mean.income, options, baselines)
+  rename(baseline = baseline.type, level = value) %>%
+  gather(level, percent.change, dollar.change, key = "comparison", value = "value")
 # Should be 110,592 observations
 
+rm(files, mean.income, options, baselines)
 
 # If data directory does not exist, create data directory
 if (!file.exists("data")) {

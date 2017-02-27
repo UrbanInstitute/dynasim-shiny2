@@ -24,6 +24,8 @@ meanIncomeScrapeR <- function(link) {
 
   mean.income <- read_excel(link, sheet = "mean income", skip = 2, col_names = TRUE)
   
+  mean.income <- mean.income[, colSums(is.na(mean.income)) != nrow(mean.income)]
+
   # Average Annuity Income
   annuity <- mean.income[, 1:9]
   
@@ -171,7 +173,8 @@ baselines <- baselines %>%
 final.income <- union(final.income, baselines) %>%
   rename(baseline = baseline.type, level = value) %>%
   gather(level, percent.change, dollar.change, key = "comparison", value = "value")
-# Should be 110,592 observations
+# Should be 110,592 observations before gather()
+# Should be 331,776 observations after gather()
 
 rm(files, mean.income, options, baselines)
 

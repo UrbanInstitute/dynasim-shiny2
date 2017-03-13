@@ -69,26 +69,26 @@ income <- income %>%
                                           "80-84",
                                           "85+ "),
                                labels = c("All",
-                                          "Females",
-                                          "Males",
-                                          "High School Dropouts",
-                                          "High School Graduates",
+                                          "Female",
+                                          "Male",
+                                          "HS Dropout",
+                                          "HS Graduate",
                                           "Some College",
-                                          "College Graduates",      
+                                          "College Graduate",      
                                           "Black",
                                           "Hispanic",
                                           "White, Non-Hispanic",
                                           "Other",
-                                          "Never Married Individuals",
-                                          "Married Individuals",
-                                          "Divorced Individuals",
-                                          "Widowed Individuals",
+                                          "Never Married",
+                                          "Married",
+                                          "Divorced",
+                                          "Widowed",
                                           "0-9", "10-14", "15-19", "20-24",
                                           "25-29", "30-34", "35-39", "40+",
                                           "Bottom Quintile",
-                                          "2nd quintile",
-                                          "3rd quintile",
-                                          "4th quintile",
+                                          "2nd Quintile",
+                                          "3rd Quintile",
+                                          "4th Quintile",
                                           "Top Quintile",
                                           "Renter", 
                                           "Home Owner",
@@ -110,10 +110,13 @@ income <- income %>%
 ## SHINY
 ##
 
+latoCSS <- "http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic,900italic"
+
 ui <- fluidPage(
 
-  theme = "shiny.css",
+  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = latoCSS)),
   
+  theme = "shiny.css",
   
   fluidRow(
     
@@ -135,6 +138,9 @@ ui <- fluidPage(
   fluidRow(
     column(6,
            style = "position:relative",
+           
+           h4(textOutput("title")),
+           h5(textOutput("subtitle")),
            plotOutput("chart",
                       hover = hoverOpts("plot_hover", delay = 100, delayType = "debounce")),
            uiOutput("hover_info"))),
@@ -237,45 +243,52 @@ ui <- fluidPage(
 
 server <- function(input, output){
   
+  output$title <- renderText({
+    
+    if (input$measure == "Average Annuity Income") {
+      "Mean Gross Annuity Income"} 
+    else if (input$measure == "Average Cash Income") {
+      "Mean Gross Cash Income"}
+    else if (input$measure == "Average Net Annuity Income") {
+      "Mean Net Annuity Income"}
+    else if (input$measure == "Average Net Cash Income") {
+      "Mean Net Cash Income"}
+    
+  })
+  
+  output$subtitle <- renderText({
+    
+    if (input$demographic == "All") {
+      "Everyone ages 62+, 2015 dollars"} 
+    else if (input$demographic == "Sex") {
+      "Ages 62+ by sex, 2015 dollars"}
+    else if (input$demographic == "Education") {
+      "Ages 62 and older by education, 2015 dollars"}
+    else if (input$demographic == "Race Ethnicity") {
+      "Ages 62 and older by race & ethnicity, 2015 dollars"}
+    else if (input$demographic == "Marital Status") {
+      "Ages 62 and older by marital status, 2015 dollars"}
+    else if (input$demographic == "Shared Work Years") {
+      "Ages 62 and older by shared work years, 2015 dollars"}
+    else if (input$demographic == "Own Work Years") {
+      "Ages 62 and older by own work years, 2015 dollars"}
+    else if (input$demographic == "Shared Income Quintile") {
+      "Ages 62 and older by shared income quintile, 2015 dollars"}
+    else if (input$demographic == "Shared Lifetime Earnings Quintile") {
+      "Ages 62 and older by shared lifetime earnings quintile, 2015 dollars"}   
+    else if (input$demographic == "Homeownership") {
+      "Ages 62 and older by homeownership"}
+    else if (input$demographic == "Family Income Relative to Official Poverty") {
+      "Ages 62 and older by family income relative to official poverty, 2015 dollars"}    
+    else if (input$demographic == "Financial Assets ($2015)") {
+      "Ages 62 and older by financial assets, 2015 dollars"}
+    else if (input$demographic == "Financial + Retirement Account Assets ($2015)") {
+      "Ages 62 and older by financial + retirement account assets, 2015 dollars"} 
+  
+    })
+  
   output$chart <- renderPlot({
 
-    title <- if (input$measure == "Average Annuity Income") {
-                 "Mean Gross Annuity Income"} 
-             else if (input$measure == "Average Cash Income") {
-               "Mean Gross Cash Income"}
-             else if (input$measure == "Average Net Annuity Income") {
-               "Mean Net Annuity Income"}
-             else if (input$measure == "Average Net Cash Income") {
-               "Mean Net Cash Income"}
-    
-    subtitle <- if (input$demographic == "All") {
-                    "Everyone ages 62+, 2015 dollars"} 
-                else if (input$demographic == "Sex") {
-                  "Ages 62+ by sex, 2015 dollars"}
-                else if (input$demographic == "Education") {
-                  "Ages 62 and older by education, 2015 dollars"}
-                else if (input$demographic == "Race Ethnicity") {
-                  "Ages 62 and older by race & ethnicity, 2015 dollars"}
-                else if (input$demographic == "Marital Status") {
-                  "Ages 62 and older by marital status, 2015 dollars"}
-                else if (input$demographic == "Shared Work Years") {
-                  "Ages 62 and older by shared work years, 2015 dollars"}
-                else if (input$demographic == "Own Work Years") {
-                  "Ages 62 and older by own work years, 2015 dollars"}
-                else if (input$demographic == "Shared Income Quintile") {
-                  "Ages 62 and older by shared income quintile, 2015 dollars"}
-                else if (input$demographic == "Shared Lifetime Earnings Quintile") {
-                  "Ages 62 and older by shared lifetime earnings quintile, 2015 dollars"}   
-                else if (input$demographic == "Homeownership") {
-                  "Ages 62 and older by homeownership"}
-                else if (input$demographic == "Family Income Relative to Official Poverty") {
-                  "Ages 62 and older by family income relative to official poverty, 2015 dollars"}    
-                else if (input$demographic == "Financial Assets ($2015)") {
-                  "Ages 62 and older by financial assets, 2015 dollars"}
-                else if (input$demographic == "Financial + Retirement Account Assets ($2015)") {
-                  "Ages 62 and older by financial + retirement account assets, 2015 dollars"}    
-
-    
     graphr <- function(scale, origin, line.placement, line.color){
   
       income %>%
@@ -287,50 +300,28 @@ server <- function(input, output){
         filter(comparison == input$comparison) %>%
         ggplot(aes(year, value, color = group)) +
         geom_line() +
-        labs(caption = "DYNASIM3") +
-        xlab("Year") +
-        ylab(NULL) +
+        labs(caption = "DYNASIM3",
+             x = "Year",
+             y = NULL) +
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
         scale_y_continuous(expand = c(0.3, 0), labels = scale) +
         expand_limits(y = origin) +
         geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-        theme(axis.line = element_blank())
+        theme(axis.line = element_blank(),
+              plot.margin = margin(t = -5))
 
     }
     
     if (input$comparison == "level") {
-       graph <- graphr(scale = scales::dollar, origin = NULL, line.placement = 50000, line.color = NA) 
+       graphr(scale = scales::dollar, origin = NULL, line.placement = 50000, line.color = NA) 
        } 
      else if (input$comparison == "dollar.change") {
-       graph <- graphr(scale = scales::dollar, origin = 0, line.placement = 0, line.color = "black")
+       graphr(scale = scales::dollar, origin = 0, line.placement = 0, line.color = "black")
        } 
      else if (input$comparison == "percent.change") {
-       graph <- graphr(scale = scales::percent, origin = 0, line.placement = 0, line.color = "black")
+       graphr(scale = scales::percent, origin = 0, line.placement = 0, line.color = "black")
        }
-    
-    ###
-    title.grob <- textGrob(
-      label = title,
-      x = unit(0.2, "lines"), 
-      y = unit(0, "lines"),
-      hjust = 0, vjust = 0,
-      gp = gpar(fontsize = 18, fontfamily = "Lato"))
-    
-    subtitle.grob <- textGrob(
-      label = subtitle,
-      x = unit(0.33, "lines"), 
-      y = unit(0.2, "lines"),
-      hjust = 0, vjust = 0,
-      gp = gpar(fontsize = 14, fontfamily = "Lato"))
-    
-    margin <- unit(0.5, "line")
-    grid.newpage()
-    grid.arrange(title.grob, subtitle.grob, graph,
-                 heights = unit.c(grobHeight(title.grob) + 1.2 * margin,
-                                  grobHeight(subtitle.grob) + margin,
-                                  unit(2, "null")))
-    ###
 
   })
   

@@ -34,15 +34,15 @@ meanIncomeScrapeR <- function(link) {
   annuity <- annuity %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
+    mutate(category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
     mutate(measure = "Average Annuity Income")
   
@@ -54,15 +54,15 @@ meanIncomeScrapeR <- function(link) {
   cash <- cash %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
+    mutate(category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
     mutate(measure = "Average Cash Income")
   
@@ -74,15 +74,15 @@ meanIncomeScrapeR <- function(link) {
   net.annuity <- net.annuity %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
+    mutate(category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
     mutate(measure = "Average Net Annuity Income")
   
@@ -94,15 +94,15 @@ meanIncomeScrapeR <- function(link) {
   net.cash <- net.cash %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category)) %>%
+    mutate(category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category),
+           category = ifelse(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
     mutate(measure = "Average Net Cash Income")
   
@@ -125,8 +125,8 @@ for (i in 1:nrow(files)) {
   mean.income <- meanIncomeScrapeR(as.character(files[i, 3]))
   
   mean.income <- mean.income %>%
-    mutate(option = as.character(files[i, 1])) %>%
-    mutate(scale = as.character(files[i, 2]))
+    mutate(option = as.character(files[i, 1]),
+           scale = as.character(files[i, 2]))
   
   final.income <- bind_rows(final.income, mean.income)
    
@@ -135,8 +135,8 @@ for (i in 1:nrow(files)) {
 
 # Remove "Per Capita " and "Equivalent " so the left_join works
 final.income <- final.income %>%
-  mutate(category = gsub("Per Capita ", "", category)) %>%
-  mutate(category = gsub("Equivalent ", "", category))
+  mutate(category = gsub("Per Capita ", "", category),
+         category = gsub("Equivalent ", "", category))
 
 # Create a df with the baselines
 options <- final.income %>%
@@ -157,17 +157,17 @@ final.income <- left_join(options, baselines, by = c("category", "group", "measu
 
 # Calculate the dollar and percent changes
 final.income <- final.income %>%
-  mutate(dollar.change = value - baseline.value) %>%
-  mutate(percent.change = (value - baseline.value) / baseline.value) %>%
+  mutate(dollar.change = value - baseline.value,
+         percent.change = (value - baseline.value) / baseline.value) %>%
   select(-baseline.value)
 
 # Clean up baselines so it matches final.income
 baselines <- baselines %>%
   rename(value = baseline.value) %>%
   rename(option = baseline.type) %>%
-  mutate(dollar.change = 0) %>%
-  mutate(percent.change = 0) %>%
-  mutate(baseline.type = option)
+  mutate(dollar.change = 0,
+         percent.change = 0,
+         baseline.type = option)
 
 # Combine the baselines (with zeroes for changes) and the options
 final.income <- union(final.income, baselines) %>%
@@ -176,10 +176,10 @@ final.income <- union(final.income, baselines) %>%
 # Should be 110,592 observations before gather()
 # Should be 331,776 observations after gather()
 
-rm(files, mean.income, options, baselines)
+rm(files, mean.income, options, baselines, i)
 
 # If data directory does not exist, create data directory
-if (!file.exists("data")) {
+if (!dir.exists("data")) {
   dir.create("data")
 }
 

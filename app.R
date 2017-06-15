@@ -143,7 +143,8 @@ ui <- fluidPage(
            style = "position:relative",
            
            h4(textOutput("title")),
-           h5(textOutput("subtitle")),
+           h5(textOutput("subtitlea")),
+           h5(textOutput("subtitleb")),
            plotOutput("chart",
                       hover = hoverOpts("plot_hover", delay = 100, delayType = "debounce")),
            uiOutput("hover_info"))),
@@ -257,46 +258,55 @@ ui <- fluidPage(
 server <- function(input, output){
   
   output$title <- renderText({
-    
-    if (input$measure == "Average Annuity Income") {
-      "Mean Gross Annuity Income"} 
-    else if (input$measure == "Average Cash Income") {
-      "Mean Gross Cash Income"}
-    else if (input$measure == "Average Net Annuity Income") {
-      "Mean Net Annuity Income"}
-    else if (input$measure == "Average Net Cash Income") {
-      "Mean Net Cash Income"}
-    
+
+    # Create title substring for comparison 
+    comparison <- if (input$comparison == "level") {"Mean"}
+    else if (input$comparison == "percent.change") {"Percent Change in Mean "}
+    else if (input$comparison == "dollar.change") {"Change in Mean "}
+        
+    # Create title string
+    paste(comparison, str_to_title(input$scale), sub("Average ", "", input$measure))
+  
+  })
+
+  output$subtitlea <- renderText({
+  
+    if (input$comparison == "level") {
+      input$option
+    } else {
+      paste(input$option, "vs.", input$baseline)
+    }
+      
   })
   
-  output$subtitle <- renderText({
+  output$subtitleb <- renderText({
     
     if (input$demographic == "All") {
-      "Everyone ages 62+, 2015 dollars"} 
+      "Everyone Ages 62+, 2015 dollars"} 
     else if (input$demographic == "Sex") {
-      "Ages 62+ by sex, 2015 dollars"}
+      "Ages 62+ by Sex, 2015 dollars"}
     else if (input$demographic == "Education") {
-      "Ages 62 and older by education, 2015 dollars"}
+      "Ages 62 and Older by Education, 2015 dollars"}
     else if (input$demographic == "Race Ethnicity") {
-      "Ages 62 and older by race & ethnicity, 2015 dollars"}
+      "Ages 62 and Older by Race & Ethnicity, 2015 dollars"}
     else if (input$demographic == "Marital Status") {
-      "Ages 62 and older by marital status, 2015 dollars"}
+      "Ages 62 and Older by Marital Status, 2015 dollars"}
     else if (input$demographic == "Shared Work Years") {
-      "Ages 62 and older by shared work years, 2015 dollars"}
+      "Ages 62 and Older by Shared Work Years, 2015 dollars"}
     else if (input$demographic == "Own Work Years") {
-      "Ages 62 and older by own work years, 2015 dollars"}
+      "Ages 62 and Older by Own Work Years, 2015 dollars"}
     else if (input$demographic == "Shared Income Quintile") {
-      "Ages 62 and older by shared income quintile, 2015 dollars"}
+      "Ages 62 and Older by Shared Income Quintile, 2015 dollars"}
     else if (input$demographic == "Shared Lifetime Earnings Quintile") {
-      "Ages 62 and older by shared lifetime earnings quintile, 2015 dollars"}   
+      "Ages 62 and Older by Shared Lifetime Earnings Quintile, 2015 dollars"}   
     else if (input$demographic == "Homeownership") {
-      "Ages 62 and older by homeownership"}
+      "Ages 62 and Older by Homeownership"}
     else if (input$demographic == "Family Income Relative to Official Poverty") {
-      "Ages 62 and older by family income relative to official poverty, 2015 dollars"}    
+      "Ages 62 and Older by Family Income Relative to Official Poverty, 2015 dollars"}    
     else if (input$demographic == "Financial Assets ($2015)") {
-      "Ages 62 and older by financial assets, 2015 dollars"}
+      "Ages 62 and Older by Financial Assets, 2015 dollars"}
     else if (input$demographic == "Financial + Retirement Account Assets ($2015)") {
-      "Ages 62 and older by financial + retirement account assets, 2015 dollars"} 
+      "Ages 62 and Older by Financial + Retirement Account Assets, 2015 dollars"} 
   
     })
   
@@ -313,6 +323,7 @@ server <- function(input, output){
         filter(comparison == input$comparison) %>%
         ggplot(aes(year, value, color = group)) +
           geom_line() +
+          geom_point(size = 2) +
           labs(caption = "DYNASIM3",
                x = "Year",
                y = NULL) +

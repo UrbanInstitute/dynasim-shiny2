@@ -131,6 +131,8 @@ for (i in 1:nrow(files)) {
   final.income <- bind_rows(final.income, mean.income)
    
 }
+
+# TODO(aaron): replace this for loop with with something better
 # final.income should be 1,536 * 38 = 58,368 rows
 
 # Remove "Per Capita " and "Equivalent " so the left_join works
@@ -138,10 +140,9 @@ final.income <- final.income %>%
   mutate(category = gsub("Per Capita ", "", category),
          category = gsub("Equivalent ", "", category))
 
-# Create a df with the baselines
-options <- final.income %>%
-  filter(option != "Payable Law" & option != "Scheduled Law")
-# should contain 52,224 rows
+# Rename dataframe for left_join
+options <- final.income 
+# should contain 58,368 rows
 # 64 subgroups * 4 measures * 6 years * 17 options * 2 scales
 
 # Create a df with the options
@@ -153,7 +154,8 @@ baselines <- final.income %>%
 
 # left_join the options with the baselines
 final.income <- left_join(options, baselines, by = c("category", "group", "measure", "year", "scale"))
-# should be 104,448 observations
+# should be 116,736 observations
+# 64 subgroups * 4 measures * 6 years * 19 options * 2 scales * 2 measures
 
 # Calculate the dollar and percent changes
 final.income <- final.income %>%
@@ -173,8 +175,8 @@ baselines <- baselines %>%
 final.income <- union(final.income, baselines) %>%
   rename(baseline = baseline.type, level = value) %>%
   gather(level, percent.change, dollar.change, key = "comparison", value = "value")
-# Should be 110,592 observations before gather()
-# Should be 331,776 observations after gather()
+# Should be 116,736 observations before gather()
+# Should be 350,208 observations after gather()
 
 rm(files, mean.income, options, baselines, i)
 

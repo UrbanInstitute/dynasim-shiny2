@@ -2,10 +2,9 @@
 library(shiny)
 library(tidyverse)
 library(extrafont)
-library(grid)
-library(gridExtra)
 library(RColorBrewer)
 library(scales)
+library(stringr)
 
 options(scipen = 999)
 
@@ -17,10 +16,40 @@ source('urban_institute_themes/urban_theme_windows.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-income <- read_csv("data/new_income.csv")
-option_text <- read_csv("text/option.csv")
-scale_text <- read_csv("text/scale.csv")
-baseline_text <- read_csv("text/baseline.csv")
+income <- read_csv("data/new_income.csv",
+  col_types = cols(
+    category = col_character(),
+    group = col_character(),
+    measure = col_character(),
+    year = col_integer(),
+    option = col_character(),
+    scale = col_character(),
+    baseline = col_character(),
+    comparison = col_character(),
+    value = col_double()
+  )
+)
+
+option_text <- read_csv("text/option.csv",
+  col_types = cols(
+    option = col_character(),
+    text = col_character()
+    )                      
+  )
+
+scale_text <- read_csv("text/scale.csv",
+  col_types = cols(
+    scale = col_character(),
+    text = col_character()
+  )
+)
+
+baseline_text <- read_csv("text/baseline.csv",
+  col_types = cols(
+    baseline = col_character(),
+    text = col_character()
+  )
+)
 
 # Remove numbers in certain factor levels and order all levels
 income <- income %>%
@@ -133,7 +162,6 @@ ui <- fluidPage(
            
            br()
            
-           
            )
     
   ),
@@ -154,8 +182,8 @@ ui <- fluidPage(
            
       selectInput(inputId = "option",
         label = "Social Security Reform",
-        choices = c("Scheduled Law" = "Scheduled Law",
-                    "Payable Law" = "Payable Law",
+        choices = c("Payable Law" = "Payable Law",
+                    "Scheduled Law" = "Scheduled Law",
                     "BPC Option" = "BPC Package",
                     "Annual PIA" = "Annual PIA", 
                     "Increase Benefits Taxation" = "Increase Benefits Taxation",
@@ -213,8 +241,8 @@ ui <- fluidPage(
     column(4,
       selectInput(inputId = "baseline",
         label = "Baseline",
-        choices = c("Current Law Scheduled" = "Scheduled Law",
-                    "Current Law Payable" = "Payable Law"))),
+        choices = c("Current Law Payable" = "Payable Law",
+                    "Current Law Scheduled" = "Scheduled Law"))),
     
     column(4,
       selectInput(inputId = "scale",

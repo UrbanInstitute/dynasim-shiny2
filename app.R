@@ -159,7 +159,7 @@ ui <- fluidPage(
            p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
              Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
            HTML("<p>Explore the trust fund, <b>by income</b>, by demographics, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065' target='_blank'>the data</a>.</p>"),
-           
+   
            br()
            
            )
@@ -250,7 +250,13 @@ ui <- fluidPage(
         choices = c("Per Capita" = "per capita",
                     "Equivalent" = "equivalent")))
     ),
-  
+
+  fluidRow(
+    column(8,
+      downloadButton('download_data', 'Download Charted Data')
+    )
+  ),
+    
   fluidRow(
     
     column(8,
@@ -337,31 +343,34 @@ server <- function(input, output){
       "Ages 62 and Older by Financial + Retirement Account Assets, 2015 dollars"} 
   
     })
+ 
+  data_subset <- reactive({
+    data_subset <- income %>%
+      filter(category == input$demographic) %>%
+      filter(measure == input$measure) %>%
+      filter(option == input$option) %>%
+      filter(scale == input$scale) %>%
+      filter(baseline == input$baseline) %>%
+      filter(comparison == input$comparison)
+  })
   
   output$chart <- renderPlot({
 
     graphr <- function(scale, origin, line.placement, line.color){
   
-      income %>%
-        filter(category == input$demographic) %>%
-        filter(measure == input$measure) %>%
-        filter(option == input$option) %>%
-        filter(scale == input$scale) %>%
-        filter(baseline == input$baseline) %>%
-        filter(comparison == input$comparison) %>%
-        ggplot(aes(year, value, color = group)) +
-          geom_line() +
-          geom_point(size = 2) +
-          labs(caption = "DYNASIM3",
-               x = "Year",
-               y = NULL) +
-          geom_line(size = 1) +
-          scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-          scale_y_continuous(expand = c(0.3, 0), labels = scale) +
-          expand_limits(y = origin) +
-          geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-          theme(axis.line = element_blank(),
-                plot.margin = margin(t = -5))
+      ggplot(data_subset(), aes(year, value, color = group)) +
+        geom_line() +
+        geom_point(size = 2) +
+        labs(caption = "DYNASIM3",
+             x = "Year",
+             y = NULL) +
+        geom_line(size = 1) +
+        scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
+        scale_y_continuous(expand = c(0.3, 0), labels = scale) +
+        expand_limits(y = origin) +
+        geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
+        theme(axis.line = element_blank(),
+              plot.margin = margin(t = -5))
 
     }
     
@@ -451,7 +460,15 @@ server <- function(input, output){
         )
       )
     )
-  })  
+  })
+  
+  output$download_data <- downloadHandler(
+    filename = function() { paste0(input$option, '.csv') },
+    content = function(file) {
+      write_csv(data_subset(), file)
+    }
+  )
+
 }
 
 shinyApp(ui = ui, server = server)

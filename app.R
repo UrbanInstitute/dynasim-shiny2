@@ -211,13 +211,10 @@ ui <- fluidPage(
     
   fluidRow(
     column(6,
-      
-     selectInput(inputId = "measure",
-       label = "Measure",
-       choices = c("Gross Annuity Income" = "Average Annuity Income",
-                   "Gross Cash Income" = "Average Cash Income",
-                   "Net Annuity Income" = "Average Net Annuity Income",
-                   "Net Cash Income" = "Average Net Cash Income"))),
+           selectInput(inputId = "baseline",
+                       label = "Baseline",
+                       choices = c("Current Law Payable" = "Payable Law",
+                                   "Current Law Scheduled" = "Scheduled Law"))),
     
      column(6,
      selectInput(inputId = "demographic",
@@ -239,10 +236,12 @@ ui <- fluidPage(
   
   fluidRow(
     column(6,
-      selectInput(inputId = "baseline",
-        label = "Baseline",
-        choices = c("Current Law Payable" = "Payable Law",
-                    "Current Law Scheduled" = "Scheduled Law"))),
+           selectInput(inputId = "measure",
+                       label = "Measure",
+                       choices = c("Gross Annuity Income" = "Average Annuity Income",
+                                   "Gross Cash Income" = "Average Cash Income",
+                                   "Net Annuity Income" = "Average Net Annuity Income",
+                                   "Net Cash Income" = "Average Net Cash Income"))),
     
     column(6,
       selectInput(inputId = "scale",

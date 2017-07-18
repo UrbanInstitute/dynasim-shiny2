@@ -152,7 +152,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
            titlePanel("Exploring Social Security Reform Options"),
            
@@ -167,7 +167,7 @@ ui <- fluidPage(
   ),
   
   fluidRow(
-    column(6,
+    column(10,
            style = "position:relative",
            
            h4(textOutput("title")),
@@ -178,7 +178,7 @@ ui <- fluidPage(
            uiOutput("hover_info"))),
     
   fluidRow(
-    column(4,
+    column(6,
            
       selectInput(inputId = "option",
         label = "Social Security Reform",
@@ -202,7 +202,7 @@ ui <- fluidPage(
                     "14.4% Payroll Tax" = "14.4% Payroll Tax",
                     "15.4% Payroll Tax" = "15.4% Payroll Tax"))),
            
-    column(4,
+    column(6,
       selectInput(inputId = "comparison",
         label = "Comparison",
         choices = c("Level" = "level",
@@ -210,7 +210,7 @@ ui <- fluidPage(
                     "Dollar Change" = "dollar.change")))),
     
   fluidRow(
-    column(4,
+    column(6,
       
      selectInput(inputId = "measure",
        label = "Measure",
@@ -219,7 +219,7 @@ ui <- fluidPage(
                    "Net Annuity Income" = "Average Net Annuity Income",
                    "Net Cash Income" = "Average Net Cash Income"))),
     
-     column(4,
+     column(6,
      selectInput(inputId = "demographic",
        label = "Demographic",
        choices = c("All" = "All",
@@ -238,13 +238,13 @@ ui <- fluidPage(
                    "Financial + Retirement Account Assets ($2015)")))),
   
   fluidRow(
-    column(4,
+    column(6,
       selectInput(inputId = "baseline",
         label = "Baseline",
         choices = c("Current Law Payable" = "Payable Law",
                     "Current Law Scheduled" = "Scheduled Law"))),
     
-    column(4,
+    column(6,
       selectInput(inputId = "scale",
         label = "Scale",
         choices = c("Per Capita" = "per capita",
@@ -252,14 +252,14 @@ ui <- fluidPage(
     ),
 
   fluidRow(
-    column(8,
+    column(12,
       downloadButton('download_data', 'Download Charted Data')
     )
   ),
     
   fluidRow(
     
-    column(8,
+    column(12,
            
            # Explanation of Social Security Reform
            
@@ -269,7 +269,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
            # Explanation of Scales
            
@@ -279,7 +279,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
            # Explanation of Baseline
            

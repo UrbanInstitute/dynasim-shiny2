@@ -152,14 +152,14 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
            titlePanel("Exploring Social Security Reform Options"),
            
            p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
              Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
            HTML("<p>Explore the trust fund, <b>by income</b>, by demographics, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065' target='_blank'>the data</a>.</p>"),
-           
+   
            br()
            
            )
@@ -167,7 +167,7 @@ ui <- fluidPage(
   ),
   
   fluidRow(
-    column(6,
+    column(10,
            style = "position:relative",
            
            h4(textOutput("title")),
@@ -178,7 +178,7 @@ ui <- fluidPage(
            uiOutput("hover_info"))),
     
   fluidRow(
-    column(4,
+    column(6,
            
       selectInput(inputId = "option",
         label = "Social Security Reform",
@@ -202,7 +202,7 @@ ui <- fluidPage(
                     "14.4% Payroll Tax" = "14.4% Payroll Tax",
                     "15.4% Payroll Tax" = "15.4% Payroll Tax"))),
            
-    column(4,
+    column(6,
       selectInput(inputId = "comparison",
         label = "Comparison",
         choices = c("Level" = "level",
@@ -210,16 +210,13 @@ ui <- fluidPage(
                     "Dollar Change" = "dollar.change")))),
     
   fluidRow(
-    column(4,
-      
-     selectInput(inputId = "measure",
-       label = "Measure",
-       choices = c("Gross Annuity Income" = "Average Annuity Income",
-                   "Gross Cash Income" = "Average Cash Income",
-                   "Net Annuity Income" = "Average Net Annuity Income",
-                   "Net Cash Income" = "Average Net Cash Income"))),
+    column(6,
+           selectInput(inputId = "baseline",
+                       label = "Baseline",
+                       choices = c("Current Law Payable" = "Payable Law",
+                                   "Current Law Scheduled" = "Scheduled Law"))),
     
-     column(4,
+     column(6,
      selectInput(inputId = "demographic",
        label = "Demographic",
        choices = c("All" = "All",
@@ -238,22 +235,30 @@ ui <- fluidPage(
                    "Financial + Retirement Account Assets ($2015)")))),
   
   fluidRow(
-    column(4,
-      selectInput(inputId = "baseline",
-        label = "Baseline",
-        choices = c("Current Law Payable" = "Payable Law",
-                    "Current Law Scheduled" = "Scheduled Law"))),
+    column(6,
+           selectInput(inputId = "measure",
+                       label = "Measure",
+                       choices = c("Gross Annuity Income" = "Average Annuity Income",
+                                   "Gross Cash Income" = "Average Cash Income",
+                                   "Net Annuity Income" = "Average Net Annuity Income",
+                                   "Net Cash Income" = "Average Net Cash Income"))),
     
-    column(4,
+    column(6,
       selectInput(inputId = "scale",
         label = "Scale",
         choices = c("Per Capita" = "per capita",
                     "Equivalent" = "equivalent")))
     ),
-  
+
+  fluidRow(
+    column(12,
+      downloadButton('download_data', 'Download Charted Data')
+    )
+  ),
+    
   fluidRow(
     
-    column(8,
+    column(12,
            
            # Explanation of Social Security Reform
            
@@ -263,7 +268,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
            # Explanation of Scales
            
@@ -273,7 +278,7 @@ ui <- fluidPage(
   
   fluidRow(
     
-    column(8,
+    column(12,
            
            # Explanation of Baseline
            
@@ -337,31 +342,34 @@ server <- function(input, output){
       "Ages 62 and Older by Financial + Retirement Account Assets, 2015 dollars"} 
   
     })
+ 
+  data_subset <- reactive({
+    data_subset <- income %>%
+      filter(category == input$demographic) %>%
+      filter(measure == input$measure) %>%
+      filter(option == input$option) %>%
+      filter(scale == input$scale) %>%
+      filter(baseline == input$baseline) %>%
+      filter(comparison == input$comparison)
+  })
   
   output$chart <- renderPlot({
 
     graphr <- function(scale, origin, line.placement, line.color){
   
-      income %>%
-        filter(category == input$demographic) %>%
-        filter(measure == input$measure) %>%
-        filter(option == input$option) %>%
-        filter(scale == input$scale) %>%
-        filter(baseline == input$baseline) %>%
-        filter(comparison == input$comparison) %>%
-        ggplot(aes(year, value, color = group)) +
-          geom_line() +
-          geom_point(size = 2) +
-          labs(caption = "DYNASIM3",
-               x = "Year",
-               y = NULL) +
-          geom_line(size = 1) +
-          scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
-          scale_y_continuous(expand = c(0.3, 0), labels = scale) +
-          expand_limits(y = origin) +
-          geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
-          theme(axis.line = element_blank(),
-                plot.margin = margin(t = -5))
+      ggplot(data_subset(), aes(year, value, color = group)) +
+        geom_line() +
+        geom_point(size = 2) +
+        labs(caption = "DYNASIM3",
+             x = "Year",
+             y = NULL) +
+        geom_line(size = 1) +
+        scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +
+        scale_y_continuous(expand = c(0.3, 0), labels = scale) +
+        expand_limits(y = origin) +
+        geom_hline(size = 0.5, aes(yintercept = line.placement), color = line.color) +
+        theme(axis.line = element_blank(),
+              plot.margin = margin(t = -5))
 
     }
     
@@ -451,7 +459,15 @@ server <- function(input, output){
         )
       )
     )
-  })  
+  })
+  
+  output$download_data <- downloadHandler(
+    filename = function() { paste0(input$option, '.csv') },
+    content = function(file) {
+      write_csv(data_subset(), file)
+    }
+  )
+
 }
 
 shinyApp(ui = ui, server = server)

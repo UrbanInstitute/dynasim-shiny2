@@ -158,7 +158,6 @@ ui <- fluidPage(
            
            p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
              Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
-           HTML("<p>Explore the trust fund, <b>by income</b>, by demographics, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065' target='_blank'>the data</a>.</p>"),
    
            br()
            
@@ -319,27 +318,27 @@ server <- function(input, output){
     else if (input$demographic == "Sex") {
       "Ages 62+ by Sex, 2015 dollars"}
     else if (input$demographic == "Education") {
-      "Ages 62 and Older by Education, 2015 dollars"}
+      "Ages 62+ by Education, 2015 dollars"}
     else if (input$demographic == "Race Ethnicity") {
-      "Ages 62 and Older by Race & Ethnicity, 2015 dollars"}
+      "Ages 62+ by Race & Ethnicity, 2015 dollars"}
     else if (input$demographic == "Marital Status") {
-      "Ages 62 and Older by Marital Status, 2015 dollars"}
+      "Ages 62+ by Marital Status, 2015 dollars"}
     else if (input$demographic == "Shared Work Years") {
-      "Ages 62 and Older by Shared Work Years, 2015 dollars"}
+      "Ages 62+ by Shared Work Years, 2015 dollars"}
     else if (input$demographic == "Own Work Years") {
-      "Ages 62 and Older by Own Work Years, 2015 dollars"}
+      "Ages 62+ by Own Work Years, 2015 dollars"}
     else if (input$demographic == "Shared Income Quintile") {
-      "Ages 62 and Older by Shared Income Quintile, 2015 dollars"}
+      "Ages 62+ by Shared Income Quintile, 2015 dollars"}
     else if (input$demographic == "Shared Lifetime Earnings Quintile") {
-      "Ages 62 and Older by Shared Lifetime Earnings Quintile, 2015 dollars"}   
+      "Ages 62+ by Shared Lifetime Earnings Quintile, 2015 dollars"}   
     else if (input$demographic == "Homeownership") {
-      "Ages 62 and Older by Homeownership"}
+      "Ages 62+ by Homeownership"}
     else if (input$demographic == "Family Income Relative to Official Poverty") {
-      "Ages 62 and Older by Family Income Relative to Official Poverty, 2015 dollars"}    
+      "Ages 62+ by Family Income Relative to Official Poverty, 2015 dollars"}    
     else if (input$demographic == "Financial Assets ($2015)") {
-      "Ages 62 and Older by Financial Assets, 2015 dollars"}
+      "Ages 62+ by Financial Assets, 2015 dollars"}
     else if (input$demographic == "Financial + Retirement Account Assets ($2015)") {
-      "Ages 62 and Older by Financial + Retirement Account Assets, 2015 dollars"} 
+      "Ages 62+ by Financial + Retirement Account Assets, 2015 dollars"} 
   
     })
  

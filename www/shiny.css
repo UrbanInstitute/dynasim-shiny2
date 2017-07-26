@@ -60,6 +60,7 @@ h5 {
   cursor: pointer;  
   color: transparent;  
   height: 39px;
+  width: calc(100% - 44px);
 }
 
 .dropdown-active {

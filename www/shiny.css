@@ -53,8 +53,9 @@ h5 {
 	overflow: hidden;  
   cursor: pointer; 	
   position: relative;
-  display: inline;
+  display: inline-block;
   top: 3.5px;
+  width: calc(100% - 33px);
 }
 
 .selectize-input {
@@ -62,7 +63,6 @@ h5 {
   cursor: pointer;  
   color: transparent;  
   height: 39px;
-  width: calc(100% - 44px);
 }
 
 .dropdown-active {

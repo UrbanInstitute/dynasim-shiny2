@@ -49,10 +49,13 @@ h5 {
 
 /* Text inside selectInput() */
 .item {
-  margin-top: 3.5px;
 	width: 299px;
 	overflow: hidden;  
   cursor: pointer; 	
+  position: relative;
+  display: inline-block;
+  top: 3.5px;
+  width: calc(100% - 33px);
 }
 
 .selectize-input {
@@ -115,6 +118,7 @@ h5 {
 	background: url(urban-select-2x.png) no-repeat right #efefef;
 	background-size: 45px 45px;
 	margin: 0;
+  width: 100%;
 }
 
 .selectize-input.items.full.has-options.has-items.focus.input-active.dropdown-active::after {

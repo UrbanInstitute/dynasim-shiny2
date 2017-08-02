@@ -185,4 +185,4 @@ if (!dir.exists("data")) {
 }
 
 # Combine data sets
-write_csv(final.income, "data/pensions.csv")
+write_csv(final.income, "data/incomes.csv")

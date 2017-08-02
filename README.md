@@ -6,17 +6,13 @@ Karen Smith used DYNASIM to model many Social Security reforms for the Bipartisa
 
 ### get_data.R
 
-This script pulls and cleans data from the sheets "mean income", "%mean income compare", and "$mean income compare" in `X:\programs\run912\Run5SaveOpt4\BPCtableShellsRun5SaveOpt4withSUPERTAX.xlsx`. The data were highly formatted in the Excel file, so the script organizes the data into a format that can be used by ggplot2. 
+This script pulls and cleans data from the sheet "mean income" The data were highly formatted in the Excel file, so the script organizes the data into a format that can be used by ggplot2. It also calculates percent and dollar change from current law scheduled and current law payable. 
 
-### mean_income_shiny.R
+## /data
 
-This script takes the .csv files created in get_data.R and stored in the data folder, and turns them into an interactive shiny graphic.  
+incomes.csv contains four income measures for many demographic groups for many policy options.
 
-### /data
-
-The /data subdirectory contains .csv files which are created in the get_data scripts and used by `income_distribution_shiny.R`.
-
-### /www
+## /www
 
 The /www subdirectory contains `shiny.css`. Shiny applications automatically look for material in the www subdirectory. The style sheet currently has a single universal css selector which changes the font in the Shiny application to [Lato](https://fonts.google.com/specimen/Lato). 
 

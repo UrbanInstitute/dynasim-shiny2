@@ -16,7 +16,7 @@ source('urban_institute_themes/urban_theme_windows.R')
 #source('urban_institute_themes/urban_theme_mac.R')
 
 # Load Data
-income <- read_csv("data/new_income.csv",
+income <- read_csv("data/incomes.csv",
   col_types = cols(
     category = col_character(),
     group = col_character(),
@@ -158,8 +158,7 @@ ui <- fluidPage(
            
            p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
              Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
-           HTML("<p>Explore the trust fund, <b>by income</b>, by demographics, and <a href='http://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-projecting-older-americans-future-well-being/detailed-projections-older-population-through-2065' target='_blank'>the data</a>.</p>"),
-   
+           
            br()
            
            )

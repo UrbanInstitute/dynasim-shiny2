@@ -42,15 +42,15 @@ mean_income_scraper <- function(link, option_label, scale_label) {
   annuity <- annuity %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category)) %>%
+    mutate(category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
     mutate(measure = "Average Annuity Income")
   
@@ -62,15 +62,15 @@ mean_income_scraper <- function(link, option_label, scale_label) {
   cash <- cash %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category)) %>%
+    mutate(category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
     mutate(measure = "Average Cash Income")
   
@@ -82,15 +82,15 @@ mean_income_scraper <- function(link, option_label, scale_label) {
   net.annuity <- net.annuity %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category)) %>%
+    mutate(category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
     mutate(measure = "Average Net Annuity Income")
   
@@ -102,15 +102,15 @@ mean_income_scraper <- function(link, option_label, scale_label) {
   net.cash <- net.cash %>%
     select(-trash) %>%
     filter(!is.na(group)) %>%
-    mutate(category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category),
-           category = ifelse(is.na(category), lag(category), category)) %>%
+    mutate(category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category),
+           category = if_else(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
     mutate(measure = "Average Net Cash Income")
   

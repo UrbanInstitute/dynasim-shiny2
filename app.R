@@ -157,8 +157,11 @@ ui <- fluidPage(
            
            titlePanel("Exploring Social Security Reform Options"),
            
-           p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
-             Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
+           p("The Social Security trustees estimate that by the mid-2030s, the system 
+             will no longer be able to pay all scheduled benefits. Which reform option 
+             should policymakers pursue to help balance the system? Use our interactive 
+             tools to compare how the Social Security trust funds and different groups 
+             would fare over time under different policy options."),
 
            br()
            
@@ -182,28 +185,28 @@ ui <- fluidPage(
            
       selectInput(inputId = "option",
         label = "Social Security Reform",
-        choices = c("Payable Law" = "Payable Law",
-                    "Scheduled Law" = "Scheduled Law",
-                    "BPC Option" = "BPC Package",
-                    "Annual PIA" = "Annual PIA", 
-                    "Basic Minimum Benefit" = "BMB",                    
-                    "Increase Benefits Taxation" = "Increase Benefits Taxation",
-                    "Cap Spouse Benefits" = "Cap Spouse Benefits",
-                    "75% Survivor Benefit" = "75% Survivor Benefit",
-                    "90% Tax Max" = "90% Tax Max",
-                    "90% Tax Max and 13.4% Payroll Tax" = "90% Tax Max and 13.4% Payroll Tax",
+        choices = c("Payable law" = "Payable Law",
+                    "Scheduled law" = "Scheduled Law",
+                    "BPC option" = "BPC Package",
+                    "Annual primary insurance amount" = "Annual PIA", 
+                    "Basic minimum benefit" = "BMB",                    
+                    "Increase benefits taxation" = "Increase Benefits Taxation",
+                    "Cap spouse benefits" = "Cap Spouse Benefits",
+                    "75 percent survivor benefit" = "75% Survivor Benefit",
+                    "90 percent tax max" = "90% Tax Max",
+                    "90% tax max and 13.4% payroll tax" = "90% Tax Max and 13.4% Payroll Tax",
                     "Reduce COLA" = "Reduce COLA",
                     "Chained-CPI COLA" = "Chained-CPI COLA",
                     "Cap COLA" = "Cap COLA", 
                     "Increase COLA" = "Increase COLA",
                     "Increase FRA" = "Increase FRA",
                     "Increase FRA and EEA" = "Increase FRA and EEA",
-                    "$150,000 Tax Max" = "$150,000 Tax Max",
-                    "$180,000 Tax Max" = "$180,000 Tax Max",
-                    "Eliminate the Tax Max" = "Eliminate the Tax Max",
-                    "13.4% Payroll Tax" = "13.4% Payroll Tax",
-                    "14.4% Payroll Tax" = "14.4% Payroll Tax",
-                    "15.4% Payroll Tax" = "15.4% Payroll Tax"))),
+                    "$150,000 tax max" = "$150,000 Tax Max",
+                    "$180,000 tax max" = "$180,000 Tax Max",
+                    "Eliminate the tax max" = "Eliminate the Tax Max",
+                    "13.4 percent payroll tax" = "13.4% Payroll Tax",
+                    "14.4 percent payroll tax" = "14.4% Payroll Tax",
+                    "15.4 percent payroll tax" = "15.4% Payroll Tax"))),
            
     column(6,
       selectInput(inputId = "comparison",
@@ -216,8 +219,8 @@ ui <- fluidPage(
     column(6,
            selectInput(inputId = "baseline",
                        label = "Baseline",
-                       choices = c("Current Law Payable" = "Payable Law",
-                                   "Current Law Scheduled" = "Scheduled Law"))),
+                       choices = c("Current law payable" = "Payable Law",
+                                   "Current law scheduled" = "Scheduled Law"))),
     
      column(6,
      selectInput(inputId = "demographic",
@@ -225,40 +228,42 @@ ui <- fluidPage(
        choices = c("All" = "All",
                    "Sex" = "Sex",
                    "Education" = "Education",
-                   "Race Ethnicity" = "Race Ethnicity",
-                   "Marital Status" = "Marital Status",
-                   "Shared Work Years" = "Shared Work Years",
-                   "Own Work Years" = "Own Work Years",
-                   "Shared Income Quintile" = "Shared Income Quintile",
-                   "Shared Lifetime Earnings Quintile" = "Shared Lifetime Earnings Quintile",
+                   "Race + ethnicity" = "Race Ethnicity",
+                   "Marital status" = "Marital Status",
+                   "Shared work years" = "Shared Work Years",
+                   "Own work years" = "Own Work Years",
+                   "Shared income quintile" = "Shared Income Quintile",
+                   "Shared lifetime earnings quintile" = "Shared Lifetime Earnings Quintile",
                    "Homeownership" = "Homeownership",
-                   "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
-                   "Financial Assets" = "Financial Assets ($2015)",
-                   "Financial + Retirement Account Assets" = 
+                   "Family income relative to official poverty" = "Family Income Relative to Official Poverty",
+                   "Financial assets" = "Financial Assets ($2015)",
+                   "Financial + retirement account assets" = 
                    "Financial + Retirement Account Assets ($2015)")))),
   
   fluidRow(
     column(6,
            selectInput(inputId = "measure",
                        label = "Measure",
-                       choices = c("Gross Annuity Income" = "Average Annuity Income",
-                                   "Gross Cash Income" = "Average Cash Income",
-                                   "Net Annuity Income" = "Average Net Annuity Income",
-                                   "Net Cash Income" = "Average Net Cash Income"))),
+                       choices = c("Gross annuity income" = "Average Annuity Income",
+                                   "Gross cash income" = "Average Cash Income",
+                                   "Net annuity income" = "Average Net Annuity Income",
+                                   "Net cash income" = "Average Net Cash Income"))),
     
     column(6,
       selectInput(inputId = "scale",
         label = "Scale",
-        choices = c("Per Capita" = "per capita",
+        choices = c("Per capita" = "per capita",
                     "Equivalent" = "equivalent")))
     ),
 
   fluidRow(
     column(12,
-      downloadButton('download_data', 'Download Charted Data')
+      downloadButton('download_data', 'Download charted data')
     )
   ),
     
+  br(),
+  
   fluidRow(
     
     column(12,

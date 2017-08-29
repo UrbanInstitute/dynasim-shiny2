@@ -27,8 +27,8 @@ files <- read_csv("options-guide.csv",
 # define workhouse function
 mean_income_scraper <- function(link, option_label, scale_label) {
 
-  option_label <- enquo(option_label)
-  scale_label <- enquo(scale_label)
+  #option_label <- enquo(option_label)
+  #scale_label <- enquo(scale_label)
   
   mean.income <- read_excel(link, sheet = "mean income", skip = 2, col_names = TRUE)
   
@@ -52,7 +52,7 @@ mean_income_scraper <- function(link, option_label, scale_label) {
            category = if_else(is.na(category), lag(category), category),
            category = if_else(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
-    mutate(measure = "Average Annuity Income")
+    mutate(measure = "Average annuity income")
   
   # Average Cash Income
   cash <- mean.income[, 10:18]
@@ -72,7 +72,7 @@ mean_income_scraper <- function(link, option_label, scale_label) {
            category = if_else(is.na(category), lag(category), category),
            category = if_else(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
-    mutate(measure = "Average Cash Income")
+    mutate(measure = "Average cash income")
   
   # Average Net Annuity Income
   net.annuity <- mean.income[, 19:27]
@@ -92,7 +92,7 @@ mean_income_scraper <- function(link, option_label, scale_label) {
            category = if_else(is.na(category), lag(category), category),
            category = if_else(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
-    mutate(measure = "Average Net Annuity Income")
+    mutate(measure = "Average net annuity income")
   
   # Average Net Cash Income
   net.cash <- mean.income[, 28:36]
@@ -112,7 +112,7 @@ mean_income_scraper <- function(link, option_label, scale_label) {
            category = if_else(is.na(category), lag(category), category),
            category = if_else(is.na(category), lag(category), category)) %>%
     filter(!is.na(year2015)) %>%
-    mutate(measure = "Average Net Cash Income")
+    mutate(measure = "Average net cash income")
   
   mean.income <- bind_rows(annuity, cash, net.annuity, net.cash)
   
@@ -125,6 +125,7 @@ mean_income_scraper <- function(link, option_label, scale_label) {
   
   return(mean.income)
 }
+
 
 # run function
 final.income <- pmap(list(files$link, files$option, files$scale), mean_income_scraper) %>%
@@ -143,7 +144,7 @@ options <- final.income
 
 # Create a df with the options
 baselines <- final.income %>%
-  filter(option %in% c("Payable Law","Scheduled Law")) %>%
+  filter(option %in% c("Payable law","Scheduled law")) %>%
   rename(baseline.value = value, baseline.type = option)
 
 # should contain 6,144 rows

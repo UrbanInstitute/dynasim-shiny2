@@ -51,6 +51,20 @@ baseline_text <- read_csv("text/baseline.csv",
   )
 )
 
+income_text <- read_csv("text/income.csv",
+  col_types = cols(
+    income = col_character(),
+    text = col_character()
+  )
+)
+
+demographic_text <- read_csv("text/demographic.csv",
+  col_types = cols(
+    demographic = col_character(),
+    text = col_character()
+  )
+)
+
 # Remove numbers in certain factor levels and order all levels
 income <- income %>%
   mutate(group = gsub("1\\.", "", group)) %>%
@@ -103,27 +117,27 @@ income <- income %>%
                                labels = c("All",
                                           "Female",
                                           "Male",
-                                          "HS Dropout",
-                                          "HS Graduate",
-                                          "Some College",
-                                          "College Graduate",      
+                                          "HS dropout",
+                                          "HS graduate",
+                                          "Some college",
+                                          "College graduate",      
                                           "Black",
                                           "Hispanic",
-                                          "White, Non-Hispanic",
+                                          "White, nonhispanic",
                                           "Other",
-                                          "Never Married",
+                                          "Never married",
                                           "Married",
                                           "Divorced",
                                           "Widowed",
                                           "0-9", "10-14", "15-19", "20-24",
                                           "25-29", "30-34", "35-39", "40+",
-                                          "Bottom Quintile",
-                                          "2nd Quintile",
-                                          "3rd Quintile",
-                                          "4th Quintile",
-                                          "Top Quintile",
+                                          "Bottom quintile",
+                                          "2nd quintile",
+                                          "3rd quintile",
+                                          "4th quintile",
+                                          "Top quintile",
                                           "Renter", 
-                                          "Home Owner",
+                                          "Homeowner",
                                           "<100% of FPL",
                                           "100-199% of FPL",
                                           "200-399% of FPL",
@@ -136,7 +150,7 @@ income <- income %>%
                                           "70-74",
                                           "75-79",
                                           "80-84",
-                                          "85+ ")))
+                                          "85+")))
 
 ##
 ## SHINY
@@ -157,8 +171,11 @@ ui <- fluidPage(
            
            titlePanel("Exploring Social Security Reform Options"),
            
-           p("The Social Security trustees project that, by the mid-2030s, the system will no longer be able to pay all scheduled benefits. Which reform option should policymakers pursue to help balance the system?
-             Use our interactive tool to compare how different groups would fare, over time, under the following policy options."),
+           p("The Social Security trustees estimate that by the mid-2030s, the system 
+             will no longer be able to pay all scheduled benefits. Which reform option 
+             should policymakers pursue to help balance the system? Use our interactive 
+             tools to compare how the Social Security trust funds and different groups 
+             would fare over time under different policy options."),
 
            br()
            
@@ -182,39 +199,42 @@ ui <- fluidPage(
            
       selectInput(inputId = "option",
         label = "Social Security Reform",
-        choices = c("Payable Law" = "Payable Law",
-                    "Scheduled Law" = "Scheduled Law",
-                    "BPC Option" = "BPC Package",
-                    "Annual PIA" = "Annual PIA", 
-                    "Increase Benefits Taxation" = "Increase Benefits Taxation",
-                    "Cap Spouse Benefits" = "Cap Spouse Benefits",
-                    "75% Survivor Benefit" = "75% Survivor Benefit",
-                    "90% Tax Max" = "90% Tax Max",
-                    "90% Tax Max and 13.4% Payroll Tax" = "90% Tax Max and 13.4% Payroll Tax",
+        choices = c("Payable law" = "Payable law",
+                    "Scheduled law" = "Scheduled law",
+                    "BPC option" = "BPC package",
+                    "Annual primary insurance amount" = "Annual primary insurance amount", 
+                    "Basic minimum benefit" = "Basic minimum benefit",                    
+                    "Increase benefits taxation" = "Increase benefits taxation",
+                    "Cap spouse benefits" = "Cap spouse benefits",
+                    "75 percent survivor benefit" = "75 percent survivor benefit",
+                    "90 percent tax max" = "90 percent tax max",
+                    "90% tax max and 13.4% payroll tax" = "90% tax max and 13.4% payroll tax",
                     "Reduce COLA" = "Reduce COLA",
                     "Chained-CPI COLA" = "Chained-CPI COLA",
+                    "Cap COLA" = "Cap COLA", 
+                    "Increase COLA" = "Increase COLA",
                     "Increase FRA" = "Increase FRA",
                     "Increase FRA and EEA" = "Increase FRA and EEA",
-                    "$150,000 Tax Max" = "$150,000 Tax Max",
-                    "$180,000 Tax Max" = "$180,000 Tax Max",
-                    "Eliminate the Tax Max" = "Eliminate the Tax Max",
-                    "13.4% Payroll Tax" = "13.4% Payroll Tax",
-                    "14.4% Payroll Tax" = "14.4% Payroll Tax",
-                    "15.4% Payroll Tax" = "15.4% Payroll Tax"))),
+                    "$150,000 tax max" = "$150,000 tax max",
+                    "$180,000 tax max" = "$180,000 tax max",
+                    "Eliminate the tax max" = "Eliminate the tax max",
+                    "13.4 percent payroll tax" = "13.4 percent payroll tax",
+                    "14.4 percent payroll tax" = "14.4 percent payroll tax",
+                    "15.4 percent payroll tax" = "15.4 percent payroll tax"))),
            
     column(6,
       selectInput(inputId = "comparison",
         label = "Comparison",
         choices = c("Level" = "level",
-                    "Percent Change" = "percent.change",
-                    "Dollar Change" = "dollar.change")))),
+                    "Percent change" = "percent.change",
+                    "Dollar change" = "dollar.change")))),
     
   fluidRow(
     column(6,
            selectInput(inputId = "baseline",
                        label = "Baseline",
-                       choices = c("Current Law Payable" = "Payable Law",
-                                   "Current Law Scheduled" = "Scheduled Law"))),
+                       choices = c("Current law payable" = "Payable law",
+                                   "Current law scheduled" = "Scheduled law"))),
     
      column(6,
      selectInput(inputId = "demographic",
@@ -222,67 +242,87 @@ ui <- fluidPage(
        choices = c("All" = "All",
                    "Sex" = "Sex",
                    "Education" = "Education",
-                   "Race Ethnicity" = "Race Ethnicity",
-                   "Marital Status" = "Marital Status",
-                   "Shared Work Years" = "Shared Work Years",
-                   "Own Work Years" = "Own Work Years",
-                   "Shared Income Quintile" = "Shared Income Quintile",
-                   "Shared Lifetime Earnings Quintile" = "Shared Lifetime Earnings Quintile",
+                   "Race or ethnicity" = "Race Ethnicity",
+                   "Marital status" = "Marital Status",
+                   "Shared work years" = "Shared Work Years",
+                   "Own work years" = "Own Work Years",
+                   "Shared income quintile" = "Shared Income Quintile",
+                   "Shared lifetime earnings quintile" = "Shared Lifetime Earnings Quintile",
                    "Homeownership" = "Homeownership",
-                   "Family Income Relative to Official Poverty" = "Family Income Relative to Official Poverty",
-                   "Financial Assets" = "Financial Assets ($2015)",
-                   "Financial + Retirement Account Assets" = 
+                   "Family income relative to official poverty" = "Family Income Relative to Official Poverty",
+                   "Financial assets" = "Financial Assets ($2015)",
+                   "Financial + retirement account assets" = 
                    "Financial + Retirement Account Assets ($2015)")))),
   
   fluidRow(
     column(6,
            selectInput(inputId = "measure",
                        label = "Measure",
-                       choices = c("Gross Annuity Income" = "Average Annuity Income",
-                                   "Gross Cash Income" = "Average Cash Income",
-                                   "Net Annuity Income" = "Average Net Annuity Income",
-                                   "Net Cash Income" = "Average Net Cash Income"))),
+                       choices = c("Gross annuity income" = "Average annuity income",
+                                   "Gross cash income" = "Average cash income",
+                                   "Net annuity income" = "Average net annuity income",
+                                   "Net cash income" = "Average net cash income"))),
     
     column(6,
       selectInput(inputId = "scale",
         label = "Scale",
-        choices = c("Per Capita" = "per capita",
+        choices = c("Per capita" = "per capita",
                     "Equivalent" = "equivalent")))
     ),
 
   fluidRow(
     column(12,
-      downloadButton('download_data', 'Download Charted Data')
+      downloadButton('download_data', 'Download charted data')
     )
   ),
     
+  br(),
+  
   fluidRow(
     
     column(12,
            
            # Explanation of Social Security Reform
            
-           htmlOutput("text1"))
+           htmlOutput("text_option"))
     
   ),
-  
-  fluidRow(
-    
-    column(12,
-           
-           # Explanation of Scales
-           
-           htmlOutput("text2"))
-    
-  ),
-  
+
   fluidRow(
     
     column(12,
            
            # Explanation of Baseline
            
-           htmlOutput("text3"))
+           htmlOutput("text_baseline"))
+    
+  ),
+  
+  fluidRow(
+    
+    column(12,
+           
+           # Explanation of income
+           
+           htmlOutput("text_income"))
+  ),
+
+  fluidRow(
+    
+    column(12,
+           
+           # Explanation of demographic
+           
+           htmlOutput("text_demographic"))
+  ),
+      
+  fluidRow(
+    
+    column(12,
+           
+           # Explanation of Scales
+           
+           htmlOutput("text_scale"))
     
   ),
   tags$script(src = "activatePym.js")
@@ -295,11 +335,11 @@ server <- function(input, output){
 
     # Create title substring for comparison 
     comparison <- if (input$comparison == "level") {"Mean"}
-    else if (input$comparison == "percent.change") {"Percent Change in Mean "}
-    else if (input$comparison == "dollar.change") {"Change in Mean "}
+    else if (input$comparison == "percent.change") {"Percent change in mean "}
+    else if (input$comparison == "dollar.change") {"Change in mean "}
         
     # Create title string
-    paste(comparison, str_to_title(input$scale), sub("Average ", "", input$measure))
+    paste(comparison, input$scale, sub("Average ", "", input$measure))
   
   })
 
@@ -308,7 +348,7 @@ server <- function(input, output){
     if (input$comparison == "level") {
       input$option
     } else {
-      paste(input$option, "vs.", input$baseline)
+      paste(input$option, "vs.", tolower(input$baseline))
     }
       
   })
@@ -316,31 +356,31 @@ server <- function(input, output){
   output$subtitleb <- renderText({
     
     if (input$demographic == "All") {
-      "Everyone Ages 62+, 2015 dollars"} 
+      "Everyone ages 62+, 2015 dollars"} 
     else if (input$demographic == "Sex") {
-      "Ages 62+ by Sex, 2015 dollars"}
+      "Ages 62+ by sex, 2015 dollars"}
     else if (input$demographic == "Education") {
-      "Ages 62+ by Education, 2015 dollars"}
+      "Ages 62+ by education, 2015 dollars"}
     else if (input$demographic == "Race Ethnicity") {
-      "Ages 62+ by Race & Ethnicity, 2015 dollars"}
+      "Ages 62+ by race or ethnicity, 2015 dollars"}
     else if (input$demographic == "Marital Status") {
-      "Ages 62+ by Marital Status, 2015 dollars"}
+      "Ages 62+ by marital status, 2015 dollars"}
     else if (input$demographic == "Shared Work Years") {
-      "Ages 62+ by Shared Work Years, 2015 dollars"}
+      "Ages 62+ by shared work years, 2015 dollars"}
     else if (input$demographic == "Own Work Years") {
-      "Ages 62+ by Own Work Years, 2015 dollars"}
+      "Ages 62+ by own work years, 2015 dollars"}
     else if (input$demographic == "Shared Income Quintile") {
-      "Ages 62+ by Shared Income Quintile, 2015 dollars"}
+      "Ages 62+ by shared income quintile, 2015 dollars"}
     else if (input$demographic == "Shared Lifetime Earnings Quintile") {
-      "Ages 62+ by Shared Lifetime Earnings Quintile, 2015 dollars"}   
+      "Ages 62+ by shared lifetime earnings quintile, 2015 dollars"}   
     else if (input$demographic == "Homeownership") {
       "Ages 62+ by Homeownership"}
     else if (input$demographic == "Family Income Relative to Official Poverty") {
-      "Ages 62+ by Family Income Relative to Official Poverty, 2015 dollars"}    
+      "Ages 62+ by family income relative to official poverty, 2015 dollars"}    
     else if (input$demographic == "Financial Assets ($2015)") {
-      "Ages 62+ by Financial Assets, 2015 dollars"}
+      "Ages 62+ by financial assets, 2015 dollars"}
     else if (input$demographic == "Financial + Retirement Account Assets ($2015)") {
-      "Ages 62+ by Financial + Retirement Account Assets, 2015 dollars"} 
+      "Ages 62+ by financial + retirement account assets, 2015 dollars"} 
   
     })
  
@@ -387,7 +427,7 @@ server <- function(input, output){
   })
   
   # Social Security Reform Descriptions
-  output$text1 <- renderText({
+  output$text_option <- renderText({
     
     as.character(
       option_text %>%
@@ -396,8 +436,18 @@ server <- function(input, output){
     )
     
   })
-  
-  output$text2 <- renderText({
+
+  output$text_baseline <- renderText({
+    
+    as.character(
+      baseline_text %>%
+        filter(baseline == input$baseline) %>%
+        select(text)
+    )
+    
+  })
+    
+  output$text_scale <- renderText({
     
     as.character(
       scale_text %>%
@@ -407,11 +457,21 @@ server <- function(input, output){
     
   })
   
-  output$text3 <- renderText({
+  output$text_demographic <- renderText({
     
     as.character(
-      baseline_text %>%
-        filter(baseline == input$baseline) %>%
+      demographic_text %>%
+        filter(demographic == input$demographic) %>%
+        select(text)
+    )
+    
+  })
+  
+  output$text_income <- renderText({
+    
+    as.character(
+      income_text %>%
+        filter(income == input$measure) %>%
         select(text)
     )
     

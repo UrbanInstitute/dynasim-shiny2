@@ -4,7 +4,7 @@ library(tidyverse)
 library(extrafont)
 library(RColorBrewer)
 library(scales)
-library(stringr)
+#library(stringr)
 
 options(scipen = 999)
 
@@ -123,7 +123,7 @@ income <- income %>%
                                           "College graduate",      
                                           "Black",
                                           "Hispanic",
-                                          "White, nonhispanic",
+                                          "White, non-Hispanic",
                                           "Other",
                                           "Never married",
                                           "Married",
@@ -169,15 +169,12 @@ ui <- fluidPage(
     
     column(12,
            
-           titlePanel("Exploring Social Security Reform Options"),
-           
-           p("The Social Security trustees estimate that by the mid-2030s, the system 
-             will no longer be able to pay all scheduled benefits. Which reform option 
-             should policymakers pursue to help balance the system? Use our interactive 
-             tools to compare how the Social Security trust funds and different groups 
-             would fare over time under different policy options."),
-
-           br()
+           p("Millions of retirees rely on Old-Age Social Security benefits for 
+             retirement and many more are counting on these benefits for the 
+             future. Use this interactive to compare how Social Security reforms 
+             would affect current and future retirees over time based on sex, 
+             education, race or ethnicity, marital status, income, and work 
+             history.")
            
            )
     

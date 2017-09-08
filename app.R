@@ -356,19 +356,21 @@ server <- function(input, output){
       graph_data <- percent_change  
     }
     
-    data_subset <- graph_data %>% #income %>%
+    graph_data <- graph_data %>% #income %>%
       filter(option == input$option) %>%
       filter(category == input$demographic) %>%
       filter(scale == input$scale) %>%
       filter(baseline == input$baseline) %>%
-      select_("category", "group", "year", "option", "scale", "baseline", input$measure)
+      select_("category", "group", "year", "option", "scale", "baseline", value = input$measure)
+    
+    print(graph_data)
   })
   
   output$chart <- renderPlot({
 
     graphr <- function(scale, origin, line.placement, line.color){
   
-      ggplot(data_subset(), aes_string("year", input$measure, color = "group")) +
+      ggplot(data_subset(), aes(year, value, color = group)) +
         geom_line() +
         geom_point(size = 2) +
         labs(caption = "DYNASIM3",
@@ -451,7 +453,10 @@ server <- function(input, output){
   output$hover_info <- renderUI({
     hover <- input$plot_hover
     
-    point <- nearPoints(level, hover, threshold = 20, maxpoints = 1) #todo replace level
+    point <- nearPoints(data_subset(), hover, threshold = 100, maxpoints = 1) #todo replace level
+    
+    print(hover)
+    print(point)
     
     if (nrow(point) == 0) return(NULL)
     
@@ -463,6 +468,11 @@ server <- function(input, output){
     # calculate distance from left and bottom side of the picture in pixels
     left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
     top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
+    
+    print("ZIIIIIIIIIP")
+    print(left_px)
+    print(top_px)
+    
     
     #TODO(awunderground): change CSS colors of pop-up
     # create style property fot tooltip

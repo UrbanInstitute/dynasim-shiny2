@@ -173,17 +173,30 @@ baselines <- baselines %>%
 # Combine the baselines (with zeroes for changes) and the options
 final.income <- union(final.income, baselines) %>%
   rename(baseline = baseline.type, level = value) %>%
-  gather(level, percent.change, dollar.change, key = "comparison", value = "value")
+  gather(level, percent.change, dollar.change, key = "comparison", value = "value") %>%
+  spread(key = measure, value = value) %>%
+  mutate(group = gsub("1\\.", "", group)) %>%
+  mutate(group = gsub("2\\.", "", group)) %>%
+  mutate(group = gsub("3\\.", "", group)) %>%
+  mutate(group = gsub("4\\.", "", group))
 
 # should contain 258,048 rows
 stopifnot(nrow(final.income) == 258048)
 
 rm(files, options, baselines)
 
-# If data directory does not exist, create data directory
-if (!dir.exists("data")) {
-  dir.create("data")
-}
+# Break into smaller data frames
+final.income %>%
+  filter(comparison == "level") %>%
+  select(-comparison) %>%
+  write_csv("data/level.csv")
 
-# Combine data sets
-write_csv(final.income, "data/incomes.csv")
+final.income %>%
+  filter(comparison == "dollar.change") %>%
+  select(-comparison) %>%
+  write_csv("data/dollar-change.csv")
+
+final.income %>%
+  filter(comparison == "percent.change") %>%
+  select(-comparison) %>%
+  write_csv("data/percent-change.csv")

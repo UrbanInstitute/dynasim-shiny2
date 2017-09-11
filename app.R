@@ -1,8 +1,6 @@
 ## Libraries and Source Files
 library(shiny)
 library(tidyverse)
-library(extrafont)
-library(RColorBrewer)
 library(scales)
 
 options(scipen = 999)
@@ -363,7 +361,6 @@ server <- function(input, output){
       filter(baseline == input$baseline) %>%
       select_("category", "group", "year", "option", "scale", "baseline", value = input$measure)
     
-    print(graph_data)
   })
   
   output$chart <- renderPlot({
@@ -455,9 +452,6 @@ server <- function(input, output){
     
     point <- nearPoints(data_subset(), hover, threshold = 100, maxpoints = 1) #todo replace level
     
-    print(hover)
-    print(point)
-    
     if (nrow(point) == 0) return(NULL)
     
     # calculate point position inside the image as percent of total dimensions
@@ -468,11 +462,6 @@ server <- function(input, output){
     # calculate distance from left and bottom side of the picture in pixels
     left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
     top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
-    
-    print("ZIIIIIIIIIP")
-    print(left_px)
-    print(top_px)
-    
     
     #TODO(awunderground): change CSS colors of pop-up
     # create style property fot tooltip

@@ -131,8 +131,8 @@ mean_income_scraper <- function(link, option_label, scale_label) {
 final.income <- pmap(list(files$link, files$option, files$scale), mean_income_scraper) %>%
   reduce(bind_rows)
 
-# final.income should be 1,536 * 28 = 43,008
-stopifnot(nrow(final.income) == 43008)
+# final.income should be 1,536 * 44 = 67,584
+stopifnot(nrow(final.income) == 67584)
 
 # Remove "Per Capita " and "Equivalent " so the left_join works
 final.income <- final.income %>%
@@ -148,13 +148,13 @@ baselines <- final.income %>%
   rename(baseline.value = value, baseline.type = option)
 
 # should contain 6,144 rows
-stopifnot(nrow(final.income) == 3072)
+stopifnot(nrow(baselines) == 6144)
 
 # left_join the options with the baselines
 final.income <- left_join(options, baselines, by = c("category", "group", "measure", "year", "scale"))
 
-# should contain 86,016 rows
-stopifnot(nrow(final.income) == 86016)
+# should contain 135,168 rows
+stopifnot(nrow(final.income) == 135,168)
 
 # Calculate the dollar and percent changes
 final.income <- final.income %>%
@@ -173,17 +173,30 @@ baselines <- baselines %>%
 # Combine the baselines (with zeroes for changes) and the options
 final.income <- union(final.income, baselines) %>%
   rename(baseline = baseline.type, level = value) %>%
-  gather(level, percent.change, dollar.change, key = "comparison", value = "value")
+  gather(level, percent.change, dollar.change, key = "comparison", value = "value") %>%
+  spread(key = measure, value = value) %>%
+  mutate(group = gsub("1\\.", "", group)) %>%
+  mutate(group = gsub("2\\.", "", group)) %>%
+  mutate(group = gsub("3\\.", "", group)) %>%
+  mutate(group = gsub("4\\.", "", group))
 
-# should contain 258,048 rows
-stopifnot(nrow(final.income) == 258048)
+# should contain 101,376 rows
+stopifnot(nrow(final.income) == 101376)
 
 rm(files, options, baselines)
 
-# If data directory does not exist, create data directory
-if (!dir.exists("data")) {
-  dir.create("data")
-}
+# Break into smaller data frames
+final.income %>%
+  filter(comparison == "level") %>%
+  select(-comparison) %>%
+  write_csv("data/level.csv")
 
-# Combine data sets
-write_csv(final.income, "data/incomes.csv")
+final.income %>%
+  filter(comparison == "dollar.change") %>%
+  select(-comparison) %>%
+  write_csv("data/dollar-change.csv")
+
+final.income %>%
+  filter(comparison == "percent.change") %>%
+  select(-comparison) %>%
+  write_csv("data/percent-change.csv")

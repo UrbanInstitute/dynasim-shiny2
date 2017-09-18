@@ -14,6 +14,13 @@ h5 {
   margin: 3px 0 5px 0; /* t, r, b, l */  
 }
 
+/* Eliminate padding from entire application */
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
 /***** HEADER *****/
 /***** CHART *****/
 /***** CONTROLS *****/

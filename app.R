@@ -1,12 +1,11 @@
-## Libraries and Source Files
+# Libraries and Source Files
 library(shiny)
 library(tidyverse)
-library(extrafont)
-library(RColorBrewer)
 library(scales)
-library(stringr)
 
+# Set options
 options(scipen = 999)
+options(shiny.sanitize.errors = TRUE)
 
 # Source file for Windows
 Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")
@@ -15,20 +14,73 @@ source('urban_institute_themes/urban_theme_windows.R')
 # Source file for Mac
 #source('urban_institute_themes/urban_theme_mac.R')
 
+factor_levels <- c("All", "Female", "Male", "High School Dropout", 
+                   "High School Graduate", "Some College", "College Graduate",
+                   "Black", "Hispanic", "White", "Other", "Single", "Married", 
+                   "Divorced", "Widowed", "0-9", "10-14", "15-19", "20-24", 
+                   "25-29", "30-34", "35-39", "40+", "bottom quintile", 
+                   "2nd quintile", "3rd quintile", "4th quintile", 
+                   "top quintile", "Renter", "Home Owner", 
+                   "Less 100% of Poverty", "100-199% of Poverty", 
+                   "200-399% of Poverty", "400%+ of Poverty", "<0k", "0k -  5k", 
+                   "5k - 25k", "25k +", "62-69", "70-74", "75-79", "80-84", 
+                   "85+ ")
+
+factor_labels <- c("All", "Female", "Male", "HS dropout", "HS graduate", 
+                   "Some college", "College graduate", "Black", "Hispanic",
+                   "White, non-Hispanic", "Other", "Never married", "Married", 
+                   "Divorced", "Widowed", "0-9",  "10-14",  "15-19",  "20-24", 
+                   "25-29", "30-34", "35-39", "40+", "Bottom quintile", 
+                   "2nd quintile", "3rd quintile", "4th quintile", "Top quintile",
+                   "Renter", "Homeowner", "<100% of FPL", "100-199% of FPL", 
+                   "200-399% of FPL", "400%+ of FPL", "<0k", "0k-5k", "5k-25k", 
+                   "25k+", "62-69", "70-74", "75-79", "80-84", "85+")
+
 # Load Data
-income <- read_csv("data/incomes.csv",
+level <- read_csv("data/level.csv",
   col_types = cols(
     category = col_character(),
     group = col_character(),
-    measure = col_character(),
     year = col_integer(),
     option = col_character(),
     scale = col_character(),
     baseline = col_character(),
-    comparison = col_character(),
-    value = col_double()
+    `Average annuity income` = col_double(),
+    `Average cash income` = col_double(),
+    `Average net annuity income` = col_double(),
+    `Average net cash income` = col_double()
   )
-)
+) %>% mutate(group = factor(group, levels = factor_levels, labels = factor_labels))
+
+dollar_change <- read_csv("data/dollar-change.csv",
+  col_types = cols(
+    category = col_character(),
+    group = col_character(),
+    year = col_integer(),
+    option = col_character(),
+    scale = col_character(),
+    baseline = col_character(),
+    `Average annuity income` = col_double(),
+    `Average cash income` = col_double(),
+    `Average net annuity income` = col_double(),
+    `Average net cash income` = col_double()
+  )
+) %>% mutate(group = factor(group, levels = factor_levels, labels = factor_labels))
+
+percent_change <- read_csv("data/percent-change.csv",
+  col_types = cols(
+    category = col_character(),
+    group = col_character(),
+    year = col_integer(),
+    option = col_character(),
+    scale = col_character(),
+    baseline = col_character(),
+    `Average annuity income` = col_double(),
+    `Average cash income` = col_double(),
+    `Average net annuity income` = col_double(),
+    `Average net cash income` = col_double()
+  )                           
+) %>% mutate(group = factor(group, levels = factor_levels, labels = factor_labels))
 
 option_text <- read_csv("text/option.csv",
   col_types = cols(
@@ -65,93 +117,6 @@ demographic_text <- read_csv("text/demographic.csv",
   )
 )
 
-# Remove numbers in certain factor levels and order all levels
-income <- income %>%
-  mutate(group = gsub("1\\.", "", group)) %>%
-  mutate(group = gsub("2\\.", "", group)) %>%
-  mutate(group = gsub("3\\.", "", group)) %>%
-  mutate(group = gsub("4\\.", "", group)) %>%
-  mutate(group = factor(group, levels = c("All",
-                                          "Female",
-                                          "Male",
-                                          "High School Dropout",
-                                          "High School Graduate",
-                                          "Some College",
-                                          "College Graduate",
-                                          "Black",
-                                          "Hispanic",
-                                          "White",
-                                          "Other",
-                                          "Single",
-                                          "Married",
-                                          "Divorced",
-                                          "Widowed",
-                                          "0-9",
-                                          "10-14",
-                                          "15-19",
-                                          "20-24",
-                                          "25-29",
-                                          "30-34",
-                                          "35-39",
-                                          "40+",
-                                          "bottom quintile",
-                                          "2nd quintile",
-                                          "3rd quintile",
-                                          "4th quintile",
-                                          "top quintile",
-                                          "Renter",
-                                          "Home Owner",
-                                          "Less 100% of Poverty",
-                                          "100-199% of Poverty",
-                                          "200-399% of Poverty",
-                                          "400%+ of Poverty",
-                                          "<0k",
-                                          "0k -  5k",
-                                          "5k - 25k",
-                                          "25k +",
-                                          "62-69",
-                                          "70-74",
-                                          "75-79",
-                                          "80-84",
-                                          "85+ "),
-                               labels = c("All",
-                                          "Female",
-                                          "Male",
-                                          "HS dropout",
-                                          "HS graduate",
-                                          "Some college",
-                                          "College graduate",      
-                                          "Black",
-                                          "Hispanic",
-                                          "White, nonhispanic",
-                                          "Other",
-                                          "Never married",
-                                          "Married",
-                                          "Divorced",
-                                          "Widowed",
-                                          "0-9", "10-14", "15-19", "20-24",
-                                          "25-29", "30-34", "35-39", "40+",
-                                          "Bottom quintile",
-                                          "2nd quintile",
-                                          "3rd quintile",
-                                          "4th quintile",
-                                          "Top quintile",
-                                          "Renter", 
-                                          "Homeowner",
-                                          "<100% of FPL",
-                                          "100-199% of FPL",
-                                          "200-399% of FPL",
-                                          "400%+ of FPL",
-                                          "<0k",
-                                          "0k-5k",
-                                          "5k-25k",
-                                          "25k+",
-                                          "62-69",
-                                          "70-74",
-                                          "75-79",
-                                          "80-84",
-                                          "85+")))
-
 ##
 ## SHINY
 ##
@@ -169,15 +134,12 @@ ui <- fluidPage(
     
     column(12,
            
-           titlePanel("Exploring Social Security Reform Options"),
-           
-           p("The Social Security trustees estimate that by the mid-2030s, the system 
-             will no longer be able to pay all scheduled benefits. Which reform option 
-             should policymakers pursue to help balance the system? Use our interactive 
-             tools to compare how the Social Security trust funds and different groups 
-             would fare over time under different policy options."),
-
-           br()
+           p("Millions of retirees rely on Old-Age Social Security benefits for 
+             retirement and many more are counting on these benefits for the 
+             future. Use this interactive to compare how Social Security reforms 
+             would affect current and future retirees over time based on sex, 
+             education, race or ethnicity, marital status, income, and work 
+             history.")
            
            )
     
@@ -258,10 +220,10 @@ ui <- fluidPage(
     column(6,
            selectInput(inputId = "measure",
                        label = "Measure",
-                       choices = c("Gross annuity income" = "Average annuity income",
-                                   "Gross cash income" = "Average cash income",
-                                   "Net annuity income" = "Average net annuity income",
-                                   "Net cash income" = "Average net cash income"))),
+                       choices = c("Gross annuity income" = "`Average annuity income`",
+                                   "Gross cash income" = "`Average cash income`",
+                                   "Net annuity income" = "`Average net annuity income`",
+                                   "Net cash income" = "`Average net cash income`"))),
     
     column(6,
       selectInput(inputId = "scale",
@@ -339,7 +301,7 @@ server <- function(input, output){
     else if (input$comparison == "dollar.change") {"Change in mean "}
         
     # Create title string
-    paste(comparison, input$scale, sub("Average ", "", input$measure))
+    paste(comparison, input$scale, sub("Average ", "", gsub("`", "", input$measure)))
   
   })
 
@@ -385,13 +347,22 @@ server <- function(input, output){
     })
  
   data_subset <- reactive({
-    data_subset <- income %>%
-      filter(category == input$demographic) %>%
-      filter(measure == input$measure) %>%
+    
+    if (input$comparison == "level") {
+      graph_data <- level
+    } else if (input$comparison == "dollar.change") {
+      graph_data <- dollar_change     
+    } else if (input$comparison == "percent.change") {
+      graph_data <- percent_change  
+    }
+    
+    graph_data <- graph_data %>% #income %>%
       filter(option == input$option) %>%
+      filter(category == input$demographic) %>%
       filter(scale == input$scale) %>%
       filter(baseline == input$baseline) %>%
-      filter(comparison == input$comparison)
+      select_("category", "group", "year", "option", "scale", "baseline", value = input$measure)
+    
   })
   
   output$chart <- renderPlot({
@@ -471,7 +442,7 @@ server <- function(input, output){
     
     as.character(
       income_text %>%
-        filter(income == input$measure) %>%
+        filter(income == gsub("`", "", input$measure)) %>%
         select(text)
     )
     
@@ -481,7 +452,7 @@ server <- function(input, output){
   output$hover_info <- renderUI({
     hover <- input$plot_hover
     
-    point <- nearPoints(income, hover, threshold = 20, maxpoints = 1)
+    point <- nearPoints(data_subset(), hover, threshold = 100, maxpoints = 1) #todo replace level
     
     if (nrow(point) == 0) return(NULL)
     

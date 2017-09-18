@@ -131,8 +131,8 @@ mean_income_scraper <- function(link, option_label, scale_label) {
 final.income <- pmap(list(files$link, files$option, files$scale), mean_income_scraper) %>%
   reduce(bind_rows)
 
-# final.income should be 1,536 * 28 = 43,008
-stopifnot(nrow(final.income) == 43008)
+# final.income should be 1,536 * 44 = 67,584
+stopifnot(nrow(final.income) == 67584)
 
 # Remove "Per Capita " and "Equivalent " so the left_join works
 final.income <- final.income %>%
@@ -148,13 +148,13 @@ baselines <- final.income %>%
   rename(baseline.value = value, baseline.type = option)
 
 # should contain 6,144 rows
-stopifnot(nrow(final.income) == 3072)
+stopifnot(nrow(baselines) == 6144)
 
 # left_join the options with the baselines
 final.income <- left_join(options, baselines, by = c("category", "group", "measure", "year", "scale"))
 
-# should contain 86,016 rows
-stopifnot(nrow(final.income) == 86016)
+# should contain 135,168 rows
+stopifnot(nrow(final.income) == 135,168)
 
 # Calculate the dollar and percent changes
 final.income <- final.income %>%
@@ -180,8 +180,8 @@ final.income <- union(final.income, baselines) %>%
   mutate(group = gsub("3\\.", "", group)) %>%
   mutate(group = gsub("4\\.", "", group))
 
-# should contain 258,048 rows
-stopifnot(nrow(final.income) == 258048)
+# should contain 101,376 rows
+stopifnot(nrow(final.income) == 101376)
 
 rm(files, options, baselines)
 

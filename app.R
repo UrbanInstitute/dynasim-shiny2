@@ -1,9 +1,11 @@
-## Libraries and Source Files
+# Libraries and Source Files
 library(shiny)
 library(tidyverse)
 library(scales)
 
+# Set options
 options(scipen = 999)
+options(shiny.sanitize.errors = TRUE)
 
 # Source file for Windows
 Sys.setenv(R_GSCMD = "C:\\Program Files\\gs\\gs9.20\\bin\\gswin64.exe")

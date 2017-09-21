@@ -372,8 +372,9 @@ server <- function(input, output){
       ggplot(data_subset(), aes(year, value, color = group)) +
         geom_line() +
         geom_point(size = 2) +
-        labs(caption = "DYNASIM3",
-             x = "Year",
+        labs(caption = "DYNASIM3
+                        Urban Institute",
+             x = NULL,
              y = NULL) +
         geom_line(size = 1) +
         scale_x_continuous(breaks = c(2015, 2025, 2035, 2045, 2055, 2065)) +

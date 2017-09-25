@@ -134,7 +134,7 @@ ui <- fluidPage(
     
     column(12,
            
-           p("Millions of retirees rely on Old-Age Social Security benefits for 
+           p("Millions of retirees rely on old-age Social Security benefits for 
              retirement and many more are counting on these benefits for the 
              future. Use this interactive to compare how Social Security reforms 
              would affect current and future retirees over time based on sex, 
@@ -163,13 +163,13 @@ ui <- fluidPage(
         label = "Social Security Reform",
         choices = c("Payable law" = "Payable law",
                     "Scheduled law" = "Scheduled law",
-                    "BPC option" = "BPC package",
+                    "Bipartisan Policy Center package" = "Bipartisan Policy Center package",
                     "Annual primary insurance amount" = "Annual primary insurance amount", 
                     "Basic minimum benefit" = "Basic minimum benefit",                    
                     "Increase benefits taxation" = "Increase benefits taxation",
                     "Cap spouse benefits" = "Cap spouse benefits",
-                    "75 percent survivor benefit" = "75 percent survivor benefit",
-                    "90 percent tax max" = "90 percent tax max",
+                    "75% survivor benefit" = "75% survivor benefit",
+                    "90% tax max" = "90% tax max",
                     "90% tax max and 13.4% payroll tax" = "90% tax max and 13.4% payroll tax",
                     "Reduce COLA" = "Reduce COLA",
                     "Chained-CPI COLA" = "Chained-CPI COLA",
@@ -180,9 +180,9 @@ ui <- fluidPage(
                     "$150,000 tax max" = "$150,000 tax max",
                     "$180,000 tax max" = "$180,000 tax max",
                     "Eliminate the tax max" = "Eliminate the tax max",
-                    "13.4 percent payroll tax" = "13.4 percent payroll tax",
-                    "14.4 percent payroll tax" = "14.4 percent payroll tax",
-                    "15.4 percent payroll tax" = "15.4 percent payroll tax"))),
+                    "13.4% payroll tax" = "13.4% payroll tax",
+                    "14.4% payroll tax" = "14.4% payroll tax",
+                    "15.4% payroll tax" = "15.4% payroll tax"))),
            
     column(6,
       selectInput(inputId = "comparison",
@@ -211,10 +211,10 @@ ui <- fluidPage(
                    "Shared income quintile" = "Shared Income Quintile",
                    "Shared lifetime earnings quintile" = "Shared Lifetime Earnings Quintile",
                    "Homeownership" = "Homeownership",
-                   "Family income relative to official poverty" = "Family Income Relative to Official Poverty",
+                   "Family income relative to poverty" = "Family Income Relative to Poverty",
                    "Financial assets" = "Financial Assets ($2015)",
-                   "Financial + retirement account assets" = 
-                   "Financial + Retirement Account Assets ($2015)")))),
+                   "Financial and retirement account assets" = 
+                   "Financial and Retirement Account Assets ($2015)")))),
   
   fluidRow(
     column(6,
@@ -310,7 +310,7 @@ server <- function(input, output){
     if (input$comparison == "level") {
       input$option
     } else {
-      paste(input$option, "vs.", tolower(input$baseline))
+      paste(input$option, "versus", tolower(input$baseline))
     }
       
   })
@@ -318,31 +318,31 @@ server <- function(input, output){
   output$subtitleb <- renderText({
     
     if (input$demographic == "All") {
-      "Everyone ages 62+, 2015 dollars"} 
+      "Everyone age 62 and older, 2015 dollars"} 
     else if (input$demographic == "Sex") {
-      "Ages 62+ by sex, 2015 dollars"}
+      "Everyone age 62 and older by sex, 2015 dollars"}
     else if (input$demographic == "Education") {
-      "Ages 62+ by education, 2015 dollars"}
+      "Everyone age 62 and older by education, 2015 dollars"}
     else if (input$demographic == "Race Ethnicity") {
-      "Ages 62+ by race or ethnicity, 2015 dollars"}
+      "Everyone age 62 and older by race or ethnicity, 2015 dollars"}
     else if (input$demographic == "Marital Status") {
-      "Ages 62+ by marital status, 2015 dollars"}
+      "Everyone age 62 and older by marital status, 2015 dollars"}
     else if (input$demographic == "Shared Work Years") {
-      "Ages 62+ by shared work years, 2015 dollars"}
+      "Everyone age 62 and older by shared work years, 2015 dollars"}
     else if (input$demographic == "Own Work Years") {
-      "Ages 62+ by own work years, 2015 dollars"}
+      "Everyone age 62 and older by own work years, 2015 dollars"}
     else if (input$demographic == "Shared Income Quintile") {
-      "Ages 62+ by shared income quintile, 2015 dollars"}
+      "Everyone age 62 and older by shared income quintile, 2015 dollars"}
     else if (input$demographic == "Shared Lifetime Earnings Quintile") {
-      "Ages 62+ by shared lifetime earnings quintile, 2015 dollars"}   
+      "Everyone age 62 and older by shared lifetime earnings quintile, 2015 dollars"}   
     else if (input$demographic == "Homeownership") {
-      "Ages 62+ by Homeownership"}
+      "Everyone age 62 and older by Homeownership"}
     else if (input$demographic == "Family Income Relative to Official Poverty") {
-      "Ages 62+ by family income relative to official poverty, 2015 dollars"}    
+      "Everyone age 62 and older by family income relative to poverty, 2015 dollars"}    
     else if (input$demographic == "Financial Assets ($2015)") {
-      "Ages 62+ by financial assets, 2015 dollars"}
+      "Everyone age 62 and older by financial assets, 2015 dollars"}
     else if (input$demographic == "Financial + Retirement Account Assets ($2015)") {
-      "Ages 62+ by financial + retirement account assets, 2015 dollars"} 
+      "Everyone age 62 and older by financial and retirement account assets, 2015 dollars"} 
   
     })
  

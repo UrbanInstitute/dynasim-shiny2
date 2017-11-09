@@ -175,3 +175,12 @@ h5 {
 
 /***** DESCRIPTIONS *****/
 
+/* Project credits */
+.credit-names {
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.credit-labels {
+  margin: 0;
+}

@@ -1,6 +1,8 @@
 # dynasim-shiny2
 
-Interactive web visualizations of DYNASIM projections of mean income from 2015-2065.
+Interactive web visualizations of DYNASIM projections of mean income from 2015-2065. [Link!](https://www.urban.org/policy-centers/cross-center-initiatives/program-retirement-policy/projects/dynasim-visualizing-older-americans-future-well-being/social-security-reform-impacts-current-and-future-retirees)
+
+![](www/shiny2.png)
 
 ## Data
 
@@ -33,3 +35,7 @@ The /www subdirectory contains `shiny.css`. Shiny applications automatically loo
 ## Authors
 * Aaron Williams
 * Karen Smith
+* Ben Chartoff
+* Jerry Ta
+* Michael Marazzi
+* Dave D'Orio

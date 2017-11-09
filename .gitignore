@@ -39,3 +39,4 @@ vignettes/*.pdf
 
 # Windows System Files
 *.DB
+Thumbs.db

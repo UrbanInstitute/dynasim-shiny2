@@ -23,8 +23,8 @@ factor_levels <- c("All", "Female", "Male", "High School Dropout",
                    "top quintile", "Renter", "Home Owner", 
                    "Less 100% of Poverty", "100-199% of Poverty", 
                    "200-399% of Poverty", "400%+ of Poverty", "<0k", "0k -  5k", 
-                   "5k - 25k", "25k +", "62-69", "70-74", "75-79", "80-84", 
-                   "85+ ")
+                   "5k - 25k", "25k +", "62-69", "70-74", "75-79", "80-84",
+                   "85+")
 
 factor_labels <- c("All", "Female", "Male", "HS dropout", "HS graduate", 
                    "Some college", "College graduate", "Black", "Hispanic",
@@ -126,7 +126,8 @@ latoCSS <- "http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300itali
 ui <- fluidPage(
 
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = latoCSS)),
-  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")),  
+  tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "bootstrap.css")), 
+  tags$head(tags$base(target = "_blank")),
   tags$head(tags$script(src = "pym.min.js")),
   
   theme = "shiny.css",
@@ -135,13 +136,12 @@ ui <- fluidPage(
     
     column(12,
            
-           p("Millions of retirees rely on Old-Age Social Security benefits for 
-             retirement and many more are counting on these benefits for the 
-             future. Use this interactive to compare how Social Security reforms 
-             would affect current and future retirees over time based on sex, 
-             education, race or ethnicity, marital status, income, and work 
-             history.")
-           
+           p("Millions of older Americans rely on old-age Social Security 
+             benefits for retirement and many more are counting on these 
+             benefits for the future. Use this interactive to compare how 
+             Social Security reforms would affect current and future older 
+             Americans over time based on sex, education, race or ethnicity, 
+             marital status, income, and work history.")
            )
     
   ),
@@ -164,13 +164,13 @@ ui <- fluidPage(
         label = "Social Security Reform",
         choices = c("Payable law" = "Payable law",
                     "Scheduled law" = "Scheduled law",
-                    "BPC option" = "BPC package",
+                    "Bipartisan Policy Center package" = "Bipartisan Policy Center package",
                     "Annual primary insurance amount" = "Annual primary insurance amount", 
                     "Basic minimum benefit" = "Basic minimum benefit",                    
                     "Increase benefits taxation" = "Increase benefits taxation",
                     "Cap spouse benefits" = "Cap spouse benefits",
-                    "75 percent survivor benefit" = "75 percent survivor benefit",
-                    "90 percent tax max" = "90 percent tax max",
+                    "75% survivor benefit" = "75% survivor benefit",
+                    "90% tax max" = "90% tax max",
                     "90% tax max and 13.4% payroll tax" = "90% tax max and 13.4% payroll tax",
                     "Reduce COLA" = "Reduce COLA",
                     "Chained-CPI COLA" = "Chained-CPI COLA",
@@ -181,9 +181,9 @@ ui <- fluidPage(
                     "$150,000 tax max" = "$150,000 tax max",
                     "$180,000 tax max" = "$180,000 tax max",
                     "Eliminate the tax max" = "Eliminate the tax max",
-                    "13.4 percent payroll tax" = "13.4 percent payroll tax",
-                    "14.4 percent payroll tax" = "14.4 percent payroll tax",
-                    "15.4 percent payroll tax" = "15.4 percent payroll tax"))),
+                    "13.4% payroll tax" = "13.4% payroll tax",
+                    "14.4% payroll tax" = "14.4% payroll tax",
+                    "15.4% payroll tax" = "15.4% payroll tax"))),
            
     column(6,
       selectInput(inputId = "comparison",
@@ -204,6 +204,7 @@ ui <- fluidPage(
        label = "Demographic",
        choices = c("All" = "All",
                    "Sex" = "Sex",
+                   "Age" = "Age",
                    "Education" = "Education",
                    "Race or ethnicity" = "Race Ethnicity",
                    "Marital status" = "Marital Status",
@@ -212,9 +213,9 @@ ui <- fluidPage(
                    "Shared income quintile" = "Shared Income Quintile",
                    "Shared lifetime earnings quintile" = "Shared Lifetime Earnings Quintile",
                    "Homeownership" = "Homeownership",
-                   "Family income relative to official poverty" = "Family Income Relative to Official Poverty",
+                   "Family income relative to poverty" = "Family Income Relative to Official Poverty",
                    "Financial assets" = "Financial Assets ($2015)",
-                   "Financial + retirement account assets" = 
+                   "Financial and retirement account assets" = 
                    "Financial + Retirement Account Assets ($2015)")))),
   
   fluidRow(
@@ -296,10 +297,11 @@ ui <- fluidPage(
            h3("About the data"),
            HTML("<p>The Urban Institute’s Dynamic Simulation of Income Model (DYNASIM) projects the size and characteristics (such as financial, health, and disability status) 
                 of the US population for the next 75 years. Using the best and most recent data available, it helps sort out how profound social, economic, and demographic 
-                shifts will likely affect older adults and their retirement as well astaxpayers, business, and government. The model can also show how outcomes would likely 
+                shifts will likely affect older adults and their retirement as well as taxpayers, business, and government. The model can also show how outcomes would likely 
                 evolve under changes to public policies, business practices, or individual behaviors.</p>"),
            HTML("<p><a href='https://www.urban.org/node/65826'>Read the DYNASIM primer</a></p>"),
-           HTML("<p><a href='https://www.urban.org/research/publication/dynamic-simulation-income-model-dynasim-overview'>Review the DYNASIM documentation</a></p>")
+           HTML("<p><a href='https://www.urban.org/research/publication/dynamic-simulation-income-model-dynasim-overview'>Review the DYNASIM documentation</a></p>"),
+           HTML("<p>Questions about DYNASIM? <a href='mailto:retirementpolicy@urban.org' target='_self'>Contact us</a>.</p>")
            
     ),
     column(6,
@@ -320,18 +322,9 @@ ui <- fluidPage(
            h5(HTML("<div class='credit-labels'>WRITING")),
            HTML("<div class='credit-names'><p><a href = 'https://www.urban.org/author/karen-e-smith'>Karen Smith</a> and <a href='https://www.urban.org/author/aaron-r-williams'>Aaron Williams</a></p></div>"),
            
-           HTML("Copyright &copy; <a href='https://www.urban.org/'>Urban Institute</a> 2017. View this project on <a href='https://github.com/urbaninstitute/dynasim-shiny1.git'>GitHub</a>.</p>")
+           HTML("Copyright &copy; <a href='https://www.urban.org/'>Urban Institute</a> September 2017. View this project on <a href='https://github.com/urbaninstitute/dynasim-shiny1.git'>GitHub</a>.</p>")
     )
   ),
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
   tags$script(src = "activatePym.js")
   
@@ -356,7 +349,7 @@ server <- function(input, output){
     if (input$comparison == "level") {
       input$option
     } else {
-      paste(input$option, "vs.", tolower(input$baseline))
+      paste(input$option, "versus", tolower(input$baseline))
     }
       
   })
@@ -364,31 +357,33 @@ server <- function(input, output){
   output$subtitleb <- renderText({
     
     if (input$demographic == "All") {
-      "Everyone ages 62+, 2015 dollars"} 
+      "Everyone age 62 and older, 2015 dollars"} 
     else if (input$demographic == "Sex") {
-      "Ages 62+ by sex, 2015 dollars"}
+      "Everyone age 62 and older by sex, 2015 dollars"}
+    else if (input$demographic == "Age") {
+      "Everyone age 62 and older by age, 2015 dollars"}
     else if (input$demographic == "Education") {
-      "Ages 62+ by education, 2015 dollars"}
+      "Everyone age 62 and older by education, 2015 dollars"}
     else if (input$demographic == "Race Ethnicity") {
-      "Ages 62+ by race or ethnicity, 2015 dollars"}
+      "Everyone age 62 and older by race or ethnicity, 2015 dollars"}
     else if (input$demographic == "Marital Status") {
-      "Ages 62+ by marital status, 2015 dollars"}
+      "Everyone age 62 and older by marital status, 2015 dollars"}
     else if (input$demographic == "Shared Work Years") {
-      "Ages 62+ by shared work years, 2015 dollars"}
+      "Everyone age 62 and older by shared work years, 2015 dollars"}
     else if (input$demographic == "Own Work Years") {
-      "Ages 62+ by own work years, 2015 dollars"}
+      "Everyone age 62 and older by own work years, 2015 dollars"}
     else if (input$demographic == "Shared Income Quintile") {
-      "Ages 62+ by shared income quintile, 2015 dollars"}
+      "Everyone age 62 and older by shared income quintile, 2015 dollars"}
     else if (input$demographic == "Shared Lifetime Earnings Quintile") {
-      "Ages 62+ by shared lifetime earnings quintile, 2015 dollars"}   
+      "Everyone age 62 and older by shared lifetime earnings quintile, 2015 dollars"}   
     else if (input$demographic == "Homeownership") {
-      "Ages 62+ by Homeownership"}
+      "Everyone age 62 and older by Homeownership"}
     else if (input$demographic == "Family Income Relative to Official Poverty") {
-      "Ages 62+ by family income relative to official poverty, 2015 dollars"}    
+      "Everyone age 62 and older by family income relative to official poverty, 2015 dollars"}    
     else if (input$demographic == "Financial Assets ($2015)") {
-      "Ages 62+ by financial assets, 2015 dollars"}
+      "Everyone age 62 and older by financial assets, 2015 dollars"}
     else if (input$demographic == "Financial + Retirement Account Assets ($2015)") {
-      "Ages 62+ by financial + retirement account assets, 2015 dollars"} 
+      "Everyone age 62 and older by financial + retirement account assets, 2015 dollars"} 
   
     })
  
@@ -512,13 +507,10 @@ server <- function(input, output){
     left_px <- hover$range$left + left_pct * (hover$range$right - hover$range$left)
     top_px <- hover$range$top + top_pct * (hover$range$bottom - hover$range$top)
     
-    #TODO(awunderground): change CSS colors of pop-up
-    # create style property fot tooltip
-    # background color is set so tooltip is a bit transparent
-    # z-index is set so we are sure are tooltip will be on top
+    # create style property for tooltip
     style <- paste0("position:absolute; z-index:100; 
                     background-color: rgba(245, 245, 245, 0.85); ",
-                    "left:", left_px + 2, "px; top:", top_px + 2, "px;")
+                    "left:", left_px + 2, "px; top:", top_px + 2, "px; cursor: crosshair;")
   
     # actual tooltip created as wellPanel
     wellPanel(

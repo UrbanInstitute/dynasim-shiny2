@@ -154,7 +154,7 @@ ui <- fluidPage(
            h5(textOutput("subtitlea")),
            h5(textOutput("subtitleb")),
            plotOutput("chart",
-                      hover = hoverOpts("plot_hover", delay = 100, delayType = "debounce")),
+                      hover = hoverOpts("plot_hover", delay = 100, delayType = "debounce", nullOutside = FALSE)),
            uiOutput("hover_info"))),
     
   fluidRow(
@@ -494,7 +494,10 @@ server <- function(input, output){
   output$hover_info <- renderUI({
     hover <- input$plot_hover
     
-    point <- nearPoints(data_subset(), hover, threshold = 100, maxpoints = 1) #todo replace level
+    point <- nearPoints(data_subset(), hover, threshold = 100, maxpoints = 1, addDist = TRUE) #todo replace level
+    
+    print(data_subset())
+    print(hover)
     
     if (nrow(point) == 0) return(NULL)
     
